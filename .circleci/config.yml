@@ -30,19 +30,19 @@ jobs: # A basic unit of work in a run
             source html2ans/bin/activate
       - run:
           name: Install project
-          command: python setup.py install
+          command: python3 setup.py install
       - run:
           name: Build docs
-          command: python setup.py build_sphinx
+          command: python3 setup.py build_sphinx
       - run:
           name: Verify git tag vs. version
-          command: python setup.py verify
+          command: python3 setup.py verify
       - run:
           name: Build wheel
-          command: python setup.py bdist_wheel
+          command: python3 setup.py bdist_wheel
       - run:
           name: Build sdist
-          command: python setup.py sdist
+          command: python3 setup.py sdist
       - run:
           name: init .pypirc
           command: |
