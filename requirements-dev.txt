@@ -9,4 +9,3 @@ pip-tools
 pycodestyle
 pytest-cov
 tox
-twine

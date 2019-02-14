@@ -6,3 +6,4 @@ ftfy<6;python_version>="3"
 html5lib
 lxml<5
 six<2
+twine

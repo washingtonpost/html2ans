@@ -10,5 +10,6 @@ ftfy==4.4.1 ; python_version < "3"
 html5lib==1.0.1
 lxml==4.2.5
 six==1.11.0
+twine==1.13.0
 wcwidth==0.1.7            # via ftfy
 webencodings==0.5.1       # via html5lib

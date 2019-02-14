@@ -23,4 +23,4 @@ html2ans is hosted on `pypi <https://pypi.org/project/html2ans/>`_.
 
 Please use the `GitHub issue tracker <https://github.com/washingtonpost/html2ans/issues>`_ to submit bugs or request features.
 
-Full documentation can be found [here](https://github.com/washingtonpost/html2ans/wiki).
+Full documentation can be found `here <https://github.com/washingtonpost/html2ans/wiki>`_.
