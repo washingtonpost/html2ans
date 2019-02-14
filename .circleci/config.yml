@@ -24,20 +24,18 @@ jobs: # A basic unit of work in a run
     steps:
       - checkout
       - run:
-          name: Build
-          command: |
-            python3 -m virtualenv html2ans
-            source html2ans/bin/activate
-            python setup.py install verify sdist bdist_wheel build_sphinx
-      - run:
           name: init .pypirc
           command: |
             echo -e "[pypi]" >> ~/.pypirc
             echo -e "username = arcpsteam" >> ~/.pypirc
             echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
-          name: Deploy
-          command: twine upload dist/*
+          name: Build and deploy
+          command: |
+            python3 -m virtualenv html2ans
+            source html2ans/bin/activate
+            python setup.py install verify sdist bdist_wheel build_sphinx
+            twine upload dist/*
   test:
     working_directory: ~/html2ans
     docker: # run the steps with Docker
