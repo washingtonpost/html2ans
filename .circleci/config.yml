@@ -24,25 +24,11 @@ jobs: # A basic unit of work in a run
     steps:
       - checkout
       - run:
-          name: Make virtualenv
+          name: Build
           command: |
             python3 -m virtualenv html2ans
             source html2ans/bin/activate
-      - run:
-          name: Install project
-          command: python3 setup.py install
-      - run:
-          name: Build docs
-          command: python3 setup.py build_sphinx
-      - run:
-          name: Verify git tag vs. version
-          command: python3 setup.py verify
-      - run:
-          name: Build wheel
-          command: python3 setup.py bdist_wheel
-      - run:
-          name: Build sdist
-          command: python3 setup.py sdist
+            python setup.py install verify sdist bdist_wheel build_sphinx
       - run:
           name: init .pypirc
           command: |
@@ -50,7 +36,7 @@ jobs: # A basic unit of work in a run
             echo -e "username = arcpsteam" >> ~/.pypirc
             echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
-          name: upload to pypi
+          name: Deploy
           command: twine upload dist/*
   test:
     working_directory: ~/html2ans
