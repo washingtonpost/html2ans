@@ -24,6 +24,11 @@ jobs: # A basic unit of work in a run
     steps:
       - checkout
       - run:
+          name: Make virtualenv
+          command: |
+            python3 -m virtualenv html2ans
+            source html2ans/bin/activate
+      - run:
           name: Install project
           command: python setup.py install
       - run:
