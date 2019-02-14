@@ -1,0 +1,8 @@
+BeautifulSoup4<5
+# pip-compile will only get the constraint for the running Python interpreter
+ftfy<5;python_version<"3"
+ftfy<6;python_version>="3"
+# html5lib has hardcoded version because they are not following semantic versioning
+html5lib
+lxml<5
+six<2
