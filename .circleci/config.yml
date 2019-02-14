@@ -14,23 +14,23 @@ jobs: # A basic unit of work in a run
     steps:
       - checkout
       - run:
-        name: Build docs
-        command: python setup.py build_sphinx
+          name: Build docs
+          command: python setup.py build_sphinx
       - run:
-        name: Verify git tag vs. version
-        command: python setup.py verify
+          name: Verify git tag vs. version
+          command: python setup.py verify
       - run:
-        name: Build wheel
-        command: python setup.py bdist_wheel
+          name: Build wheel
+          command: python setup.py bdist_wheel
       - run:
-        name: Build sdist
-        command: python setup.py sdist
+          name: Build sdist
+          command: python setup.py sdist
       - run:
-        name: init .pypirc
-        command: |
-          echo -e "[pypi]" >> ~/.pypirc
-          echo -e "username = arcpsteam" >> ~/.pypirc
-          echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+          name: init .pypirc
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "username = arcpsteam" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
           name: upload to pypi
           command: twine upload dist/*
