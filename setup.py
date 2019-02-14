@@ -9,33 +9,43 @@ THIS_FILE_DIR = os.path.dirname(__file__)
 
 try:
     # pip 9
-    from pip.req.req_install import InstallRequirement
+    from pip.req import parse_requirements
+    from pip.download import PipSession
 except ImportError:
     # pip 10
-    from pip._internal.req.req_install import InstallRequirement
+    from pip._internal.req import parse_requirements
+    from pip._internal.download import PipSession
 
 
 def load_reqs(fn):
     reqs = []
-    with open(fn) as reqs_file:
-        for line in reqs_file:
-            try:
-                InstallRequirement.from_line(line)
-            except Exception:
-                # not a line containing a dependency
-                pass
-            else:
-                reqs.insert(0, line.strip())  # reverse the order for setuptools
-    return reqs
+    reqs_extras = {}
+    parsed_reqs = parse_requirements(fn, session=PipSession())
+
+    for req in parsed_reqs:
+        markers = req.markers
+        if markers:
+            reqs_extras[":" + str(markers)] = str(req.req)
+        else:
+            reqs.append(str(req.req))
+
+    return reqs, reqs_extras
 
 
 NEEDS_DOCS = 'build_sphinx' in sys.argv
 NEEDS_PYTEST = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
 
-DOCS_REQUIRE = load_reqs('reqs/doc.txt') if NEEDS_DOCS else []
-INSTALL_REQUIRES = load_reqs('reqs/default.in')
-TESTS_REQUIRE = load_reqs('reqs/test.txt')
+DOCS_REQUIRE, DOCS_EXTRAS = load_reqs('reqs/doc.txt') if NEEDS_DOCS else ([], {})
+INSTALL_REQUIRES, EXTRAS_REQUIRE = load_reqs('reqs/default.in')
+TESTS_REQUIRE, TESTS_EXTRAS = load_reqs('reqs/test.txt')
+SETUP_REQUIRES = []
 
+if NEEDS_DOCS:
+    EXTRAS_REQUIRE.update(DOCS_EXTRAS)
+    SETUP_REQUIRES.extend(DOCS_REQUIRE)
+if NEEDS_PYTEST:
+    EXTRAS_REQUIRE.update(TESTS_EXTRAS)
+    SETUP_REQUIRES.append('pytest-runner')
 
 # Get the long description from the README file
 with open(os.path.join(THIS_FILE_DIR, 'README.rst'), encoding='utf-8') as f:
@@ -59,9 +69,7 @@ class VerifyVersionCommand(install):
         tag = os.getenv('CIRCLE_TAG')
 
         if tag != RELEASE:
-            info = "Git tag: {0} does not match the version of this app: {1}".format(
-                tag, VERSION
-            )
+            info = f"Git tag: {tag} does not match the version of this app: {RELEASE}"
             sys.exit(info)
 
 
@@ -79,13 +87,14 @@ setup(
     author=AUTHOR,
     author_email='arc.professional.services@gmail.com',
     license='MIT',
-    packages=find_packages('src', exclude=['tests']),
+    packages=find_packages('src', exclude=['docs', 'tests']),
     package_dir={'': 'src'},
     include_package_data=True,
     zip_safe=False,
     install_requires=INSTALL_REQUIRES,
-    setup_requires=['pytest-runner'] if NEEDS_PYTEST else [],
+    setup_requires=SETUP_REQUIRES,
     tests_require=TESTS_REQUIRE,
+    extras_require=EXTRAS_REQUIRE,
     command_options={
         'build_sphinx': {
             'project': ('setup.py', PROJECT),
