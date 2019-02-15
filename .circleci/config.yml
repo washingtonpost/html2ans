@@ -1,4 +1,4 @@
-# how to skip Circle builds with a commit message: https://circleci.com/docs/2.0/skip-build/
+## how to skip Circle builds with a commit message: https://circleci.com/docs/2.0/skip-build/
 version: 2 # use CircleCI 2.0
 workflows:
   version: 2
