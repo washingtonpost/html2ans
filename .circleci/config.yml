@@ -5,12 +5,10 @@ workflows:
   test:
     jobs:
       - test
-  build_and_deploy:
+  deploy:
     jobs:
       - test
       - build_and_deploy:
-          requires:
-            - test
           filters:
             tags:
               only: /[0-9]+(\.[0-9]+)*/
