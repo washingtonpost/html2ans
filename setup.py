@@ -52,7 +52,7 @@ with open(os.path.join(THIS_FILE_DIR, 'README.rst'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 
 # The full version, including alpha/beta/rc tags
-RELEASE = '3.0.0dev0'
+RELEASE = '3.0.0'
 # The short X.Y version
 VERSION = '.'.join(RELEASE.split('.')[:2])
 
@@ -69,7 +69,7 @@ class VerifyVersionCommand(install):
         tag = os.getenv('CIRCLE_TAG')
 
         if tag != RELEASE:
-            info = f"Git tag: {tag} does not match the version of this app: {RELEASE}"
+            info = "Git tag: {tag} does not match the version of this app: {release}".format(tag=tag, release=RELEASE)
             sys.exit(info)
 
 
