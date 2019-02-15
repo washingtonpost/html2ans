@@ -1,5 +1,5 @@
 # how to skip Circle builds with a commit message: https://circleci.com/docs/2.0/skip-build/
-version: 2 # use CircleCI 2.0
+version: 2.1 # use CircleCI 2.0
 workflows:
   version: 2
   test:
@@ -12,7 +12,7 @@ workflows:
             tags:
               only: /[0-9]+(\.[0-9]+)*/
             branches:
-              ignore: /.*/
+              only: master
 jobs: # A basic unit of work in a run
   build_and_deploy:
     working_directory: ~/html2ans
