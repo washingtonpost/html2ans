@@ -7,7 +7,6 @@ workflows:
       - test
   deploy:
     jobs:
-      - test
       - build_and_deploy:
           filters:
             tags:
@@ -33,7 +32,7 @@ jobs: # A basic unit of work in a run
           command: |
             python3 -m virtualenv html2ans
             source html2ans/bin/activate
-            python setup.py install verify sdist bdist_wheel build_sphinx
+            python setup.py install test verify sdist bdist_wheel build_sphinx
             twine upload dist/*
   test:
     working_directory: ~/html2ans
