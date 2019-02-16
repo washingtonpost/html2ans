@@ -1,2 +1,0 @@
-include reqs/default.in
-prune tests
