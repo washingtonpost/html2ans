@@ -2,7 +2,7 @@
 
 Welcome to the contribution guide for html2ans. Here are some important resources to get you started:
   
-  * [html2ans Wiki](https://github.com/washingtonpost/html2ans/wiki)
+  * [html2ans Wiki](https://washingtonpost.github.io/html2ans/)
   * [BeautifulSoup documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
   
 ## Questions or Issues

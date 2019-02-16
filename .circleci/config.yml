@@ -32,7 +32,7 @@ jobs: # A basic unit of work in a run
           command: |
             python3 -m virtualenv html2ans
             source html2ans/bin/activate
-            python setup.py install test verify sdist bdist_wheel build_sphinx
+            python setup.py install test verify sdist bdist_wheel
             twine upload dist/*
   test:
     working_directory: ~/html2ans
