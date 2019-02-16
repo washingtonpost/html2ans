@@ -3,6 +3,13 @@ from html2ans.parsers.base import BaseElementParser, ParseResult
 
 
 class AbstractImageParser(BaseElementParser):
+    """
+    Abstract class for image parsing.
+
+    `ANS schema
+    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/image.json>`_
+    """
+
     version_required = True
 
     def _parse_dimensions(self, element, element_json, dimension_keys=('width', 'height')):
@@ -20,8 +27,7 @@ class AbstractImageParser(BaseElementParser):
 
 class ImageParser(AbstractImageParser):
     """
-    Basic img element parser. `ANS schema
-    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/image.json>`_
+    Basic img element parser.
 
     Example:
 
@@ -53,8 +59,7 @@ class ImageParser(AbstractImageParser):
 
 class LinkedImageParser(ImageParser):
     """
-    Link-wrapped image parser. `ANS schema
-    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/image.json>`_
+    Link-wrapped image parser.
 
     Example:
 
@@ -102,8 +107,7 @@ class LinkedImageParser(ImageParser):
 
 class FigureParser(ImageParser):
     """
-    Figure-wrapped image parser. `ANS schema
-    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/image.json>`_
+    Figure-wrapped image parser.
 
     Example:
 

@@ -4,6 +4,9 @@ from bs4.element import NavigableString, Tag
 
 
 def has_attributes(tag, filter_types=('id', 'class', 'style')):
+    """
+    Helper function to check if a tag has attributes (excluding the given ``filter_types``).
+    """
     if isinstance(tag, Tag) and tag.attrs:
         return len(list(filter(lambda attr: attr not in filter_types, tag.attrs))) > 0
     return False
@@ -12,12 +15,8 @@ def has_attributes(tag, filter_types=('id', 'class', 'style')):
 def parse_dimensions(tag, tag_json, dimension_keys=('width', 'height')):
     """
     Adds dimensions to converted JSON. Images and iframes will generally
-    have width/height properties;
-    this is just a convenience method for adding those properties.
-    :param tag:
-    :param tag_json:
-    :param dimension_keys:
-    :return:
+    have width/height properties; this is just a convenience method for
+    adding those properties.
     """
     for dimension_key in dimension_keys:
         try:
@@ -27,12 +26,28 @@ def parse_dimensions(tag, tag_json, dimension_keys=('width', 'height')):
 
 
 class AbstractParserUtilities(object):
+    """
+    Common utility functions for parsers. These methods are grouped here (rather
+    than in the ``BaseElementParser``) because they are used both in element
+    parsing and in document parser (i.e. by the ``BaseHtmlAnsParser``).
+    """
 
     WRAPPER_TAGS = ['p', 'div']
+    """
+    Which tags to consider as potential wrappers in the ``is_wrapper`` method.
+    """
 
-    EMPTY_STRINGS = [None, '', '', ' ', '\n', '<br>', '<br/>']
+    EMPTY_STRINGS = [None, '', ' ', '\n', '<br>', '<br/>']
+    """
+    List of strings considered empty (if a ``NavigableString`` is passed to 
+    ``is_empty`` and the string is in this list, ``is_empty`` will return True).
+    """
 
     EMPTY_TAGS = ['br']
+    """
+    List of tags considered empty (if a tag passed to ``is_empty`` is in this list,
+    ``is_empty`` will return True).
+    """
 
     TEXT_TAGS = [
         'blockquote',
@@ -49,6 +64,12 @@ class AbstractParserUtilities(object):
         'sub',
         'sup',
         'span']
+    """
+    List of tags considered to be text. This affects the results of ``is_text_only``
+    which is used by most text parsers. For example, because by default ``a`` tags
+    are considered text, ``<p>Here is a <a href="google.com">link</a></p>`` would
+    be considered text only.
+    """
 
     @classmethod
     def is_empty(cls, element, *args, **kwargs):
@@ -57,6 +78,7 @@ class AbstractParserUtilities(object):
         are considered empty.
         :param tag: the tag to check
         :return: True if empty
+
         """
         result = False
         if isinstance(element, NavigableString):
@@ -70,8 +92,8 @@ class AbstractParserUtilities(object):
     @classmethod
     def is_text_only(cls, element, *args, **kwargs):
         """
-        Returns true if the given tag only has NavigableStrings or
-        tags in TEXT_TYPES for children.
+        Returns true if the given tag only has ``NavigableString`` or
+        tags in ``TEXT_TYPES`` for children.
         :param element:
         :return: True if this element only contains text
         """
@@ -109,7 +131,8 @@ class AbstractParserUtilities(object):
     @classmethod
     def get_children(cls, element, filter_tags=None, filter_types=None):
         """
-        Returns the given tag's children (excluding the filter_types and filter_tags).
+        Returns the given tag's children (excluding the ``filter_types`` and
+        ``filter_tags``).
         :param element: the element to check
         :param filter_types: class types to filter from the tag's children
         :param filter_tags: tag names to filter from the tag's children
