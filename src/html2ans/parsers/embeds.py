@@ -372,7 +372,7 @@ class InstagramEmbedParser(AbstractEmbedParser):
                 "service": "oembed"
             },
             "additional_properties": {
-                "class": "instagram-media",
+                "class": "instagram-media"
             }
         }
 
@@ -408,7 +408,7 @@ class VineEmbedParser(AbstractEmbedParser):
                 "service": "oembed"
             },
             "additional_properties": {
-                "class": "vine-embed",
+                "class": "vine-embed"
             }
         }
 
