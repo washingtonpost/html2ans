@@ -1,0 +1,135 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Text Parsers &#8212; html2ans 3.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Raw HTML Parser" href="raw_html_parser.html" />
+    <link rel="prev" title="Image Parsers" href="image_parser.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-html2ans.parsers.text">
+<span id="text-parsers"></span><h1>Text Parsers<a class="headerlink" href="#module-html2ans.parsers.text" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="html2ans.parsers.text.LinkParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">LinkParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#LinkParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></p>
+<p>Use this class to convert links in anchor elements into
+an ANS element of type interstitial_link.</p>
+<dl class="method">
+<dt id="html2ans.parsers.text.LinkParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#LinkParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">html2ans</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="base.html">Base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exc.html">Exceptions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="parsers.html">Parsers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Development Guide</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://pypi.org/project/html2ans/">html2ans @ PyPi</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/">html2ans @ github</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/issues">Issue Tracker</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/text_parser.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>html2ans.default &#8212; html2ans 3.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for html2ans.default</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">html2ans.base</span> <span class="k">import</span> <span class="n">BaseHtmlAnsParser</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="k">import</span> <span class="n">NullParser</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.text</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">LinkParser</span><span class="p">,</span>
+    <span class="n">BlockquoteParser</span><span class="p">,</span>
+    <span class="n">FormattedTextParser</span><span class="p">,</span>
+    <span class="n">HeaderParser</span><span class="p">,</span>
+    <span class="n">ListParser</span><span class="p">,</span>
+    <span class="n">ParagraphParser</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.image</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">FigureParser</span><span class="p">,</span>
+    <span class="n">LinkedImageParser</span><span class="p">,</span>
+    <span class="n">ImageParser</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.embeds</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">SpotifyEmbedParser</span><span class="p">,</span>
+    <span class="n">TumblrEmbedParser</span><span class="p">,</span>
+    <span class="n">TwitterTweetEmbedParser</span><span class="p">,</span>
+    <span class="n">TwitterVideoEmbedParser</span><span class="p">,</span>
+    <span class="n">VimeoEmbedParser</span><span class="p">,</span>
+    <span class="n">VineEmbedParser</span><span class="p">,</span>
+    <span class="n">YoutubeEmbedParser</span><span class="p">,</span>
+    <span class="n">FacebookPostEmbedParser</span><span class="p">,</span>
+    <span class="n">FacebookVideoEmbedParser</span><span class="p">,</span>
+    <span class="n">IFrameParser</span><span class="p">,</span>
+    <span class="n">ImgurEmbedParser</span><span class="p">,</span>
+    <span class="n">InstagramEmbedParser</span><span class="p">,</span>
+    <span class="n">ArcPlayerEmbedParser</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.audio</span> <span class="k">import</span> <span class="n">AudioParser</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.raw_html</span> <span class="k">import</span> <span class="n">RawHtmlParser</span>
+
+
+<div class="viewcode-block" id="DefaultHtmlAnsParser"><a class="viewcode-back" href="../../base.html#html2ans.default.DefaultHtmlAnsParser">[docs]</a><span class="k">class</span> <span class="nc">DefaultHtmlAnsParser</span><span class="p">(</span><span class="n">BaseHtmlAnsParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default root/top-level parser class.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">DEFAULT_PARSERS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">HeaderParser</span><span class="p">(),</span>  <span class="c1"># h1-h6</span>
+        <span class="n">ListParser</span><span class="p">(),</span>  <span class="c1"># ul/ol</span>
+        <span class="n">FormattedTextParser</span><span class="p">(),</span>  <span class="c1"># strong, em, etc.</span>
+        <span class="n">LinkedImageParser</span><span class="p">(),</span>  <span class="c1"># a</span>
+        <span class="n">LinkParser</span><span class="p">(),</span>  <span class="c1"># a</span>
+        <span class="n">ImageParser</span><span class="p">(),</span>  <span class="c1"># img</span>
+        <span class="n">ArcPlayerEmbedParser</span><span class="p">(),</span>  <span class="c1"># div</span>
+        <span class="n">TumblrEmbedParser</span><span class="p">(),</span>  <span class="c1"># div</span>
+        <span class="n">FigureParser</span><span class="p">(),</span>  <span class="c1"># figure</span>
+        <span class="n">AudioParser</span><span class="p">(),</span>  <span class="c1"># audio</span>
+        <span class="n">TwitterTweetEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
+        <span class="n">TwitterVideoEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
+        <span class="n">InstagramEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
+        <span class="n">ImgurEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
+        <span class="n">YoutubeEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">FacebookPostEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">FacebookVideoEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">SpotifyEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">VimeoEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">VineEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">BlockquoteParser</span><span class="p">(),</span>  <span class="c1"># blockquote</span>
+        <span class="n">ParagraphParser</span><span class="p">(),</span>  <span class="c1"># NavigableString, p</span>
+        <span class="n">IFrameParser</span><span class="p">(),</span>  <span class="c1"># iframe</span>
+        <span class="n">NullParser</span><span class="p">(),</span>  <span class="c1"># comments</span>
+    <span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Default parsers for the default implementation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">BACKUP_PARSERS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">IFrameParser</span><span class="p">(),</span>
+        <span class="n">RawHtmlParser</span><span class="p">()</span>
+    <span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Backup parsers for the default implementation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DefaultHtmlAnsParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">default_parsers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_PARSERS</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="c1"># kind of for backwards compatibility</span>
+<span class="c1"># but more for being succint</span>
+<span class="n">Html2Ans</span> <span class="o">=</span> <span class="n">DefaultHtmlAnsParser</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">html2ans</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_guide.html">Development Guide</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://pypi.org/project/html2ans/">html2ans @ PyPi</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/">html2ans @ github</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/issues">Issue Tracker</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

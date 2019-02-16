@@ -1,0 +1,818 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>html2ans.parsers.embeds &#8212; html2ans 3.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for html2ans.parsers.embeds</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">six.moves.urllib_parse</span> <span class="k">import</span> <span class="n">urlparse</span><span class="p">,</span> <span class="n">unquote</span>
+<span class="kn">from</span> <span class="nn">bs4.element</span> <span class="k">import</span> <span class="n">Tag</span>
+
+<span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="k">import</span> <span class="n">BaseElementParser</span><span class="p">,</span> <span class="n">ParseResult</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.raw_html</span> <span class="k">import</span> <span class="n">RawHtmlParser</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.utils</span> <span class="k">import</span> <span class="n">parse_dimensions</span>
+
+
+<div class="viewcode-block" id="AbstractEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.AbstractEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">AbstractEmbedParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract class for embed parsing.</span>
+
+<span class="sd">    `Reference ANS schema</span>
+<span class="sd">    &lt;https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/utils/reference.json&gt;`_</span>
+
+<span class="sd">    `Oembed response ANS schema</span>
+<span class="sd">    &lt;https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/utils/oembed_response.json&gt;`_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blockquote&#39;</span><span class="p">]</span>
+    <span class="n">non_oembed_service_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;video&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A regex that can be used to find the embed&#39;s ID</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">tag</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The tag the embed URL will appear in</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">attr</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The attribute the embed URL will appear in</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The embed type (for populating ``referent.type``)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A URL from the embed can be accessed from (given the embed&#39;s ID)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_tag_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="n">tag_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">tag_attr</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tag_attr</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex</span><span class="p">:</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">regex</span><span class="p">,</span> <span class="n">tag_attr</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                    <span class="n">tag_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tag_id</span> <span class="o">=</span> <span class="n">tag_attr</span>
+        <span class="k">return</span> <span class="n">tag_id</span>
+
+    <span class="k">def</span> <span class="nf">_remove_embed_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="n">next_tag</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">next_sibling</span>
+        <span class="k">while</span> <span class="n">next_tag</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">next_tag</span><span class="p">):</span>
+            <span class="n">next_tag</span> <span class="o">=</span> <span class="n">next_tag</span><span class="o">.</span><span class="n">next_sibling</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">next_tag</span><span class="p">,</span> <span class="n">Tag</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">next_tag</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;script&quot;</span><span class="p">:</span>
+                <span class="n">next_tag</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_remove_all_scripts</span><span class="p">(</span><span class="n">next_tag</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_remove_all_scripts</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_remove_all_scripts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">):</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span>
+
+<div class="viewcode-block" id="AbstractEmbedParser.parse"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.AbstractEmbedParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">tag_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tag_id</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tag_id</span><span class="p">:</span>
+            <span class="n">sub_tags</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">sub_tag</span> <span class="ow">in</span> <span class="n">sub_tags</span><span class="p">:</span>
+                <span class="n">sub_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tag_id</span><span class="p">(</span><span class="n">sub_tag</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">sub_id</span><span class="p">:</span>
+                    <span class="n">tag_id</span> <span class="o">=</span> <span class="n">sub_id</span>
+                    <span class="k">break</span>
+        <span class="k">if</span> <span class="n">tag_id</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;referent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">provider</span><span class="p">,</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed_type</span><span class="p">,</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">unquote</span><span class="p">(</span><span class="n">tag_id</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;https://&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_oembed_service_types</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="s1">&#39;referent&#39;</span><span class="p">][</span><span class="s1">&#39;service&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;oembed&#39;</span>
+        <span class="c1"># many embeds come with a script that should be removed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remove_embed_script</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DailyMotionEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.DailyMotionEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">DailyMotionEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DailyMotion video parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;iframe src=&quot;https://www.dailymotion.com/embed/video/x2p99yn&quot;&gt;&lt;/iframe&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;x2p99yn&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;dailymotion&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://www.dailymotion.com/services/oembed?id=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;iframe&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;https?://www.dailymotion.com/embed/video/(.+)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;iframe&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;src&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;dailymotion&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://www.dailymotion.com/services/oembed?id=&#39;</span></div>
+
+
+<div class="viewcode-block" id="FlickrEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.FlickrEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">FlickrEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flickr embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/16177003@N03/8240338083/in/photolist-dyaTqx&quot; title=&quot;Fox&quot;&gt;</span>
+<span class="sd">            &lt;img src=&quot;https://farm9.staticflickr.com/8066/8240338083_938cc14c6f_k.jpg&quot; width=&quot;2048&quot; height=&quot;1272&quot; alt=&quot;Fox&quot;&gt;</span>
+<span class="sd">        &lt;/a&gt;&lt;script async src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://www.flickr.com/photos/16177003@N03/8240338083/in/photolist-dyaTqx&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;flickr&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://www.flickr.com/services/oembed.json/?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(https?://www.flickr.com/photos/.+)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;href&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;flickr&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s2">&quot;https://www.flickr.com/services/oembed.json/?url=&quot;</span></div>
+
+
+<div class="viewcode-block" id="RedditEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.RedditEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">RedditEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reddit embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;blockquote class=&quot;reddit-card&quot; data-card-created=&quot;1549834040&quot;&gt;</span>
+<span class="sd">            &lt;a href=&quot;https://www.reddit.com/r/programming/comments/6l689j/a_manually_curated_list_of_240_popular/&quot;&gt;</span>
+<span class="sd">                A manually curated list of 240+ popular programming podcast episodes</span>
+<span class="sd">            &lt;/a&gt; from &lt;a href=&quot;http://www.reddit.com/r/programming&quot;&gt;r/programming&lt;/a&gt;</span>
+<span class="sd">        &lt;/blockquote&gt;</span>
+<span class="sd">        &lt;script async src=&quot;//embed.redditmedia.com/widgets/platform.js&quot; charset=&quot;UTF-8&quot;&gt;&lt;/script&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://www.reddit.com/r/programming/comments/6l689j/a_manually_curated_list_of_240_popular/&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;reddit&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://www.reddit.com/oembed?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blockquote&#39;</span><span class="p">]</span>
+    <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;reddit-card&#39;</span><span class="p">]</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;href&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;reddit&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s2">&quot;https://www.reddit.com/oembed?url=&quot;</span></div>
+
+
+<div class="viewcode-block" id="PollDaddyEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.PollDaddyEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">PollDaddyEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    PollDaddy embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;noscript&gt;</span>
+<span class="sd">            &lt;b&gt;Click here to see this poll: &lt;a href=&quot;https://poll.fm/6514633&quot;&gt;https://poll.fm/6514633&lt;/a&gt;&lt;/b&gt;</span>
+<span class="sd">        &lt;/noscript&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://poll.fm/6514633&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;polldaddy&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://polldaddy.com/oembed/?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;noscript&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(https?://poll.fm/(\d+))&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;href&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;polldaddy&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s2">&quot;https://polldaddy.com/oembed/?url=&quot;</span></div>
+
+
+<div class="viewcode-block" id="TwitterTweetEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.TwitterTweetEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">TwitterTweetEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Twitter post parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;</span>
+<span class="sd">            &lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;</span>
+<span class="sd">                Displaced by Woolsey fire, Malibu families gather for a meal and hugs:</span>
+<span class="sd">                &lt;a href=&quot;https://t.co/W3ZWJIKOjG&quot;&gt;https://t.co/W3ZWJIKOjG&lt;/a&gt;</span>
+<span class="sd">                &lt;a href=&quot;https://t.co/FUouJS6xwl&quot;&gt;pic.twitter.com/FUouJS6xwl&lt;/a&gt;</span>
+<span class="sd">            &lt;/p&gt;</span>
+<span class="sd">            Los Angeles Times (@latimes)</span>
+<span class="sd">            &lt;a href=&quot;https://twitter.com/latimes/status/1065323995959037953?ref_src=twsrc%5Etfw&quot;&gt;November 21, 2018&lt;/a&gt;</span>
+<span class="sd">        &lt;/blockquote&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: 1065323995959037953,</span>
+<span class="sd">                &quot;type&quot;: &quot;twitter&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://api.twitter.com/1.1/statuses/oembed.json?id=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            },</span>
+<span class="sd">            &quot;additional_properties&quot;: {</span>
+<span class="sd">                &quot;class&quot;: &quot;twitter-tweet&quot;,</span>
+<span class="sd">                &quot;data-lang&quot;: &quot;en&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;twitter-tweet&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;https?://twitter.com/\w+/status/(\d+)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;href&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;twitter&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://api.twitter.com/1.1/statuses/oembed.json?id=&#39;</span></div>
+
+
+<div class="viewcode-block" id="TwitterVideoEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.TwitterVideoEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">TwitterVideoEmbedParser</span><span class="p">(</span><span class="n">TwitterTweetEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Twitter video parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;blockquote class=&quot;twitter-video&quot; data-lang=&quot;de&quot;&gt;</span>
+<span class="sd">            &lt;p lang=&quot;de&quot; dir=&quot;ltr&quot;&gt;</span>
+<span class="sd">                Am Sonntag wird in Hannover gefeiert!</span>
+
+<span class="sd">                &lt;a href=&quot;https://twitter.com/hashtag/Einschulung?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;</span>
+<span class="sd">                    #Einschulung</span>
+<span class="sd">                &lt;/a&gt;</span>
+<span class="sd">                &lt;a href=&quot;https://twitter.com/hashtag/HAZfest?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;</span>
+<span class="sd">                    #HAZfest</span>
+<span class="sd">                &lt;/a&gt;</span>
+<span class="sd">                &lt;a href=&quot;https://twitter.com/hashtag/AktionSichererSchulweg?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;</span>
+<span class="sd">                    #AktionSichererSchulweg</span>
+<span class="sd">                &lt;/a&gt;</span>
+<span class="sd">                &lt;a href=&quot;https://t.co/8q7hHjy1zK&quot;&gt;</span>
+<span class="sd">                    pic.twitter.com/8q7hHjy1zK</span>
+<span class="sd">                &lt;/a&gt;</span>
+<span class="sd">            &lt;/p&gt;</span>
+<span class="sd">            &amp;mdash; HAZ (@HAZ)</span>
+<span class="sd">            &lt;a href=&quot;https://twitter.com/HAZ/status/1027958659404521475?ref_src=twsrc%5Etfw&quot;&gt;August 10, 2018&lt;/a&gt;</span>
+<span class="sd">        &lt;/blockquote&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: 1027958659404521475,</span>
+<span class="sd">                &quot;type&quot;: &quot;twitter&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://api.twitter.com/1.1/statuses/oembed.json?id=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            },</span>
+<span class="sd">            &quot;additional_properties&quot;: {</span>
+<span class="sd">                &quot;class&quot;: &quot;twitter-video&quot;,</span>
+<span class="sd">                &quot;data-lang&quot;: &quot;de&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;twitter-video&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="InstagramEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.InstagramEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">InstagramEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Instagram embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;blockquote class=&quot;instagram-media&quot; data-instgrm-permalink=&quot;https://www.instagram.com/p/BqTW3VBDl2c/?utm_source=ig_embed&amp;amp;utm_medium=loading&quot; data-instgrm-version=&quot;12&quot;&gt;</span>
+<span class="sd">            &lt;div&gt;</span>
+<span class="sd">                &lt;a href=&quot;https://www.instagram.com/p/BqTW3VBDl2c/?utm_source=ig_embed&amp;amp;utm_medium=loading&quot; target=&quot;_blank&quot;&gt;</span>
+<span class="sd">                    Removed stuff</span>
+<span class="sd">                &lt;/a&gt;</span>
+<span class="sd">                &lt;p&gt;</span>
+<span class="sd">                    &lt;a href=&quot;https://www.instagram.com/p/BqTW3VBDl2c/?utm_source=ig_embed&amp;amp;utm_medium=loading&quot; target=&quot;_blank&quot;&gt;</span>
+<span class="sd">                        A post shared by CNN (@cnn)</span>
+<span class="sd">                    &lt;/a&gt; on &lt;time datetime=&quot;2018-11-18T01:00:10+00:00&quot;&gt;Nov 17, 2018 at 5:00pm PST&lt;/time&gt;</span>
+<span class="sd">                &lt;/p&gt;</span>
+<span class="sd">            &lt;/div&gt;</span>
+<span class="sd">        &lt;/blockquote&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://www.instagram.com/p/BqTW3VBDl2c/?utm_source=ig_embed&amp;amp;utm_medium=loading&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;instagram&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://api.instagram.com/oembed?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            },</span>
+<span class="sd">            &quot;additional_properties&quot;: {</span>
+<span class="sd">                &quot;class&quot;: &quot;instagram-media&quot;,</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;instagram-media&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(https?://www.instagram.com/\w+/\w+/)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;href&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;instagram&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://api.instagram.com/oembed?url=&#39;</span></div>
+
+
+<div class="viewcode-block" id="VineEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.VineEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">VineEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vine embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;iframe class=&quot;vine-embed&quot; src=&quot;https://vine.co/v/imPIVvJ6E5j/embed/simple&quot;&gt;&lt;/iframe&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;imPIVvJ6E5j&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;vine&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://vine.co/oembed.json?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            },</span>
+<span class="sd">            &quot;additional_properties&quot;: {</span>
+<span class="sd">                &quot;class&quot;: &quot;vine-embed&quot;,</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;iframe&#39;</span><span class="p">]</span>
+    <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;vine-embed&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(https?://vine.co/v(/[\w?=]+)+)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;iframe&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;src&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;vine&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://vine.co/oembed.json?url=&#39;</span></div>
+
+
+<div class="viewcode-block" id="ArcPlayerEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.ArcPlayerEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">ArcPlayerEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;div&#39;</span><span class="p">]</span>
+    <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;arc-player&#39;</span><span class="p">]</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;div&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;data-uuid&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;video&#39;</span></div>
+
+
+<div class="viewcode-block" id="FacebookPostEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.FacebookPostEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">FacebookPostEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Facebook post embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;iframe src=&quot;https://www.facebook.com/plugins/post.php?href=https://www.facebook.com/zuck/posts/10102883338403521&amp;width=500&quot;&gt;&lt;/iframe&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://www.facebook.com/zuck/posts/10102883338403521&amp;width=500&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;facebook-post&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://www.facebook.com/plugins/post/oembed.json/?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;iframe&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;https?://www.facebook.com/plugins/post\.php\?href=(.*)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;iframe&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;src&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;facebook-post&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://www.facebook.com/plugins/post/oembed.json/?url=&#39;</span></div>
+
+
+<div class="viewcode-block" id="FacebookVideoEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.FacebookVideoEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">FacebookVideoEmbedParser</span><span class="p">(</span><span class="n">FacebookPostEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Facebook video embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;iframe src=&quot;https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chicagotribune/videos/351670322074116/&amp;show_text=0&amp;width=560&quot;&gt;&lt;/iframe&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://www.facebook.com/chicagotribune/videos/351670322074116/&amp;show_text=0&amp;width=560&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;facebook-video&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://www.facebook.com/plugins/video/oembed.json/?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;https?://www.facebook.com/plugins/video\.php\?href=(.*)&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://www.facebook.com/plugins/video/oembed.json/?url=&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;facebook-video&#39;</span></div>
+
+
+<div class="viewcode-block" id="YoutubeEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.YoutubeEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">YoutubeEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Youtube video embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;iframe src=&quot;https://www.youtube.com/embed/4I86iz4X4jM&quot;&gt;&lt;/iframe&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://www.youtube.com/embed/4I86iz4X4jM&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;youtube&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://www.youtube.com/oembed?format=json&amp;url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;iframe&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(https?://www.youtube.com/embed/[\w-]+)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;iframe&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;src&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;youtube&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://www.youtube.com/oembed?format=json&amp;url=&#39;</span>
+
+<div class="viewcode-block" id="YoutubeEmbedParser.parse"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.YoutubeEmbedParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">parsed_result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">YoutubeEmbedParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parsed_result</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">parsed_result</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;referent&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">path</span>
+            <span class="n">tag_id</span> <span class="o">=</span> <span class="s1">&#39;https://www.youtube.com/watch?v=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/embed/&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+            <span class="n">parsed_result</span><span class="o">.</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;referent&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tag_id</span>
+        <span class="k">return</span> <span class="n">parsed_result</span></div></div>
+
+
+<div class="viewcode-block" id="VimeoEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.VimeoEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">VimeoEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vimeo video embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;iframe src=&quot;https://player.vimeo.com/video/76979871&quot;&gt;&lt;/iframe&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://player.vimeo.com/video/76979871&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;vimeo&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://vimeo.com/api/oembed.json?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;iframe&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(https?://player.vimeo.com/video/\w+)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;iframe&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;src&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;vimeo&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://vimeo.com/api/oembed.json?url=&#39;</span></div>
+
+
+<div class="viewcode-block" id="TumblrEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.TumblrEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">TumblrEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vimeo video embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;div class=&quot;tumblr-post&quot; data-href=&quot;https://embed.tumblr.com/embed/post/67gzjB87rG0-5qSuAaoBxA/180352280783&quot; data-did=&quot;a57f8b609347877835580bb80b3d7d8566419e40&quot;&gt;&#39;</span>
+<span class="sd">            &lt;a href=&quot;https://herepet.tumblr.com/post/180352280783/source-instagramcom-mydogiscutest-i-pwomise-i&quot;&gt;</span>
+<span class="sd">                https://herepet.tumblr.com/post/180352280783/source-instagramcom-mydogiscutest-i-pwomise-i</span>
+<span class="sd">            &lt;/a&gt;</span>
+<span class="sd">        &lt;/div&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://herepet.tumblr.com/post/180352280783/source-instagramcom-mydogiscutest-i-pwomise-i&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;tumblr&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://www.tumblr.com/oembed/1.0?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;div&#39;</span><span class="p">]</span>
+    <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tumblr-post&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(https?://\w+.tumblr.com/post/\d+)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;href&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;tumblr&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://www.tumblr.com/oembed/1.0?url=&#39;</span></div>
+
+
+<div class="viewcode-block" id="SpotifyEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.SpotifyEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">SpotifyEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Spotify embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;iframe src=&quot;https://open.spotify.com/user/112389858/playlist/4E55G0GYK0CuUWZ0IQiaoD&quot;&gt;&lt;/iframe&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://open.spotify.com/user/112389858/playlist/4E55G0GYK0CuUWZ0IQiaoD&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;spotify&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://embed.spotify.com/oembed/?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;iframe&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(https?://\w+.spotify.com/.*)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;iframe&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;src&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;spotify&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://embed.spotify.com/oembed/?url=&#39;</span></div>
+
+
+<div class="viewcode-block" id="ImgurEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.ImgurEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">ImgurEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Imgur embed parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;blockquote class=&quot;imgur-embed-pub&quot; lang=&quot;en&quot; data-id=&quot;w7zCp&quot;&gt;</span>
+<span class="sd">            &lt;a href=&quot;https://imgur.com/w7zCp&quot;&gt;View post on imgur.com&lt;/a&gt;</span>
+<span class="sd">        &lt;/blockquote&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;reference&quot;,</span>
+<span class="sd">            &quot;referent&quot;: {</span>
+<span class="sd">                &quot;id&quot;: &quot;https://imgur.com/w7zCp&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;imgur&quot;,</span>
+<span class="sd">                &quot;provider&quot;: &quot;https://api.imgur.com/oembed/?url=&quot;,</span>
+<span class="sd">                &quot;service&quot;: &quot;oembed&quot;</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;imgur-embed-pub&#39;</span><span class="p">]</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(https?://imgur.com/.*)&#39;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;href&#39;</span>
+    <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;imgur&#39;</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oembed/?url=&#39;</span></div>
+
+
+<div class="viewcode-block" id="IFrameParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.IFrameParser">[docs]</a><span class="k">class</span> <span class="nc">IFrameParser</span><span class="p">(</span><span class="n">RawHtmlParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Iframe parser.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;iframe src=&quot;http://www.test.com?var=value&quot; height=&quot;315&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;raw_html&quot;,</span>
+<span class="sd">            &quot;content&quot;: &quot;&lt;iframe src=&quot;http://www.test.com?var=value&quot; height=&quot;315&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;&quot;,</span>
+<span class="sd">            &quot;additional_properties&quot;: {</span>
+<span class="sd">                &quot;height&quot;: 315</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;iframe&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="IFrameParser.is_applicable"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.IFrameParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">BaseElementParser</span><span class="o">.</span><span class="n">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span> <span class="ow">or</span> <span class="n">element</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;iframe&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IFrameParser.parse"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.IFrameParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">IFrameParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="o">.</span><span class="n">output</span>
+        <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;iframe&#39;</span><span class="p">:</span>
+            <span class="n">iframe_tag</span> <span class="o">=</span> <span class="n">element</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">iframe_tag</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;iframe&#39;</span><span class="p">)</span>
+        <span class="n">add_props</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;additional_properties&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="k">if</span> <span class="n">iframe_tag</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+            <span class="n">add_props</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">iframe_tag</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+        <span class="n">parse_dimensions</span><span class="p">(</span><span class="n">iframe_tag</span><span class="p">,</span> <span class="n">add_props</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">add_props</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;additional_properties&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_props</span>
+        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">html2ans</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev_guide.html">Development Guide</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://pypi.org/project/html2ans/">html2ans @ PyPi</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/">html2ans @ github</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/issues">Issue Tracker</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

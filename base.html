@@ -1,0 +1,267 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Base &#8212; html2ans 3.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Exceptions" href="exc.html" />
+    <link rel="prev" title="Modules" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-html2ans">
+<span id="base"></span><h1>Base<a class="headerlink" href="#module-html2ans" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="html2ans.default.DefaultHtmlAnsParser">
+<em class="property">class </em><code class="descclassname">html2ans.default.</code><code class="descname">DefaultHtmlAnsParser</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/default.html#DefaultHtmlAnsParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.default.DefaultHtmlAnsParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.base.BaseHtmlAnsParser" title="html2ans.base.BaseHtmlAnsParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.base.BaseHtmlAnsParser</span></code></a></p>
+<p>The default root/top-level parser class.</p>
+<dl class="attribute">
+<dt id="html2ans.default.DefaultHtmlAnsParser.DEFAULT_PARSERS">
+<code class="descname">DEFAULT_PARSERS</code><em class="property"> = [&lt;html2ans.parsers.text.HeaderParser object&gt;, &lt;html2ans.parsers.text.ListParser object&gt;, &lt;html2ans.parsers.text.FormattedTextParser object&gt;, &lt;html2ans.parsers.image.LinkedImageParser object&gt;, &lt;html2ans.parsers.text.LinkParser object&gt;, &lt;html2ans.parsers.image.ImageParser object&gt;, &lt;html2ans.parsers.embeds.ArcPlayerEmbedParser object&gt;, &lt;html2ans.parsers.embeds.TumblrEmbedParser object&gt;, &lt;html2ans.parsers.image.FigureParser object&gt;, &lt;html2ans.parsers.audio.AudioParser object&gt;, &lt;html2ans.parsers.embeds.TwitterTweetEmbedParser object&gt;, &lt;html2ans.parsers.embeds.TwitterVideoEmbedParser object&gt;, &lt;html2ans.parsers.embeds.InstagramEmbedParser object&gt;, &lt;html2ans.parsers.embeds.ImgurEmbedParser object&gt;, &lt;html2ans.parsers.embeds.YoutubeEmbedParser object&gt;, &lt;html2ans.parsers.embeds.FacebookPostEmbedParser object&gt;, &lt;html2ans.parsers.embeds.FacebookVideoEmbedParser object&gt;, &lt;html2ans.parsers.embeds.SpotifyEmbedParser object&gt;, &lt;html2ans.parsers.embeds.VimeoEmbedParser object&gt;, &lt;html2ans.parsers.embeds.VineEmbedParser object&gt;, &lt;html2ans.parsers.text.BlockquoteParser object&gt;, &lt;html2ans.parsers.text.ParagraphParser object&gt;, &lt;html2ans.parsers.embeds.IFrameParser object&gt;, &lt;html2ans.parsers.base.NullParser object&gt;]</em><a class="headerlink" href="#html2ans.default.DefaultHtmlAnsParser.DEFAULT_PARSERS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default parsers for the default implementation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="html2ans.default.DefaultHtmlAnsParser.BACKUP_PARSERS">
+<code class="descname">BACKUP_PARSERS</code><em class="property"> = [&lt;html2ans.parsers.embeds.IFrameParser object&gt;, &lt;html2ans.parsers.raw_html.RawHtmlParser object&gt;]</em><a class="headerlink" href="#html2ans.default.DefaultHtmlAnsParser.BACKUP_PARSERS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Backup parsers for the default implementation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.base.BaseHtmlAnsParser">
+<em class="property">class </em><code class="descclassname">html2ans.base.</code><code class="descname">BaseHtmlAnsParser</code><span class="sig-paren">(</span><em>ans_version=None</em>, <em>soup_parse_lib='lxml'</em>, <em>suppress_exceptions=False</em>, <em>default_parsers=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/base.html#BaseHtmlAnsParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.base.BaseHtmlAnsParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.base.AbstractHtmlAnsParser" title="html2ans.base.AbstractHtmlAnsParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.base.AbstractHtmlAnsParser</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.utils.AbstractParserUtilities</span></code></p>
+<p>The base root/top-level parser class; assumes elements will be parsed with <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code>.
+Use this class to generate a list of ANS elements from an HTML document.
+HTML elements within the document will be parsed using
+element parsers present in the <code class="docutils literal notranslate"><span class="pre">parsers</span></code> attribute. The <code class="docutils literal notranslate"><span class="pre">parsers</span></code> attribute is populated
+first with the parsers from the <code class="docutils literal notranslate"><span class="pre">DEFAULT_PARSERS</span></code> variable. Other parsers can be added
+using this class’s <code class="docutils literal notranslate"><span class="pre">add_parser</span></code> and <code class="docutils literal notranslate"><span class="pre">insert_parser</span></code> methods.</p>
+<p>Attempts at parsing an element will use each parser in an element’s parser list in order.
+If a parser isn’t applicable (<code class="docutils literal notranslate"><span class="pre">is_applicable</span></code> returns <code class="docutils literal notranslate"><span class="pre">False</span></code>) or <code class="docutils literal notranslate"><span class="pre">parse</span></code> indicates
+this element wasn’t a match, the next parser is tried. Why are there two ways of indicating
+if an element/parser are compatable? You can’t always tell if an element/parser are compatible
+until you’re parsing the element. <code class="docutils literal notranslate"><span class="pre">is_applicable</span></code> catches early, obvious issues (like “this
+parser is for <code class="docutils literal notranslate"><span class="pre">img</span></code> elements; is this an <code class="docutils literal notranslate"><span class="pre">img</span></code>?).</p>
+<p>Using an <code class="docutils literal notranslate"><span class="pre">ans_version</span></code> won’t affect the output of these parsers in terms of actual
+ANS version compatibility; it is provided as a convenience (sometimes you need to update
+the overall ANS version because of a specific new feature, but won’t want to update the
+output of all parsers).</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">suppress_exceptions</span></code> option to treat element parsing exceptions as non-matches.
+With <code class="docutils literal notranslate"><span class="pre">suppress_exceptions</span></code>, when exceptions are thrown, the next parser will be tried (as
+though <code class="docutils literal notranslate"><span class="pre">is_applicable</span></code> returned <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ans_version</strong> (<em>str</em>) – the ANS version to apply to the output of parsers that require a version</li>
+<li><strong>bs_parse_lib</strong> (<em>str</em>) – the BeautifulSoup parsing library to use</li>
+<li><strong>suppress_exceptions</strong> (<em>bool</em>) – whether or not to suppress exceptions during element parsing</li>
+<li><strong>default_parsers</strong> (<em>list</em>) – The default parsers to populate <code class="docutils literal notranslate"><span class="pre">parsers</span></code> with. Order matters here!</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="html2ans.base.BaseHtmlAnsParser.BACKUP_PARSERS">
+<code class="descname">BACKUP_PARSERS</code><em class="property"> = []</em><a class="headerlink" href="#html2ans.base.BaseHtmlAnsParser.BACKUP_PARSERS" title="Permalink to this definition">¶</a></dt>
+<dd><p>The backup parsers for this class to use. This list will be used on _every_ parsing
+attempt if the primary parsers for a given type don’t match. For example, if <code class="docutils literal notranslate"><span class="pre">parsers</span></code>
+contains <code class="docutils literal notranslate"><span class="pre">'p':</span> <span class="pre">[ParagraphParser()]</span></code> and an exception is thrown when processing a
+paragraph tag using the <code class="docutils literal notranslate"><span class="pre">ParagraphParser</span></code>, all backup parsers will also be tried. In
+the default implementation, this essentially means that producing raw_html will be
+the last resort when all other parsers fail.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="html2ans.base.BaseHtmlAnsParser.parsers">
+<code class="descname">parsers</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.base.BaseHtmlAnsParser.parsers" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mapping of potential HTML elements to a list of
+parsers to use to attempt to parse elements of that type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="html2ans.base.BaseHtmlAnsParser.generate_ans">
+<code class="descname">generate_ans</code><span class="sig-paren">(</span><em>html</em>, <em>start_tag='body'</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/base.html#BaseHtmlAnsParser.generate_ans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.base.BaseHtmlAnsParser.generate_ans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses html and produces ANS in a jsonify-able format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>html</strong> (<em>str</em>) – the html to parse</li>
+<li><strong>start_tag</strong> (<em>str</em>) – where to start parsing (if not provided, all tags will be parsed)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a list of ANS elements as dictionaries</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="html2ans.base.BaseHtmlAnsParser.insert_parser">
+<code class="descname">insert_parser</code><span class="sig-paren">(</span><em>element_key</em>, <em>parser</em>, <em>position=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/base.html#BaseHtmlAnsParser.insert_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.base.BaseHtmlAnsParser.insert_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert a parser of the given type into the list of parsers for that type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>element_key</strong> (<em>str</em>) – The key of the element in self.parsers (e.g. ‘p’)</li>
+<li><strong>parser</strong> (<em>html2ans.parsers.base.ElementParser</em>) – The parser object to insert</li>
+<li><strong>position</strong> (<em>int</em>) – Where to insert the parser in the list</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="html2ans.base.BaseHtmlAnsParser.add_parser">
+<code class="descname">add_parser</code><span class="sig-paren">(</span><em>parser</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/base.html#BaseHtmlAnsParser.add_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.base.BaseHtmlAnsParser.add_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a parser to <code class="docutils literal notranslate"><span class="pre">self.parsers</span></code> using the parser’s <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<em>html2ans.parsers.base.BaseElementParser</em>) – The parser object to insert</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.base.AbstractHtmlAnsParser">
+<em class="property">class </em><code class="descclassname">html2ans.base.</code><code class="descname">AbstractHtmlAnsParser</code><a class="reference internal" href="_modules/html2ans/base.html#AbstractHtmlAnsParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.base.AbstractHtmlAnsParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The abstract base root/top-level parser class. Makes no assumptions about
+underlying libraries.</p>
+<dl class="method">
+<dt id="html2ans.base.AbstractHtmlAnsParser.generate_ans">
+<code class="descname">generate_ans</code><span class="sig-paren">(</span><em>html</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/base.html#AbstractHtmlAnsParser.generate_ans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.base.AbstractHtmlAnsParser.generate_ans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses html and produces ANS in a jsonify-able format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>html</strong> (<em>str</em>) – the html to parse</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a list of ANS elements as dictionaries</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">html2ans</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exc.html">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers.html">Parsers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Development Guide</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://pypi.org/project/html2ans/">html2ans @ PyPi</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/">html2ans @ github</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/issues">Issue Tracker</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/base.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

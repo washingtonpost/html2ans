@@ -1,0 +1,648 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Embed Parsers &#8212; html2ans 3.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Image Parsers" href="image_parser.html" />
+    <link rel="prev" title="Audio Parsers" href="audio_parser.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-html2ans.parsers.embeds">
+<span id="embed-parsers"></span><h1>Embed Parsers<a class="headerlink" href="#module-html2ans.parsers.embeds" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="html2ans.parsers.embeds.AbstractEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">AbstractEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#AbstractEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></p>
+<p>Abstract class for embed parsing.</p>
+<p><a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/utils/reference.json">Reference ANS schema</a></p>
+<p><a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/utils/oembed_response.json">Oembed response ANS schema</a></p>
+<dl class="attribute">
+<dt id="html2ans.parsers.embeds.AbstractEmbedParser.regex">
+<code class="descname">regex</code><em class="property"> = ''</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.regex" title="Permalink to this definition">¶</a></dt>
+<dd><p>A regex that can be used to find the embed’s ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="html2ans.parsers.embeds.AbstractEmbedParser.tag">
+<code class="descname">tag</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tag the embed URL will appear in</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="html2ans.parsers.embeds.AbstractEmbedParser.attr">
+<code class="descname">attr</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>The attribute the embed URL will appear in</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="html2ans.parsers.embeds.AbstractEmbedParser.embed_type">
+<code class="descname">embed_type</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.embed_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The embed type (for populating <code class="docutils literal notranslate"><span class="pre">referent.type</span></code>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="html2ans.parsers.embeds.AbstractEmbedParser.provider">
+<code class="descname">provider</code><em class="property"> = ''</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.provider" title="Permalink to this definition">¶</a></dt>
+<dd><p>A URL from the embed can be accessed from (given the embed’s ID)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="html2ans.parsers.embeds.AbstractEmbedParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#AbstractEmbedParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.DailyMotionEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">DailyMotionEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#DailyMotionEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.DailyMotionEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>DailyMotion video parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.dailymotion.com/embed/video/x2p99yn&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;x2p99yn&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;dailymotion&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.dailymotion.com/services/oembed?id=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.FlickrEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">FlickrEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#FlickrEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.FlickrEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Flickr embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">data-flickr-embed</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.flickr.com/photos/16177003@N03/8240338083/in/photolist-dyaTqx&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;Fox&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://farm9.staticflickr.com/8066/8240338083_938cc14c6f_k.jpg&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;2048&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;1272&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Fox&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">async</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;//embedr.flickr.com/assets/client-code.js&quot;</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.flickr.com/photos/16177003@N03/8240338083/in/photolist-dyaTqx&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;flickr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.flickr.com/services/oembed.json/?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.RedditEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">RedditEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#RedditEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.RedditEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Reddit embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">blockquote</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;reddit-card&quot;</span> <span class="na">data-card-created</span><span class="o">=</span><span class="s">&quot;1549834040&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.reddit.com/r/programming/comments/6l689j/a_manually_curated_list_of_240_popular/&quot;</span><span class="p">&gt;</span>
+        A manually curated list of 240+ popular programming podcast episodes
+    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> from <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://www.reddit.com/r/programming&quot;</span><span class="p">&gt;</span>r/programming<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">async</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;//embed.redditmedia.com/widgets/platform.js&quot;</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.reddit.com/r/programming/comments/6l689j/a_manually_curated_list_of_240_popular/&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reddit&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.reddit.com/oembed?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.PollDaddyEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">PollDaddyEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#PollDaddyEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.PollDaddyEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>PollDaddy embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">noscript</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">b</span><span class="p">&gt;</span>Click here to see this poll: <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://poll.fm/6514633&quot;</span><span class="p">&gt;</span>https://poll.fm/6514633<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">b</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">noscript</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://poll.fm/6514633&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;polldaddy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://polldaddy.com/oembed/?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.TwitterTweetEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">TwitterTweetEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#TwitterTweetEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.TwitterTweetEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Twitter post parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">blockquote</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;twitter-tweet&quot;</span> <span class="na">data-lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">dir</span><span class="o">=</span><span class="s">&quot;ltr&quot;</span><span class="p">&gt;</span>
+        Displaced by Woolsey fire, Malibu families gather for a meal and hugs:
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://t.co/W3ZWJIKOjG&quot;</span><span class="p">&gt;</span>https://t.co/W3ZWJIKOjG<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://t.co/FUouJS6xwl&quot;</span><span class="p">&gt;</span>pic.twitter.com/FUouJS6xwl<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    Los Angeles Times (@latimes)
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://twitter.com/latimes/status/1065323995959037953?ref_src=twsrc%5Etfw&quot;</span><span class="p">&gt;</span>November 21, 2018<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1065323995959037953</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;twitter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.twitter.com/1.1/statuses/oembed.json?id=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;additional_properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;twitter-tweet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data-lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.TwitterVideoEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">TwitterVideoEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#TwitterVideoEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.TwitterVideoEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.TwitterTweetEmbedParser" title="html2ans.parsers.embeds.TwitterTweetEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.TwitterTweetEmbedParser</span></code></a></p>
+<p>Twitter video parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">blockquote</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;twitter-video&quot;</span> <span class="na">data-lang</span><span class="o">=</span><span class="s">&quot;de&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;de&quot;</span> <span class="na">dir</span><span class="o">=</span><span class="s">&quot;ltr&quot;</span><span class="p">&gt;</span>
+        Am Sonntag wird in Hannover gefeiert!
+
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://twitter.com/hashtag/Einschulung?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;</span><span class="p">&gt;</span>
+            #Einschulung
+        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://twitter.com/hashtag/HAZfest?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;</span><span class="p">&gt;</span>
+            #HAZfest
+        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://twitter.com/hashtag/AktionSichererSchulweg?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;</span><span class="p">&gt;</span>
+            #AktionSichererSchulweg
+        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://t.co/8q7hHjy1zK&quot;</span><span class="p">&gt;</span>
+            pic.twitter.com/8q7hHjy1zK
+        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="ni">&amp;mdash;</span> HAZ (@HAZ)
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://twitter.com/HAZ/status/1027958659404521475?ref_src=twsrc%5Etfw&quot;</span><span class="p">&gt;</span>August 10, 2018<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1027958659404521475</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;twitter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.twitter.com/1.1/statuses/oembed.json?id=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;additional_properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;twitter-video&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data-lang&quot;</span><span class="p">:</span> <span class="s2">&quot;de&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.InstagramEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">InstagramEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#InstagramEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.InstagramEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Instagram embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">blockquote</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;instagram-media&quot;</span> <span class="na">data-instgrm-permalink</span><span class="o">=</span><span class="s">&quot;https://www.instagram.com/p/BqTW3VBDl2c/?utm_source=ig_embed&amp;amp;utm_medium=loading&quot;</span> <span class="na">data-instgrm-version</span><span class="o">=</span><span class="s">&quot;12&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.instagram.com/p/BqTW3VBDl2c/?utm_source=ig_embed&amp;amp;utm_medium=loading&quot;</span> <span class="na">target</span><span class="o">=</span><span class="s">&quot;_blank&quot;</span><span class="p">&gt;</span>
+            Removed stuff
+        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.instagram.com/p/BqTW3VBDl2c/?utm_source=ig_embed&amp;amp;utm_medium=loading&quot;</span> <span class="na">target</span><span class="o">=</span><span class="s">&quot;_blank&quot;</span><span class="p">&gt;</span>
+                A post shared by CNN (@cnn)
+            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> on <span class="p">&lt;</span><span class="nt">time</span> <span class="na">datetime</span><span class="o">=</span><span class="s">&quot;2018-11-18T01:00:10+00:00&quot;</span><span class="p">&gt;</span>Nov 17, 2018 at 5:00pm PST<span class="p">&lt;/</span><span class="nt">time</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.instagram.com/p/BqTW3VBDl2c/?utm_source=ig_embed&amp;amp;utm_medium=loading&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;instagram&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.instagram.com/oembed?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;additional_properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;instagram-media&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.VineEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">VineEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#VineEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.VineEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Vine embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;vine-embed&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://vine.co/v/imPIVvJ6E5j/embed/simple&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;imPIVvJ6E5j&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;vine&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://vine.co/oembed.json?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;additional_properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;vine-embed&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.ArcPlayerEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">ArcPlayerEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#ArcPlayerEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.ArcPlayerEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.FacebookPostEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">FacebookPostEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#FacebookPostEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.FacebookPostEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Facebook post embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.facebook.com/plugins/post.php?href=https://www.facebook.com/zuck/posts/10102883338403521&amp;width=500&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.facebook.com/zuck/posts/10102883338403521&amp;width=500&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;facebook-post&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.facebook.com/plugins/post/oembed.json/?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.FacebookVideoEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">FacebookVideoEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#FacebookVideoEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.FacebookVideoEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.FacebookPostEmbedParser" title="html2ans.parsers.embeds.FacebookPostEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.FacebookPostEmbedParser</span></code></a></p>
+<p>Facebook video embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chicagotribune/videos/351670322074116/&amp;show_text=0&amp;width=560&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.facebook.com/chicagotribune/videos/351670322074116/&amp;show_text=0&amp;width=560&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;facebook-video&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.facebook.com/plugins/video/oembed.json/?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.YoutubeEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">YoutubeEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#YoutubeEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.YoutubeEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Youtube video embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://www.youtube.com/embed/4I86iz4X4jM&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.youtube.com/embed/4I86iz4X4jM&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;youtube&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.youtube.com/oembed?format=json&amp;url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.embeds.YoutubeEmbedParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#YoutubeEmbedParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.YoutubeEmbedParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.VimeoEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">VimeoEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#VimeoEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.VimeoEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Vimeo video embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://player.vimeo.com/video/76979871&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://player.vimeo.com/video/76979871&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;vimeo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://vimeo.com/api/oembed.json?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.TumblrEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">TumblrEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#TumblrEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.TumblrEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Vimeo video embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tumblr-post&quot;</span> <span class="na">data-href</span><span class="o">=</span><span class="s">&quot;https://embed.tumblr.com/embed/post/67gzjB87rG0-5qSuAaoBxA/180352280783&quot;</span> <span class="na">data-did</span><span class="o">=</span><span class="s">&quot;a57f8b609347877835580bb80b3d7d8566419e40&quot;</span><span class="p">&gt;</span>&#39;
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://herepet.tumblr.com/post/180352280783/source-instagramcom-mydogiscutest-i-pwomise-i&quot;</span><span class="p">&gt;</span>
+        https://herepet.tumblr.com/post/180352280783/source-instagramcom-mydogiscutest-i-pwomise-i
+    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://herepet.tumblr.com/post/180352280783/source-instagramcom-mydogiscutest-i-pwomise-i&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;tumblr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.tumblr.com/oembed/1.0?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.SpotifyEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">SpotifyEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#SpotifyEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.SpotifyEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Spotify embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://open.spotify.com/user/112389858/playlist/4E55G0GYK0CuUWZ0IQiaoD&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://open.spotify.com/user/112389858/playlist/4E55G0GYK0CuUWZ0IQiaoD&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;spotify&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://embed.spotify.com/oembed/?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.ImgurEmbedParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">ImgurEmbedParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#ImgurEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.ImgurEmbedParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
+<p>Imgur embed parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">blockquote</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;imgur-embed-pub&quot;</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">data-id</span><span class="o">=</span><span class="s">&quot;w7zCp&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://imgur.com/w7zCp&quot;</span><span class="p">&gt;</span>View post on imgur.com<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referent&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://imgur.com/w7zCp&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;imgur&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.imgur.com/oembed/?url=&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;oembed&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.embeds.IFrameParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">IFrameParser</code><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#IFrameParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.IFrameParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.raw_html.RawHtmlParser</span></code></p>
+<p>Iframe parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.test.com?var=value&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;315&quot;</span> <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>{
+    &quot;type&quot;: &quot;raw_html&quot;,
+    &quot;content&quot;: &quot;&lt;iframe src=&quot;http://www.test.com?var=value&quot; height=&quot;315&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;&quot;,
+    &quot;additional_properties&quot;: {
+        &quot;height&quot;: 315
+    }
+}
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.embeds.IFrameParser.is_applicable">
+<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#IFrameParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.IFrameParser.is_applicable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
+<code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="html2ans.parsers.embeds.IFrameParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/embeds.html#IFrameParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.IFrameParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">html2ans</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="base.html">Base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exc.html">Exceptions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="parsers.html">Parsers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Development Guide</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://pypi.org/project/html2ans/">html2ans @ PyPi</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/">html2ans @ github</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/washingtonpost/html2ans/issues">Issue Tracker</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/embed_parser.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
