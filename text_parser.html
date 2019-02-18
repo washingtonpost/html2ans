@@ -36,14 +36,267 @@
   <div class="section" id="module-html2ans.parsers.text">
 <span id="text-parsers"></span><h1>Text Parsers<a class="headerlink" href="#module-html2ans.parsers.text" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
+<dt id="html2ans.parsers.text.AbstractTextParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">AbstractTextParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#AbstractTextParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.AbstractTextParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
+<p>Abstract parser for text-only elements (<code class="docutils literal notranslate"><span class="pre">NavigableString</span></code>, <code class="docutils literal notranslate"><span class="pre">p</span></code>, etc.).</p>
+<dl class="method">
+<dt id="html2ans.parsers.text.AbstractTextParser.construct_output">
+<code class="descname">construct_output</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#AbstractTextParser.construct_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.AbstractTextParser.construct_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method for constructing an output dictionary. If element is a <code class="docutils literal notranslate"><span class="pre">Tag</span></code> with
+attributes, those attributes will be stashed in <code class="docutils literal notranslate"><span class="pre">additional_properties</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element being parsed</li>
+<li><strong>ans_type</strong> (<em>str</em>) – the ANS type to put in the output <code class="docutils literal notranslate"><span class="pre">type</span></code> field</li>
+<li><strong>content</strong> (<em>str</em>) – the content to put in the <code class="docutils literal notranslate"><span class="pre">content</span></code> field</li>
+<li><strong>version</strong> (<em>str</em>) – the version to put in the <code class="docutils literal notranslate"><span class="pre">version</span></code> field. Note: if not provided but
+<code class="docutils literal notranslate"><span class="pre">version_required=True</span></code> on this parser, the output will receive a version from the
+root parser</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.text.FormattedTextParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">FormattedTextParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#FormattedTextParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.FormattedTextParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.text.AbstractTextParser" title="html2ans.parsers.text.AbstractTextParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.text.AbstractTextParser</span></code></a></p>
+<p>Formatted text parser. This parser does not remove text-formatting
+tags like <code class="docutils literal notranslate"><span class="pre">em</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code>, etc. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json">ANS schema</a></p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Post Reports<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;em&gt;Post Reports&lt;/em&gt;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.text.FormattedTextParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#FormattedTextParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.FormattedTextParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.text.ParagraphParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">ParagraphParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#ParagraphParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ParagraphParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.text.AbstractTextParser" title="html2ans.parsers.text.AbstractTextParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.text.AbstractTextParser</span></code></a></p>
+<p>Paragraph parser. This parser does not remove text-formatting
+tags like <code class="docutils literal notranslate"><span class="pre">em</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code>, etc. OR inline links. What is
+or isn’t removed by this parser can be adjusted by updating the
+<code class="docutils literal notranslate"><span class="pre">TEXT_TAGS</span></code> field which is inherited from
+<code class="docutils literal notranslate"><span class="pre">html2ans.parsers.utils.AbstractParserUtilities</span></code>. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json">ANS schema</a></p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Post Reports is the daily podcast from <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.washingtonpost.com&quot;</span><span class="p">&gt;</span>The Washington Post<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Post Reports is the daily podcast from &lt;a href=&quot;</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">washingtonpost</span><span class="o">.</span><span class="n">com</span><span class="s2">&quot;&gt;The Washington Post&lt;/a&gt;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.text.ParagraphParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#ParagraphParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ParagraphParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.text.BlockquoteParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">BlockquoteParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#BlockquoteParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.BlockquoteParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.text.AbstractTextParser" title="html2ans.parsers.text.AbstractTextParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.text.AbstractTextParser</span></code></a></p>
+<p>Blockquote parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/quote.json">ANS schema</a></p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Post Reports is the daily podcast from The Washington Post.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Unparalleled reporting.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Expert insight.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Clear analysis.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">blockquote</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;quote&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;content_elements&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Post Reports is the daily podcast from The Washington Post.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Unparalleled reporting.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Expert insight.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Clear analysis.&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.text.BlockquoteParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#BlockquoteParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.BlockquoteParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.text.HeaderParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">HeaderParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#HeaderParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.HeaderParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
+<p>Header parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/header.json">ANS schema</a></p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Post Reports<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;header&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Post Reports&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.text.HeaderParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#HeaderParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.HeaderParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="html2ans.parsers.text.LinkParser">
 <em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">LinkParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#LinkParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></p>
-<p>Use this class to convert links in anchor elements into
-an ANS element of type interstitial_link.</p>
+<dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
+<p>Converts links in anchor elements into
+ANS elements of type <code class="docutils literal notranslate"><span class="pre">interstitial_link</span></code>. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/interstitial_link.json">ANS schema</a></p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.washingtonpost.com&quot;</span><span class="p">&gt;</span>The Washington Post<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;interstitial_link&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.washingtonpost.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;The Washington Post&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="method">
 <dt id="html2ans.parsers.text.LinkParser.parse">
 <code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#LinkParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.text.ListParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">ListParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#ListParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
+<p>List parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/list.json">ANS schema</a></p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Post Reports is the daily podcast from The Washington Post.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Unparalleled reporting.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Expert insight.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Clear analysis.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;list_type&quot;</span><span class="p">:</span> <span class="s2">&quot;unordered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Post Reports is the daily podcast from The Washington Post.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Unparalleled reporting.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Expert insight.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Clear analysis.&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.text.ListParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#ListParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

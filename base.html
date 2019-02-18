@@ -57,7 +57,7 @@
 <dl class="class">
 <dt id="html2ans.base.BaseHtmlAnsParser">
 <em class="property">class </em><code class="descclassname">html2ans.base.</code><code class="descname">BaseHtmlAnsParser</code><span class="sig-paren">(</span><em>ans_version=None</em>, <em>soup_parse_lib='lxml'</em>, <em>suppress_exceptions=False</em>, <em>default_parsers=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/base.html#BaseHtmlAnsParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.base.BaseHtmlAnsParser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#html2ans.base.AbstractHtmlAnsParser" title="html2ans.base.AbstractHtmlAnsParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.base.AbstractHtmlAnsParser</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.utils.AbstractParserUtilities</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.base.AbstractHtmlAnsParser" title="html2ans.base.AbstractHtmlAnsParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.base.AbstractHtmlAnsParser</span></code></a>, <a class="reference internal" href="parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities" title="html2ans.parsers.utils.AbstractParserUtilities"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.utils.AbstractParserUtilities</span></code></a></p>
 <p>The base root/top-level parser class; assumes elements will be parsed with <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code>.
 Use this class to generate a list of ANS elements from an HTML document.
 HTML elements within the document will be parsed using
@@ -140,7 +140,7 @@ parsers to use to attempt to parse elements of that type</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>element_key</strong> (<em>str</em>) – The key of the element in self.parsers (e.g. ‘p’)</li>
-<li><strong>parser</strong> (<em>html2ans.parsers.base.ElementParser</em>) – The parser object to insert</li>
+<li><strong>parser</strong> (<a class="reference internal" href="base_parser.html#html2ans.parsers.base.ElementParser" title="html2ans.parsers.base.ElementParser"><em>html2ans.parsers.base.ElementParser</em></a>) – The parser object to insert</li>
 <li><strong>position</strong> (<em>int</em>) – Where to insert the parser in the list</li>
 </ul>
 </td>
@@ -157,7 +157,7 @@ parsers to use to attempt to parse elements of that type</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<em>html2ans.parsers.base.BaseElementParser</em>) – The parser object to insert</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><em>html2ans.parsers.base.BaseElementParser</em></a>) – The parser object to insert</td>
 </tr>
 </tbody>
 </table>

@@ -37,21 +37,20 @@
 <span class="kn">from</span> <span class="nn">bs4.element</span> <span class="k">import</span> <span class="n">NavigableString</span><span class="p">,</span> <span class="n">Tag</span>
 
 
-<span class="k">def</span> <span class="nf">has_attributes</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">filter_types</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">)):</span>
+<div class="viewcode-block" id="has_attributes"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.has_attributes">[docs]</a><span class="k">def</span> <span class="nf">has_attributes</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">filter_types</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function to check if a tag has attributes (excluding the given ``filter_types``).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">Tag</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">attr</span><span class="p">:</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">filter_types</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="mi">0</span>
-    <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <div class="viewcode-block" id="parse_dimensions"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.parse_dimensions">[docs]</a><span class="k">def</span> <span class="nf">parse_dimensions</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">tag_json</span><span class="p">,</span> <span class="n">dimension_keys</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds dimensions to converted JSON. Images and iframes will generally</span>
-<span class="sd">    have width/height properties;</span>
-<span class="sd">    this is just a convenience method for adding those properties.</span>
-<span class="sd">    :param tag:</span>
-<span class="sd">    :param tag_json:</span>
-<span class="sd">    :param dimension_keys:</span>
-<span class="sd">    :return:</span>
+<span class="sd">    have width/height properties; this is just a convenience method for</span>
+<span class="sd">    adding those properties.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">dimension_key</span> <span class="ow">in</span> <span class="n">dimension_keys</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -60,13 +59,29 @@
             <span class="k">pass</span></div>
 
 
-<span class="k">class</span> <span class="nc">AbstractParserUtilities</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractParserUtilities"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities">[docs]</a><span class="k">class</span> <span class="nc">AbstractParserUtilities</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Common utility functions for parsers. These methods are grouped here (rather</span>
+<span class="sd">    than in the ``BaseElementParser``) because they are used both in element</span>
+<span class="sd">    parsing and in document parser (i.e. by the ``BaseHtmlAnsParser``).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">WRAPPER_TAGS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;div&#39;</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Which tags to consider as potential wrappers in the ``is_wrapper`` method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">EMPTY_STRINGS</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;br/&gt;&#39;</span><span class="p">]</span>
+    <span class="n">EMPTY_STRINGS</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;br/&gt;&#39;</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List of strings considered empty (if a ``NavigableString`` is passed to </span>
+<span class="sd">    ``is_empty`` and the string is in this list, ``is_empty`` will return True).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">EMPTY_TAGS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;br&#39;</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List of tags considered empty (if a tag passed to ``is_empty`` is in this list,</span>
+<span class="sd">    ``is_empty`` will return True).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">TEXT_TAGS</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;blockquote&#39;</span><span class="p">,</span>
@@ -83,14 +98,21 @@
         <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
         <span class="s1">&#39;sup&#39;</span><span class="p">,</span>
         <span class="s1">&#39;span&#39;</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List of tags considered to be text. This affects the results of ``is_text_only``</span>
+<span class="sd">    which is used by most text parsers. For example, because by default ``a`` tags</span>
+<span class="sd">    are considered text, ``&lt;p&gt;Here is a &lt;a href=&quot;google.com&quot;&gt;link&lt;/a&gt;&lt;/p&gt;`` would</span>
+<span class="sd">    be considered text only.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractParserUtilities.is_empty"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.is_empty">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns true if the given tag is empty. Things like \n, &lt;p&gt;\n&lt;/p&gt;, &lt;iframe /&gt;</span>
 <span class="sd">        are considered empty.</span>
 <span class="sd">        :param tag: the tag to check</span>
 <span class="sd">        :return: True if empty</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">NavigableString</span><span class="p">):</span>
@@ -99,13 +121,13 @@
             <span class="n">result</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">or</span> <span class="n">has_attributes</span><span class="p">(</span><span class="n">element</span><span class="p">)):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 
-    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractParserUtilities.is_text_only"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.is_text_only">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">is_text_only</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns true if the given tag only has NavigableStrings or</span>
-<span class="sd">        tags in TEXT_TYPES for children.</span>
+<span class="sd">        Returns true if the given tag only has ``NavigableString`` or</span>
+<span class="sd">        tags in ``TEXT_TYPES`` for children.</span>
 <span class="sd">        :param element:</span>
 <span class="sd">        :return: True if this element only contains text</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -118,9 +140,9 @@
             <span class="n">result</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">child</span><span class="p">:</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">is_text_only</span><span class="p">(</span><span class="n">child</span><span class="p">),</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">element</span><span class="p">)))</span>
-        <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 
-    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractParserUtilities.is_wrapper"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.is_wrapper">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">is_wrapper</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns true if this tag is only wrapping other content.</span>
@@ -138,12 +160,13 @@
                 <span class="c1"># for example, &lt;p&gt;&lt;img src=&quot;awesome_image&quot; /&gt;&lt;/p&gt; we DO want to unwrap</span>
                 <span class="c1"># but &lt;p&gt;A &lt;a href=&quot;awesome_image&quot;&gt;link&lt;/a&gt; to a cool image&lt;/p&gt; we DON&#39;T</span>
                 <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">is_text_only</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">element</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
-    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractParserUtilities.get_children"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.get_children">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">filter_tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filter_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the given tag&#39;s children (excluding the filter_types and filter_tags).</span>
+<span class="sd">        Returns the given tag&#39;s children (excluding the ``filter_types`` and</span>
+<span class="sd">        ``filter_tags``).</span>
 <span class="sd">        :param element: the element to check</span>
 <span class="sd">        :param filter_types: class types to filter from the tag&#39;s children</span>
 <span class="sd">        :param filter_tags: tag names to filter from the tag&#39;s children</span>
@@ -158,11 +181,11 @@
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">child</span><span class="p">):</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">Tag</span><span class="p">):</span>
-                        <span class="k">if</span> <span class="ow">not</span> <span class="n">child</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">filter_tags</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">filter_tags</span><span class="p">:</span>
                             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="ow">not</span> <span class="p">[</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">filter_type</span><span class="p">)</span> <span class="k">for</span> <span class="n">filter_type</span> <span class="ow">in</span> <span class="n">filter_types</span><span class="p">]:</span>
                         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">result</span></div></div>
 </pre></div>
 
           </div>

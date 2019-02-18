@@ -41,9 +41,12 @@
 <span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="k">import</span> <span class="n">BaseElementParser</span><span class="p">,</span> <span class="n">ParseResult</span>
 
 
-<span class="k">class</span> <span class="nc">AbstractTextParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractTextParser"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.AbstractTextParser">[docs]</a><span class="k">class</span> <span class="nc">AbstractTextParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract parser for text-only elements (``NavigableString``, ``p``, etc.).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">construct_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractTextParser.construct_output"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.AbstractTextParser.construct_output">[docs]</a>    <span class="k">def</span> <span class="nf">construct_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">NavigableString</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">text_type</span><span class="p">):</span>
             <span class="n">content</span> <span class="o">=</span> <span class="n">six</span><span class="o">.</span><span class="n">text_type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -53,22 +56,32 @@
             <span class="n">content</span> <span class="o">=</span> <span class="n">fix_text</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">six</span><span class="o">.</span><span class="n">text_type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">contents</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AbstractTextParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="kc">None</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">HeaderParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
-    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;h1&quot;</span><span class="p">,</span> <span class="s2">&quot;h2&quot;</span><span class="p">,</span> <span class="s2">&quot;h3&quot;</span><span class="p">,</span> <span class="s2">&quot;h4&quot;</span><span class="p">,</span> <span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;h6&quot;</span><span class="p">]</span>
+<div class="viewcode-block" id="FormattedTextParser"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.FormattedTextParser">[docs]</a><span class="k">class</span> <span class="nc">FormattedTextParser</span><span class="p">(</span><span class="n">AbstractTextParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formatted text parser. This parser does not remove text-formatting</span>
+<span class="sd">    tags like ``em``, ``b``, ``i``, etc. `ANS schema</span>
+<span class="sd">    &lt;https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json&gt;`_</span>
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span>
-        <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">name</span><span class="p">)])</span>
-        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="sd">    Example:</span>
 
+<span class="sd">    .. code-block:: html</span>
 
-<span class="k">class</span> <span class="nc">FormattedTextParser</span><span class="p">(</span><span class="n">AbstractTextParser</span><span class="p">):</span>
+<span class="sd">        &lt;em&gt;Post Reports&lt;/em&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">            &quot;content&quot;: &quot;&lt;em&gt;Post Reports&lt;/em&gt;&quot;</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;b&#39;</span><span class="p">,</span>
         <span class="s1">&#39;del&#39;</span><span class="p">,</span>
@@ -82,7 +95,7 @@
         <span class="s1">&#39;sup&#39;</span><span class="p">,</span>
         <span class="s1">&#39;u&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="FormattedTextParser.parse"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.FormattedTextParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">match</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_text_only</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
@@ -92,13 +105,37 @@
                 <span class="n">result</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&lt;</span><span class="si">{}</span><span class="s2">&gt;</span><span class="si">{}</span><span class="s2">&lt;/</span><span class="si">{}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">element</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">),</span> <span class="n">element</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">ParagraphParser</span><span class="p">(</span><span class="n">AbstractTextParser</span><span class="p">):</span>
+<div class="viewcode-block" id="ParagraphParser"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.ParagraphParser">[docs]</a><span class="k">class</span> <span class="nc">ParagraphParser</span><span class="p">(</span><span class="n">AbstractTextParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Paragraph parser. This parser does not remove text-formatting</span>
+<span class="sd">    tags like ``em``, ``b``, ``i``, etc. OR inline links. What is</span>
+<span class="sd">    or isn&#39;t removed by this parser can be adjusted by updating the</span>
+<span class="sd">    ``TEXT_TAGS`` field which is inherited from</span>
+<span class="sd">    ``html2ans.parsers.utils.AbstractParserUtilities``. `ANS schema</span>
+<span class="sd">    &lt;https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json&gt;`_</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;p&gt;Post Reports is the daily podcast from &lt;a href=&quot;https://www.washingtonpost.com&quot;&gt;The Washington Post&lt;/a&gt;&lt;/p&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">            &quot;content&quot;: &quot;Post Reports is the daily podcast from &lt;a href=&quot;https://www.washingtonpost.com&quot;&gt;The Washington Post&lt;/a&gt;&quot;</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">NavigableString</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ParagraphParser.parse"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.ParagraphParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">match</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_text_only</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
@@ -106,13 +143,55 @@
             <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">content</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">)):</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">content</span>
-        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">BlockquoteParser</span><span class="p">(</span><span class="n">AbstractTextParser</span><span class="p">):</span>
+<div class="viewcode-block" id="BlockquoteParser"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.BlockquoteParser">[docs]</a><span class="k">class</span> <span class="nc">BlockquoteParser</span><span class="p">(</span><span class="n">AbstractTextParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Blockquote parser. `ANS schema</span>
+<span class="sd">    &lt;https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/quote.json&gt;`_</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;blockquote&gt;</span>
+<span class="sd">            &lt;p&gt;Post Reports is the daily podcast from The Washington Post.&lt;/p&gt;</span>
+<span class="sd">            &lt;p&gt;Unparalleled reporting.&lt;/p&gt;</span>
+<span class="sd">            &lt;p&gt;Expert insight.&lt;/p&gt;</span>
+<span class="sd">            &lt;p&gt;Clear analysis.&lt;/p&gt;</span>
+<span class="sd">        &lt;/blockquote&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;quote&quot;,</span>
+<span class="sd">            &quot;content_elements&quot;: [</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">                    &quot;content&quot;: &quot;Post Reports is the daily podcast from The Washington Post.&quot;</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">                    &quot;content&quot;: &quot;Unparalleled reporting.&quot;</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">                    &quot;content&quot;: &quot;Expert insight.&quot;</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">                    &quot;content&quot;: &quot;Clear analysis.&quot;</span>
+<span class="sd">                }</span>
+<span class="sd">            ]</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blockquote&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="BlockquoteParser.parse"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.BlockquoteParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">match</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">content_elements</span> <span class="o">=</span> <span class="p">[]</span>
@@ -123,7 +202,7 @@
                 <span class="k">for</span> <span class="n">p_element</span> <span class="ow">in</span> <span class="n">p_elements</span><span class="p">:</span>
                     <span class="c1"># don&#39;t want to process oembed (twitter, inselementram, etc) as blockquotes,</span>
                     <span class="c1"># so only consider text</span>
-                    <span class="c1"># technically in 0.6.0 we could put in the oembeds but shouldn&#39;t by default</span>
+                    <span class="c1"># technically since v0.6.0 we could put in the oembeds but shouldn&#39;t by default</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">p_element</span><span class="p">):</span>
                         <span class="n">p_result</span> <span class="o">=</span> <span class="n">ParagraphParser</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">p_element</span><span class="p">)</span>
                         <span class="k">if</span> <span class="n">p_result</span><span class="o">.</span><span class="n">match</span> <span class="ow">and</span> <span class="n">p_result</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
@@ -137,13 +216,65 @@
                 <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;quote&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;content_elements&quot;</span><span class="p">:</span> <span class="n">content_elements</span>
             <span class="p">}</span>
-        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="HeaderParser"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.HeaderParser">[docs]</a><span class="k">class</span> <span class="nc">HeaderParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Header parser. `ANS schema</span>
+<span class="sd">    &lt;https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/header.json&gt;`_</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;h1&gt;Post Reports&lt;/h1&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;header&quot;,</span>
+<span class="sd">            &quot;level&quot;: 1,</span>
+<span class="sd">            &quot;content&quot;: &quot;Post Reports&quot;</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;h1&quot;</span><span class="p">,</span> <span class="s2">&quot;h2&quot;</span><span class="p">,</span> <span class="s2">&quot;h3&quot;</span><span class="p">,</span> <span class="s2">&quot;h4&quot;</span><span class="p">,</span> <span class="s2">&quot;h5&quot;</span><span class="p">,</span> <span class="s2">&quot;h6&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="HeaderParser.parse"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.HeaderParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span>
+        <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">name</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="LinkParser"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.LinkParser">[docs]</a><span class="k">class</span> <span class="nc">LinkParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Use this class to convert links in anchor elements into</span>
-<span class="sd">    an ANS element of type interstitial_link.</span>
+<span class="sd">    Converts links in anchor elements into</span>
+<span class="sd">    ANS elements of type ``interstitial_link``. `ANS schema</span>
+<span class="sd">    &lt;https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/interstitial_link.json&gt;`_</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;a href=&quot;https://www.washingtonpost.com&quot;&gt;The Washington Post&lt;/a&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;interstitial_link&quot;,</span>
+<span class="sd">            &quot;url&quot;: &quot;https://www.washingtonpost.com&quot;,</span>
+<span class="sd">            &quot;content&quot;: &quot;The Washington Post&quot;</span>
+<span class="sd">        }</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
 
@@ -159,10 +290,53 @@
         <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">ListParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+<div class="viewcode-block" id="ListParser"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.ListParser">[docs]</a><span class="k">class</span> <span class="nc">ListParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List parser. `ANS schema</span>
+<span class="sd">    &lt;https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/list.json&gt;`_</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block:: html</span>
+
+<span class="sd">        &lt;ul&gt;</span>
+<span class="sd">            &lt;li&gt;Post Reports is the daily podcast from The Washington Post.&lt;/li&gt;</span>
+<span class="sd">            &lt;li&gt;Unparalleled reporting.&lt;/li&gt;</span>
+<span class="sd">            &lt;li&gt;Expert insight.&lt;/li&gt;</span>
+<span class="sd">            &lt;li&gt;Clear analysis.&lt;/li&gt;</span>
+<span class="sd">        &lt;/ul&gt;</span>
+
+<span class="sd">    -&gt;</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        {</span>
+<span class="sd">            &quot;type&quot;: &quot;list&quot;,</span>
+<span class="sd">            &quot;list_type&quot;: &quot;unordered&quot;,</span>
+<span class="sd">            &quot;items&quot;: [</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">                    &quot;content&quot;: &quot;Post Reports is the daily podcast from The Washington Post.&quot;</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">                    &quot;content&quot;: &quot;Unparalleled reporting.&quot;</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">                    &quot;content&quot;: &quot;Expert insight.&quot;</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;type&quot;: &quot;text&quot;,</span>
+<span class="sd">                    &quot;content&quot;: &quot;Clear analysis.&quot;</span>
+<span class="sd">                }</span>
+<span class="sd">            ]</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ul&#39;</span><span class="p">,</span> <span class="s1">&#39;ol&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ListParser.parse"><a class="viewcode-back" href="../../../text_parser.html#html2ans.parsers.text.ListParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;ul&#39;</span><span class="p">:</span>
             <span class="n">list_type</span> <span class="o">=</span> <span class="s1">&#39;unordered&#39;</span>
         <span class="k">else</span><span class="p">:</span>
@@ -188,7 +362,7 @@
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;list&quot;</span><span class="p">)</span>
         <span class="n">result</span><span class="p">[</span><span class="s2">&quot;list_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_type</span>
         <span class="n">result</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_elements</span>
-        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

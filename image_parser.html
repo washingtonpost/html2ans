@@ -35,6 +35,168 @@
             
   <div class="section" id="module-html2ans.parsers.image">
 <span id="image-parsers"></span><h1>Image Parsers<a class="headerlink" href="#module-html2ans.parsers.image" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="html2ans.parsers.image.AbstractImageParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">AbstractImageParser</code><a class="reference internal" href="_modules/html2ans/parsers/image.html#AbstractImageParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.AbstractImageParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
+<p>Abstract class for image parsing.</p>
+<p><a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/image.json">ANS schema</a></p>
+<dl class="method">
+<dt id="html2ans.parsers.image.AbstractImageParser.construct_output">
+<code class="descname">construct_output</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#AbstractImageParser.construct_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.AbstractImageParser.construct_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method for constructing an output dictionary. If element is a <code class="docutils literal notranslate"><span class="pre">Tag</span></code> with
+attributes, those attributes will be stashed in <code class="docutils literal notranslate"><span class="pre">additional_properties</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element being parsed</li>
+<li><strong>ans_type</strong> (<em>str</em>) – the ANS type to put in the output <code class="docutils literal notranslate"><span class="pre">type</span></code> field</li>
+<li><strong>content</strong> (<em>str</em>) – the content to put in the <code class="docutils literal notranslate"><span class="pre">content</span></code> field</li>
+<li><strong>version</strong> (<em>str</em>) – the version to put in the <code class="docutils literal notranslate"><span class="pre">version</span></code> field. Note: if not provided but
+<code class="docutils literal notranslate"><span class="pre">version_required=True</span></code> on this parser, the output will receive a version from the
+root parser</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.image.ImageParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">ImageParser</code><a class="reference internal" href="_modules/html2ans/parsers/image.html#ImageParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.ImageParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.image.AbstractImageParser" title="html2ans.parsers.image.AbstractImageParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.image.AbstractImageParser</span></code></a></p>
+<p>Basic img element parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;postreports.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;The Post Reports&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;postreports.jpg&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;caption&quot;</span><span class="p">:</span> <span class="s2">&quot;The Post Reports&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">50</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.image.ImageParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#ImageParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.ImageParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.image.LinkedImageParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">LinkedImageParser</code><a class="reference internal" href="_modules/html2ans/parsers/image.html#LinkedImageParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.LinkedImageParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.image.ImageParser" title="html2ans.parsers.image.ImageParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.image.ImageParser</span></code></a></p>
+<p>Link-wrapped image parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.stitcher.com/podcast/the-washington-post/post-reports&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;postreports.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;The Post Reports&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;postreports.jpg&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;caption&quot;</span><span class="p">:</span> <span class="s2">&quot;The Post Reports&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;additional_properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;image_link&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.stitcher.com/podcast/the-washington-post/post-reports&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.image.LinkedImageParser.is_applicable">
+<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#LinkedImageParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.LinkedImageParser.is_applicable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
+<code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="html2ans.parsers.image.LinkedImageParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#LinkedImageParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.LinkedImageParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.image.FigureParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">FigureParser</code><a class="reference internal" href="_modules/html2ans/parsers/image.html#FigureParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.FigureParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.image.ImageParser" title="html2ans.parsers.image.ImageParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.image.ImageParser</span></code></a></p>
+<p>Figure-wrapped image parser.</p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">figure</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;postreports.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;The Post Reports logo&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">figcaption</span><span class="p">&gt;</span>The Post Reports<span class="p">&lt;/</span><span class="nt">figcaption</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">figure</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;postreports.jpg&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;caption&quot;</span><span class="p">:</span> <span class="s2">&quot;The Post Reports&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">50</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.image.FigureParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#FigureParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.FigureParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
