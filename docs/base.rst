@@ -1,13 +1,19 @@
-Base
-====
+Document Parsing
+================
 
-.. automodule:: html2ans
+Interface
+---------
+
+.. autoclass:: html2ans.base.AbstractHtmlAnsParser
 
 
-.. autoclass:: html2ans.default.DefaultHtmlAnsParser
-
+Base HTML Parser
+----------------
 
 .. autoclass:: html2ans.base.BaseHtmlAnsParser
 
 
-.. autoclass:: html2ans.base.AbstractHtmlAnsParser
+Default HTML Parser
+-------------------
+
+.. autoclass:: html2ans.default.DefaultHtmlAnsParser

@@ -25,6 +25,44 @@ class AbstractTextParser(BaseElementParser):
         return None
 
 
+class ParagraphParser(AbstractTextParser):
+    """
+    Paragraph parser. This parser does not remove text-formatting
+    tags like ``em``, ``b``, ``i``, etc. OR inline links. What is
+    or isn't removed by this parser can be adjusted by updating the
+    ``TEXT_TAGS`` field which is inherited from
+    ``html2ans.parsers.utils.AbstractParserUtilities``. `ANS schema
+    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json>`_
+
+    Example:
+
+    .. code-block:: html
+
+        <p>Post Reports is the daily podcast from <a href="https://www.washingtonpost.com">The Washington Post</a></p>
+
+    ->
+
+    .. code-block:: python
+
+        {
+            "type": "text",
+            "content": "Post Reports is the daily podcast from <a href=\"https://www.washingtonpost.com\">The Washington Post</a>"
+        }
+
+    """
+    applicable_elements = ['p', NavigableString]
+
+    def parse(self, element, *args, **kwargs):
+        result = None
+        match = False
+        if self.is_text_only(element):
+            match = True
+            content = self.construct_output(element)
+            if isinstance(content, list) or (isinstance(content, dict) and content.get("content")):
+                result = content
+        return ParseResult(result, match)
+
+
 class FormattedTextParser(AbstractTextParser):
     """
     Formatted text parser. This parser does not remove text-formatting
@@ -71,44 +109,6 @@ class FormattedTextParser(AbstractTextParser):
                 result["content"] = "<{}>{}</{}>".format(
                     element.name,
                     result.get("content"), element.name)
-        return ParseResult(result, match)
-
-
-class ParagraphParser(AbstractTextParser):
-    """
-    Paragraph parser. This parser does not remove text-formatting
-    tags like ``em``, ``b``, ``i``, etc. OR inline links. What is
-    or isn't removed by this parser can be adjusted by updating the
-    ``TEXT_TAGS`` field which is inherited from
-    ``html2ans.parsers.utils.AbstractParserUtilities``. `ANS schema
-    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json>`_
-
-    Example:
-
-    .. code-block:: html
-
-        <p>Post Reports is the daily podcast from <a href="https://www.washingtonpost.com">The Washington Post</a></p>
-
-    ->
-
-    .. code-block:: python
-
-        {
-            "type": "text",
-            "content": "Post Reports is the daily podcast from <a href="https://www.washingtonpost.com">The Washington Post</a>"
-        }
-
-    """
-    applicable_elements = ['p', NavigableString]
-
-    def parse(self, element, *args, **kwargs):
-        result = None
-        match = False
-        if self.is_text_only(element):
-            match = True
-            content = self.construct_output(element)
-            if isinstance(content, list) or (isinstance(content, dict) and content.get("content")):
-                result = content
         return ParseResult(result, match)
 
 
