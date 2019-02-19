@@ -33,55 +33,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-html2ans.parsers.raw_html">
-<span id="raw-html-parser"></span><h1>Raw HTML Parser<a class="headerlink" href="#module-html2ans.parsers.raw_html" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="html2ans.parsers.raw_html.RawHtmlParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.raw_html.</code><code class="descname">RawHtmlParser</code><a class="reference internal" href="../_modules/html2ans/parsers/raw_html.html#RawHtmlParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.raw_html.RawHtmlParser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
-<p>Raw HTML parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/raw_html.json">ANS schema</a></p>
-<p>Example:</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://app.stitcher.com/splayer/f/335403/58653169&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;220&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;150&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
-</pre></div>
-</div>
-<p>-&gt;</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;raw_html&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;iframe src=&quot;</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">app</span><span class="o">.</span><span class="n">stitcher</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">splayer</span><span class="o">/</span><span class="n">f</span><span class="o">/</span><span class="mi">335403</span><span class="o">/</span><span class="mi">58653169</span><span class="s2">&quot; width=&quot;</span><span class="mi">220</span><span class="s2">&quot; height=&quot;</span><span class="mi">150</span><span class="s2">&quot;&gt;&lt;/iframe&gt;&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<dl class="method">
-<dt id="html2ans.parsers.raw_html.RawHtmlParser.is_applicable">
-<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/raw_html.html#RawHtmlParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.raw_html.RawHtmlParser.is_applicable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
-<code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="html2ans.parsers.raw_html.RawHtmlParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/raw_html.html#RawHtmlParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.raw_html.RawHtmlParser.parse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parses the given element.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="raw-html-parser">
+<h1>Raw HTML Parser<a class="headerlink" href="#raw-html-parser" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
