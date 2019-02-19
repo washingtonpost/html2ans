@@ -6,9 +6,32 @@ from bs4.element import Comment, Tag
 from html2ans.parsers.utils import AbstractParserUtilities
 
 
+class ParseResult(namedtuple('ParseResult', ['output', 'match'])):
+    """
+    A wrapper for holding the results of parsing.
+
+    ``output`` is the ANS JSON parsed by the parser.
+
+    ``match`` indicates whether or not other parse attempts should be made.
+    
+    The idea of the parsing "match" is necessary so that we can try
+    multiple parsers per tag (and not try multiple parsers when we don't have to).
+    For example, when parsing ``<p></p>``, if we only returned an empty dictionary
+    with the first available parser, the next logical step is to try the next parser.
+    By returning ``match=True`` in that situation, we don't make any more
+    parsing attempts, we just move on to the next element in the tree.
+
+    :param output: The output ANS
+    :type output: dict or list[dict]
+    :param match: Whether or not this parse was a match for a given element
+    :type match: bool
+    """
+    pass
+
+
 class ElementParser(object):
     """
-    Element parser interface.
+    Element parsing interface.
     """
 
     def is_applicable(self, element, *args, **kwargs):
@@ -113,24 +136,6 @@ class BaseElementParser(ElementParser, AbstractParserUtilities):
         if version:
             result["version"] = version
         return result
-
-
-class ParseResult(namedtuple('ParseResult', ['output', 'match'])):
-    """
-    A wrapper for parsing results. The idea of a parsing "match" is necessary
-    so that we can try multiple parsers per tag (and not try multiple parsers
-    when we don't have to). For example, when parsing ``<p></p>``, if we
-    only returned an empty dictionary with the first available parser,
-    the next logical step is to try the next parser. By returning ``match=True``
-    in that situation, we don't make any more parsing attempts, we just move on
-    to the next element in the tree.
-
-    :param output: The output ANS
-    :type output: dict or list[dict]
-    :param match: Whether or not this parser was a match for a given element
-    :type match: bool
-    """
-    pass
 
 
 class NullParser(BaseElementParser):

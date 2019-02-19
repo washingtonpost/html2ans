@@ -7,6 +7,7 @@ workflows:
       - test
   deploy:
     jobs:
+      - update_docs
       - build_and_deploy:
           filters:
             tags:
@@ -34,6 +35,37 @@ jobs: # A basic unit of work in a run
             source html2ans/bin/activate
             python setup.py install test verify sdist bdist_wheel
             twine upload dist/*
+  update_docs:
+    working_directory: ~/html2ans
+    docker: # run the steps with Docker
+      # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - run:
+          name: Initialize gh-pages
+          command: |
+            cd ..
+            mkdir html2ans-docs
+            cd html2ans-docs
+            git clone https://github.com/washingtonpost/html2ans.git html
+            cd html
+            git checkout -b gh-pages remotes/origin/gh-pages
+      - run:
+          name: Build docs
+          command: |
+            python3 -m virtualenv html2ans
+            source html2ans/bin/activate
+            python setup.py install build_sphinx
+      - run:
+          name: Upload docs
+          command: |
+            cd ../html2ans-docs/html
+            git config --global user.email "arc.professional.services@gmail.com"
+            git config --global user.name "Arc PS Team"
+            git add -A
+            git commit -m "Updated docs"
+            git push -q https://${DOCS_GH_TOKEN}@github.com/washingtonpost/html2ans.git gh-pages
   test:
     working_directory: ~/html2ans
     docker: # run the steps with Docker
