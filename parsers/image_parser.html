@@ -7,18 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Image Parsers &#8212; html2ans 3.0.0 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Text Parsers" href="text_parser.html" />
     <link rel="prev" title="Embed Parsers" href="embed_parser.html" />
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -33,17 +33,19 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-html2ans.parsers.image">
-<span id="image-parsers"></span><h1>Image Parsers<a class="headerlink" href="#module-html2ans.parsers.image" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="image-parsers">
+<h1>Image Parsers<a class="headerlink" href="#image-parsers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="base-image-parser">
+<h2>Base Image Parser<a class="headerlink" href="#base-image-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.image.AbstractImageParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">AbstractImageParser</code><a class="reference internal" href="_modules/html2ans/parsers/image.html#AbstractImageParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.AbstractImageParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">AbstractImageParser</code><a class="reference internal" href="../_modules/html2ans/parsers/image.html#AbstractImageParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.AbstractImageParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>Abstract class for image parsing.</p>
 <p><a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/image.json">ANS schema</a></p>
 <dl class="method">
 <dt id="html2ans.parsers.image.AbstractImageParser.construct_output">
-<code class="descname">construct_output</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#AbstractImageParser.construct_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.AbstractImageParser.construct_output" title="Permalink to this definition">¶</a></dt>
+<code class="descname">construct_output</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/image.html#AbstractImageParser.construct_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.AbstractImageParser.construct_output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method for constructing an output dictionary. If element is a <code class="docutils literal notranslate"><span class="pre">Tag</span></code> with
 attributes, those attributes will be stashed in <code class="docutils literal notranslate"><span class="pre">additional_properties</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -66,9 +68,12 @@ root parser</li>
 
 </dd></dl>
 
+</div>
+<div class="section" id="basic-image-parser">
+<h2>Basic Image Parser<a class="headerlink" href="#basic-image-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.image.ImageParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">ImageParser</code><a class="reference internal" href="_modules/html2ans/parsers/image.html#ImageParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.ImageParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">ImageParser</code><a class="reference internal" href="../_modules/html2ans/parsers/image.html#ImageParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.ImageParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.image.AbstractImageParser" title="html2ans.parsers.image.AbstractImageParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.image.AbstractImageParser</span></code></a></p>
 <p>Basic img element parser.</p>
 <p>Example:</p>
@@ -88,7 +93,7 @@ root parser</li>
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.image.ImageParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#ImageParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.ImageParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/image.html#ImageParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.ImageParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -102,9 +107,12 @@ root parser</li>
 
 </dd></dl>
 
+</div>
+<div class="section" id="linked-image-parser">
+<h2>Linked Image Parser<a class="headerlink" href="#linked-image-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.image.LinkedImageParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">LinkedImageParser</code><a class="reference internal" href="_modules/html2ans/parsers/image.html#LinkedImageParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.LinkedImageParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">LinkedImageParser</code><a class="reference internal" href="../_modules/html2ans/parsers/image.html#LinkedImageParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.LinkedImageParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.image.ImageParser" title="html2ans.parsers.image.ImageParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.image.ImageParser</span></code></a></p>
 <p>Link-wrapped image parser.</p>
 <p>Example:</p>
@@ -129,7 +137,7 @@ root parser</li>
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.image.LinkedImageParser.is_applicable">
-<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#LinkedImageParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.LinkedImageParser.is_applicable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/image.html#LinkedImageParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.LinkedImageParser.is_applicable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
 <code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -144,7 +152,7 @@ root parser</li>
 
 <dl class="method">
 <dt id="html2ans.parsers.image.LinkedImageParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#LinkedImageParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.LinkedImageParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/image.html#LinkedImageParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.LinkedImageParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -158,9 +166,12 @@ root parser</li>
 
 </dd></dl>
 
+</div>
+<div class="section" id="figure-parser">
+<h2>Figure Parser<a class="headerlink" href="#figure-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.image.FigureParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">FigureParser</code><a class="reference internal" href="_modules/html2ans/parsers/image.html#FigureParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.FigureParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.image.</code><code class="descname">FigureParser</code><a class="reference internal" href="../_modules/html2ans/parsers/image.html#FigureParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.FigureParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.image.ImageParser" title="html2ans.parsers.image.ImageParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.image.ImageParser</span></code></a></p>
 <p>Figure-wrapped image parser.</p>
 <p>Example:</p>
@@ -183,7 +194,7 @@ root parser</li>
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.image.FigureParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/image.html#FigureParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.FigureParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/image.html#FigureParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.image.FigureParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -198,6 +209,7 @@ root parser</li>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
@@ -206,7 +218,7 @@ root parser</li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">html2ans</a></h1>
+<h1 class="logo"><a href="../index.html">html2ans</a></h1>
 
 
 
@@ -217,15 +229,28 @@ root parser</li>
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="base.html">Base</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exc.html">Exceptions</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="parsers.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usage.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../base.html">Document Parsing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../parsers.html">Element Parsers</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="base_parser.html">Base Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="audio_parser.html">Audio Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed_parser.html">Embed Parsers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Image Parsers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#base-image-parser">Base Image Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#basic-image-parser">Basic Image Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linked-image-parser">Linked Image Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#figure-parser">Figure Parser</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Development Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="text_parser.html">Text Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="raw_html_parser.html">Raw HTML Parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parser_utils.html">Parser Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Development Guide</a></li>
 </ul>
 
 
@@ -243,7 +268,7 @@ root parser</li>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -264,7 +289,7 @@ root parser</li>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/image_parser.rst.txt"
+      <a href="../_sources/parsers/image_parser.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

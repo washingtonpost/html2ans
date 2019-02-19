@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Parsers &#8212; html2ans 3.0.0 documentation</title>
+    <title>Element Parsers &#8212; html2ans 3.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -15,8 +15,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Base Parsers" href="base_parser.html" />
-    <link rel="prev" title="Exceptions" href="exc.html" />
+    <link rel="next" title="Base Parsers" href="parsers/base_parser.html" />
+    <link rel="prev" title="Document Parsing" href="base.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -33,17 +33,41 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="parsers">
-<h1>Parsers<a class="headerlink" href="#parsers" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="element-parsers">
+<h1>Element Parsers<a class="headerlink" href="#element-parsers" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="base_parser.html">Base Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="audio_parser.html">Audio Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="embed_parser.html">Embed Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image_parser.html">Image Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="text_parser.html">Text Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="raw_html_parser.html">Raw HTML Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="parser_utils.html">Parser Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/base_parser.html">Base Parsers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="parsers/base_parser.html#parsing-results">Parsing Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/base_parser.html#parser-interface">Parser Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/base_parser.html#base-parser">Base Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/base_parser.html#ignore-elements-null-parser">Ignore Elements (Null Parser)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/audio_parser.html">Audio Parsers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="parsers/audio_parser.html#basic-audio-parser">Basic Audio Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/embed_parser.html">Embed Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/image_parser.html">Image Parsers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="parsers/image_parser.html#base-image-parser">Base Image Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/image_parser.html#basic-image-parser">Basic Image Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/image_parser.html#linked-image-parser">Linked Image Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/image_parser.html#figure-parser">Figure Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/text_parser.html">Text Parsers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="parsers/text_parser.html#base-text-parser">Base Text Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/text_parser.html#basic-text-parser">Basic Text Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/text_parser.html#formatted-text-parser">Formatted Text Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/text_parser.html#blockquote-parser">Blockquote Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/text_parser.html#header-parser">Header Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/text_parser.html#link-parser">Link Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsers/text_parser.html#list-parser">List Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/raw_html_parser.html">Raw HTML Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/parser_utils.html">Parser Utilities</a></li>
 </ul>
 </div>
 </div>
@@ -66,12 +90,19 @@
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="base.html">Base</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exc.html">Exceptions</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Parsers</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="usage.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="base.html">Document Parsing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Element Parsers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="parsers/base_parser.html">Base Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parsers/audio_parser.html">Audio Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parsers/embed_parser.html">Embed Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parsers/image_parser.html">Image Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parsers/text_parser.html">Text Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parsers/raw_html_parser.html">Raw HTML Parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parsers/parser_utils.html">Parser Utilities</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Development Guide</a></li>

@@ -41,7 +41,7 @@
 <span class="kn">from</span> <span class="nn">html2ans.parsers.utils</span> <span class="k">import</span> <span class="n">parse_dimensions</span>
 
 
-<div class="viewcode-block" id="AbstractEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.AbstractEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">AbstractEmbedParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.AbstractEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">AbstractEmbedParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract class for embed parsing.</span>
 
@@ -107,7 +107,7 @@
         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">):</span>
             <span class="n">tag</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span>
 
-<div class="viewcode-block" id="AbstractEmbedParser.parse"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.AbstractEmbedParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractEmbedParser.parse"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.AbstractEmbedParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">match</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">tag_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tag_id</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
@@ -133,7 +133,7 @@
         <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="DailyMotionEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.DailyMotionEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">DailyMotionEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="DailyMotionEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.DailyMotionEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">DailyMotionEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DailyMotion video parser.</span>
 
@@ -166,7 +166,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://www.dailymotion.com/services/oembed?id=&#39;</span></div>
 
 
-<div class="viewcode-block" id="FlickrEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.FlickrEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">FlickrEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="FlickrEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.FlickrEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">FlickrEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Flickr embed parser.</span>
 
@@ -201,7 +201,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s2">&quot;https://www.flickr.com/services/oembed.json/?url=&quot;</span></div>
 
 
-<div class="viewcode-block" id="RedditEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.RedditEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">RedditEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="RedditEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.RedditEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">RedditEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reddit embed parser.</span>
 
@@ -239,7 +239,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s2">&quot;https://www.reddit.com/oembed?url=&quot;</span></div>
 
 
-<div class="viewcode-block" id="PollDaddyEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.PollDaddyEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">PollDaddyEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="PollDaddyEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.PollDaddyEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">PollDaddyEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    PollDaddy embed parser.</span>
 
@@ -274,7 +274,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s2">&quot;https://polldaddy.com/oembed/?url=&quot;</span></div>
 
 
-<div class="viewcode-block" id="TwitterTweetEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.TwitterTweetEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">TwitterTweetEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="TwitterTweetEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.TwitterTweetEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">TwitterTweetEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Twitter post parser.</span>
 
@@ -320,7 +320,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://api.twitter.com/1.1/statuses/oembed.json?id=&#39;</span></div>
 
 
-<div class="viewcode-block" id="TwitterVideoEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.TwitterVideoEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">TwitterVideoEmbedParser</span><span class="p">(</span><span class="n">TwitterTweetEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="TwitterVideoEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.TwitterVideoEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">TwitterVideoEmbedParser</span><span class="p">(</span><span class="n">TwitterTweetEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Twitter video parser.</span>
 
@@ -372,7 +372,7 @@
     <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;twitter-video&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="InstagramEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.InstagramEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">InstagramEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="InstagramEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.InstagramEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">InstagramEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Instagram embed parser.</span>
 
@@ -419,7 +419,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://api.instagram.com/oembed?url=&#39;</span></div>
 
 
-<div class="viewcode-block" id="VineEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.VineEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">VineEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="VineEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.VineEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">VineEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Vine embed parser.</span>
 
@@ -456,7 +456,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://vine.co/oembed.json?url=&#39;</span></div>
 
 
-<div class="viewcode-block" id="ArcPlayerEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.ArcPlayerEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">ArcPlayerEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="ArcPlayerEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.ArcPlayerEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">ArcPlayerEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;div&#39;</span><span class="p">]</span>
     <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;arc-player&#39;</span><span class="p">]</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;div&#39;</span>
@@ -464,7 +464,7 @@
     <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;video&#39;</span></div>
 
 
-<div class="viewcode-block" id="FacebookPostEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.FacebookPostEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">FacebookPostEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="FacebookPostEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.FacebookPostEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">FacebookPostEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Facebook post embed parser.</span>
 
@@ -497,7 +497,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://www.facebook.com/plugins/post/oembed.json/?url=&#39;</span></div>
 
 
-<div class="viewcode-block" id="FacebookVideoEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.FacebookVideoEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">FacebookVideoEmbedParser</span><span class="p">(</span><span class="n">FacebookPostEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="FacebookVideoEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.FacebookVideoEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">FacebookVideoEmbedParser</span><span class="p">(</span><span class="n">FacebookPostEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Facebook video embed parser.</span>
 
@@ -527,7 +527,7 @@
     <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;facebook-video&#39;</span></div>
 
 
-<div class="viewcode-block" id="YoutubeEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.YoutubeEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">YoutubeEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="YoutubeEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.YoutubeEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">YoutubeEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Youtube video embed parser.</span>
 
@@ -559,7 +559,7 @@
     <span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;youtube&#39;</span>
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://www.youtube.com/oembed?format=json&amp;url=&#39;</span>
 
-<div class="viewcode-block" id="YoutubeEmbedParser.parse"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.YoutubeEmbedParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="YoutubeEmbedParser.parse"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.YoutubeEmbedParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">parsed_result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">YoutubeEmbedParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parsed_result</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">parsed_result</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;referent&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">path</span>
@@ -568,7 +568,7 @@
         <span class="k">return</span> <span class="n">parsed_result</span></div></div>
 
 
-<div class="viewcode-block" id="VimeoEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.VimeoEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">VimeoEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="VimeoEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.VimeoEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">VimeoEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Vimeo video embed parser.</span>
 
@@ -601,7 +601,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://vimeo.com/api/oembed.json?url=&#39;</span></div>
 
 
-<div class="viewcode-block" id="TumblrEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.TumblrEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">TumblrEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="TumblrEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.TumblrEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">TumblrEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Vimeo video embed parser.</span>
 
@@ -639,7 +639,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://www.tumblr.com/oembed/1.0?url=&#39;</span></div>
 
 
-<div class="viewcode-block" id="SpotifyEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.SpotifyEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">SpotifyEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="SpotifyEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.SpotifyEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">SpotifyEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Spotify embed parser.</span>
 
@@ -672,7 +672,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://embed.spotify.com/oembed/?url=&#39;</span></div>
 
 
-<div class="viewcode-block" id="ImgurEmbedParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.ImgurEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">ImgurEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
+<div class="viewcode-block" id="ImgurEmbedParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.ImgurEmbedParser">[docs]</a><span class="k">class</span> <span class="nc">ImgurEmbedParser</span><span class="p">(</span><span class="n">AbstractEmbedParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Imgur embed parser.</span>
 
@@ -707,7 +707,7 @@
     <span class="n">provider</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oembed/?url=&#39;</span></div>
 
 
-<div class="viewcode-block" id="IFrameParser"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.IFrameParser">[docs]</a><span class="k">class</span> <span class="nc">IFrameParser</span><span class="p">(</span><span class="n">RawHtmlParser</span><span class="p">):</span>
+<div class="viewcode-block" id="IFrameParser"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.IFrameParser">[docs]</a><span class="k">class</span> <span class="nc">IFrameParser</span><span class="p">(</span><span class="n">RawHtmlParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iframe parser.</span>
 
@@ -733,10 +733,10 @@
 
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;iframe&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="IFrameParser.is_applicable"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.IFrameParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="IFrameParser.is_applicable"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.IFrameParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">BaseElementParser</span><span class="o">.</span><span class="n">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span> <span class="ow">or</span> <span class="n">element</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;iframe&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="IFrameParser.parse"><a class="viewcode-back" href="../../../embed_parser.html#html2ans.parsers.embeds.IFrameParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="IFrameParser.parse"><a class="viewcode-back" href="../../../parsers/embed_parser.html#html2ans.parsers.embeds.IFrameParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">IFrameParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="o">.</span><span class="n">output</span>
         <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;iframe&#39;</span><span class="p">:</span>
             <span class="n">iframe_tag</span> <span class="o">=</span> <span class="n">element</span>
@@ -768,9 +768,8 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../dev_guide.html">Development Guide</a></li>
 </ul>
 

@@ -36,7 +36,7 @@
 <span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="k">import</span> <span class="n">BaseElementParser</span><span class="p">,</span> <span class="n">ParseResult</span>
 
 
-<div class="viewcode-block" id="RawHtmlParser"><a class="viewcode-back" href="../../../raw_html_parser.html#html2ans.parsers.raw_html.RawHtmlParser">[docs]</a><span class="k">class</span> <span class="nc">RawHtmlParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+<div class="viewcode-block" id="RawHtmlParser"><a class="viewcode-back" href="../../../parsers/raw_html_parser.html#html2ans.parsers.raw_html.RawHtmlParser">[docs]</a><span class="k">class</span> <span class="nc">RawHtmlParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Raw HTML parser. `ANS schema</span>
 <span class="sd">    &lt;https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/raw_html.json&gt;`_</span>
@@ -58,10 +58,10 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="RawHtmlParser.is_applicable"><a class="viewcode-back" href="../../../raw_html_parser.html#html2ans.parsers.raw_html.RawHtmlParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="RawHtmlParser.is_applicable"><a class="viewcode-back" href="../../../parsers/raw_html_parser.html#html2ans.parsers.raw_html.RawHtmlParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="RawHtmlParser.parse"><a class="viewcode-back" href="../../../raw_html_parser.html#html2ans.parsers.raw_html.RawHtmlParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="RawHtmlParser.parse"><a class="viewcode-back" href="../../../parsers/raw_html_parser.html#html2ans.parsers.raw_html.RawHtmlParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;raw_html&quot;</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">text_type</span><span class="p">(</span><span class="n">element</span><span class="p">)),</span> <span class="kc">True</span><span class="p">)</span></div></div>
 </pre></div>
 
@@ -82,9 +82,8 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../dev_guide.html">Development Guide</a></li>
 </ul>
 

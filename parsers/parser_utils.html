@@ -7,18 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Parser Utilities &#8212; html2ans 3.0.0 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Development" href="dev_guide.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Development" href="../dev_guide.html" />
     <link rel="prev" title="Raw HTML Parser" href="raw_html_parser.html" />
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -37,13 +37,13 @@
 <span id="parser-utilities"></span><h1>Parser Utilities<a class="headerlink" href="#module-html2ans.parsers.utils" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="html2ans.parsers.utils.has_attributes">
-<code class="descclassname">html2ans.parsers.utils.</code><code class="descname">has_attributes</code><span class="sig-paren">(</span><em>tag</em>, <em>filter_types=('id'</em>, <em>'class'</em>, <em>'style')</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/utils.html#has_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.has_attributes" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">html2ans.parsers.utils.</code><code class="descname">has_attributes</code><span class="sig-paren">(</span><em>tag</em>, <em>filter_types=('id'</em>, <em>'class'</em>, <em>'style')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#has_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.has_attributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function to check if a tag has attributes (excluding the given <code class="docutils literal notranslate"><span class="pre">filter_types</span></code>).</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="html2ans.parsers.utils.parse_dimensions">
-<code class="descclassname">html2ans.parsers.utils.</code><code class="descname">parse_dimensions</code><span class="sig-paren">(</span><em>tag</em>, <em>tag_json</em>, <em>dimension_keys=('width'</em>, <em>'height')</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/utils.html#parse_dimensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.parse_dimensions" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">html2ans.parsers.utils.</code><code class="descname">parse_dimensions</code><span class="sig-paren">(</span><em>tag</em>, <em>tag_json</em>, <em>dimension_keys=('width'</em>, <em>'height')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#parse_dimensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.parse_dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds dimensions to converted JSON. Images and iframes will generally
 have width/height properties; this is just a convenience method for
 adding those properties.</p>
@@ -51,7 +51,7 @@ adding those properties.</p>
 
 <dl class="class">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.utils.</code><code class="descname">AbstractParserUtilities</code><a class="reference internal" href="_modules/html2ans/parsers/utils.html#AbstractParserUtilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.utils.</code><code class="descname">AbstractParserUtilities</code><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Common utility functions for parsers. These methods are grouped here (rather
 than in the <code class="docutils literal notranslate"><span class="pre">BaseElementParser</span></code>) because they are used both in element
@@ -87,7 +87,7 @@ be considered text only.</p>
 
 <dl class="classmethod">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.is_empty">
-<em class="property">classmethod </em><code class="descname">is_empty</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_empty" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">is_empty</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_empty" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Returns true if the given tag is empty. Things like</div></blockquote>
 <p>, &lt;p&gt;
@@ -100,7 +100,7 @@ be considered text only.</p>
 
 <dl class="classmethod">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.is_text_only">
-<em class="property">classmethod </em><code class="descname">is_text_only</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_text_only"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_text_only" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">is_text_only</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_text_only"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_text_only" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the given tag only has <code class="docutils literal notranslate"><span class="pre">NavigableString</span></code> or
 tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES</span></code> for children.
 :param element:
@@ -109,7 +109,7 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
 
 <dl class="classmethod">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.is_wrapper">
-<em class="property">classmethod </em><code class="descname">is_wrapper</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_wrapper" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">is_wrapper</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_wrapper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if this tag is only wrapping other content.
 :param element:
 :return: True if the given element is only wrapping sub-content</p>
@@ -117,7 +117,7 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
 
 <dl class="classmethod">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.get_children">
-<em class="property">classmethod </em><code class="descname">get_children</code><span class="sig-paren">(</span><em>element</em>, <em>filter_tags=None</em>, <em>filter_types=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/utils.html#AbstractParserUtilities.get_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.get_children" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_children</code><span class="sig-paren">(</span><em>element</em>, <em>filter_tags=None</em>, <em>filter_types=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.get_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.get_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the given tag’s children (excluding the <code class="docutils literal notranslate"><span class="pre">filter_types</span></code> and
 <code class="docutils literal notranslate"><span class="pre">filter_tags</span></code>).
 :param element: the element to check
@@ -137,7 +137,7 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">html2ans</a></h1>
+<h1 class="logo"><a href="../index.html">html2ans</a></h1>
 
 
 
@@ -148,15 +148,22 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="base.html">Base</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exc.html">Exceptions</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="parsers.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usage.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../base.html">Document Parsing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../parsers.html">Element Parsers</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="base_parser.html">Base Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="audio_parser.html">Audio Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed_parser.html">Embed Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="image_parser.html">Image Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="text_parser.html">Text Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="raw_html_parser.html">Raw HTML Parser</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Parser Utilities</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Development Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Development Guide</a></li>
 </ul>
 
 
@@ -174,7 +181,7 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -195,7 +202,7 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/parser_utils.rst.txt"
+      <a href="../_sources/parsers/parser_utils.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

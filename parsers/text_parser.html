@@ -7,18 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Text Parsers &#8212; html2ans 3.0.0 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Raw HTML Parser" href="raw_html_parser.html" />
     <link rel="prev" title="Image Parsers" href="image_parser.html" />
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -33,16 +33,18 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-html2ans.parsers.text">
-<span id="text-parsers"></span><h1>Text Parsers<a class="headerlink" href="#module-html2ans.parsers.text" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="text-parsers">
+<h1>Text Parsers<a class="headerlink" href="#text-parsers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="base-text-parser">
+<h2>Base Text Parser<a class="headerlink" href="#base-text-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.text.AbstractTextParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">AbstractTextParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#AbstractTextParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.AbstractTextParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">AbstractTextParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#AbstractTextParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.AbstractTextParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>Abstract parser for text-only elements (<code class="docutils literal notranslate"><span class="pre">NavigableString</span></code>, <code class="docutils literal notranslate"><span class="pre">p</span></code>, etc.).</p>
 <dl class="method">
 <dt id="html2ans.parsers.text.AbstractTextParser.construct_output">
-<code class="descname">construct_output</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#AbstractTextParser.construct_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.AbstractTextParser.construct_output" title="Permalink to this definition">¶</a></dt>
+<code class="descname">construct_output</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#AbstractTextParser.construct_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.AbstractTextParser.construct_output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method for constructing an output dictionary. If element is a <code class="docutils literal notranslate"><span class="pre">Tag</span></code> with
 attributes, those attributes will be stashed in <code class="docutils literal notranslate"><span class="pre">additional_properties</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -65,42 +67,12 @@ root parser</li>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="html2ans.parsers.text.FormattedTextParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">FormattedTextParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#FormattedTextParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.FormattedTextParser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.text.AbstractTextParser" title="html2ans.parsers.text.AbstractTextParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.text.AbstractTextParser</span></code></a></p>
-<p>Formatted text parser. This parser does not remove text-formatting
-tags like <code class="docutils literal notranslate"><span class="pre">em</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code>, etc. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json">ANS schema</a></p>
-<p>Example:</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Post Reports<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
-</pre></div>
 </div>
-<p>-&gt;</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;em&gt;Post Reports&lt;/em&gt;&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<dl class="method">
-<dt id="html2ans.parsers.text.FormattedTextParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#FormattedTextParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.FormattedTextParser.parse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parses the given element.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="basic-text-parser">
+<h2>Basic Text Parser<a class="headerlink" href="#basic-text-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.text.ParagraphParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">ParagraphParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#ParagraphParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ParagraphParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">ParagraphParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#ParagraphParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ParagraphParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.text.AbstractTextParser" title="html2ans.parsers.text.AbstractTextParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.text.AbstractTextParser</span></code></a></p>
 <p>Paragraph parser. This parser does not remove text-formatting
 tags like <code class="docutils literal notranslate"><span class="pre">em</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code>, etc. OR inline links. What is
@@ -120,7 +92,7 @@ or isn’t removed by this parser can be adjusted by updating the
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.text.ParagraphParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#ParagraphParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ParagraphParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#ParagraphParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ParagraphParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -134,9 +106,48 @@ or isn’t removed by this parser can be adjusted by updating the
 
 </dd></dl>
 
+</div>
+<div class="section" id="formatted-text-parser">
+<h2>Formatted Text Parser<a class="headerlink" href="#formatted-text-parser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="html2ans.parsers.text.FormattedTextParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">FormattedTextParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#FormattedTextParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.FormattedTextParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.text.AbstractTextParser" title="html2ans.parsers.text.AbstractTextParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.text.AbstractTextParser</span></code></a></p>
+<p>Formatted text parser. This parser does not remove text-formatting
+tags like <code class="docutils literal notranslate"><span class="pre">em</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code>, etc. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json">ANS schema</a></p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Post Reports<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;em&gt;Post Reports&lt;/em&gt;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.text.FormattedTextParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#FormattedTextParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.FormattedTextParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="blockquote-parser">
+<h2>Blockquote Parser<a class="headerlink" href="#blockquote-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.text.BlockquoteParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">BlockquoteParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#BlockquoteParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.BlockquoteParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">BlockquoteParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#BlockquoteParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.BlockquoteParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.text.AbstractTextParser" title="html2ans.parsers.text.AbstractTextParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.text.AbstractTextParser</span></code></a></p>
 <p>Blockquote parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/quote.json">ANS schema</a></p>
 <p>Example:</p>
@@ -174,7 +185,7 @@ or isn’t removed by this parser can be adjusted by updating the
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.text.BlockquoteParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#BlockquoteParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.BlockquoteParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#BlockquoteParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.BlockquoteParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -188,9 +199,12 @@ or isn’t removed by this parser can be adjusted by updating the
 
 </dd></dl>
 
+</div>
+<div class="section" id="header-parser">
+<h2>Header Parser<a class="headerlink" href="#header-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.text.HeaderParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">HeaderParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#HeaderParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.HeaderParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">HeaderParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#HeaderParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.HeaderParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>Header parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/header.json">ANS schema</a></p>
 <p>Example:</p>
@@ -207,7 +221,7 @@ or isn’t removed by this parser can be adjusted by updating the
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.text.HeaderParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#HeaderParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.HeaderParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#HeaderParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.HeaderParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -221,9 +235,12 @@ or isn’t removed by this parser can be adjusted by updating the
 
 </dd></dl>
 
+</div>
+<div class="section" id="link-parser">
+<h2>Link Parser<a class="headerlink" href="#link-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.text.LinkParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">LinkParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#LinkParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">LinkParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#LinkParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>Converts links in anchor elements into
 ANS elements of type <code class="docutils literal notranslate"><span class="pre">interstitial_link</span></code>. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/interstitial_link.json">ANS schema</a></p>
@@ -241,7 +258,7 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.text.LinkParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#LinkParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#LinkParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -255,9 +272,12 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
 
 </dd></dl>
 
+</div>
+<div class="section" id="list-parser">
+<h2>List Parser<a class="headerlink" href="#list-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.text.ListParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">ListParser</code><a class="reference internal" href="_modules/html2ans/parsers/text.html#ListParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">ListParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#ListParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>List parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/list.json">ANS schema</a></p>
 <p>Example:</p>
@@ -296,7 +316,7 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.text.ListParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/text.html#ListParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#ListParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -311,6 +331,7 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
@@ -319,7 +340,7 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">html2ans</a></h1>
+<h1 class="logo"><a href="../index.html">html2ans</a></h1>
 
 
 
@@ -330,15 +351,31 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="base.html">Base</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exc.html">Exceptions</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="parsers.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usage.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../base.html">Document Parsing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../parsers.html">Element Parsers</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="base_parser.html">Base Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="audio_parser.html">Audio Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed_parser.html">Embed Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="image_parser.html">Image Parsers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Text Parsers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#base-text-parser">Base Text Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#basic-text-parser">Basic Text Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#formatted-text-parser">Formatted Text Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#blockquote-parser">Blockquote Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-parser">Header Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#link-parser">Link Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#list-parser">List Parser</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Development Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="raw_html_parser.html">Raw HTML Parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parser_utils.html">Parser Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Development Guide</a></li>
 </ul>
 
 
@@ -356,7 +393,7 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -377,7 +414,7 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/text_parser.rst.txt"
+      <a href="../_sources/parsers/text_parser.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

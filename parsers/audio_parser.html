@@ -7,18 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Audio Parsers &#8212; html2ans 3.0.0 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Embed Parsers" href="embed_parser.html" />
     <link rel="prev" title="Base Parsers" href="base_parser.html" />
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -33,11 +33,13 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-html2ans.parsers.audio">
-<span id="audio-parsers"></span><h1>Audio Parsers<a class="headerlink" href="#module-html2ans.parsers.audio" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="audio-parsers">
+<h1>Audio Parsers<a class="headerlink" href="#audio-parsers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-audio-parser">
+<h2>Basic Audio Parser<a class="headerlink" href="#basic-audio-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.audio.AudioParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.audio.</code><code class="descname">AudioParser</code><a class="reference internal" href="_modules/html2ans/parsers/audio.html#AudioParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.audio.AudioParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.audio.</code><code class="descname">AudioParser</code><a class="reference internal" href="../_modules/html2ans/parsers/audio.html#AudioParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.audio.AudioParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>Audio element parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/audio.json">ANS schema</a></p>
 <p>Example:</p>
@@ -56,7 +58,7 @@
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.audio.AudioParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/audio.html#AudioParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.audio.AudioParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/audio.html#AudioParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.audio.AudioParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -71,6 +73,7 @@
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
@@ -79,7 +82,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">html2ans</a></h1>
+<h1 class="logo"><a href="../index.html">html2ans</a></h1>
 
 
 
@@ -90,15 +93,25 @@
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="base.html">Base</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exc.html">Exceptions</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="parsers.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usage.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../base.html">Document Parsing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../parsers.html">Element Parsers</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="base_parser.html">Base Parsers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Audio Parsers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#basic-audio-parser">Basic Audio Parser</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Development Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed_parser.html">Embed Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="image_parser.html">Image Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="text_parser.html">Text Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="raw_html_parser.html">Raw HTML Parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parser_utils.html">Parser Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Development Guide</a></li>
 </ul>
 
 
@@ -116,7 +129,7 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -137,7 +150,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/audio_parser.rst.txt"
+      <a href="../_sources/parsers/audio_parser.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

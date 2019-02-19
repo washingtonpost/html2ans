@@ -36,7 +36,7 @@
 <span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="k">import</span> <span class="n">BaseElementParser</span><span class="p">,</span> <span class="n">ParseResult</span>
 
 
-<div class="viewcode-block" id="AbstractImageParser"><a class="viewcode-back" href="../../../image_parser.html#html2ans.parsers.image.AbstractImageParser">[docs]</a><span class="k">class</span> <span class="nc">AbstractImageParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractImageParser"><a class="viewcode-back" href="../../../parsers/image_parser.html#html2ans.parsers.image.AbstractImageParser">[docs]</a><span class="k">class</span> <span class="nc">AbstractImageParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract class for image parsing.</span>
 
@@ -49,7 +49,7 @@
     <span class="k">def</span> <span class="nf">_parse_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">element_json</span><span class="p">,</span> <span class="n">dimension_keys</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)):</span>
         <span class="n">parse_dimensions</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">element_json</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AbstractImageParser.construct_output"><a class="viewcode-back" href="../../../image_parser.html#html2ans.parsers.image.AbstractImageParser.construct_output">[docs]</a>    <span class="k">def</span> <span class="nf">construct_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractImageParser.construct_output"><a class="viewcode-back" href="../../../parsers/image_parser.html#html2ans.parsers.image.AbstractImageParser.construct_output">[docs]</a>    <span class="k">def</span> <span class="nf">construct_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">AbstractImageParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">)</span>
         <span class="n">result</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">)</span>
         <span class="n">caption</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alt&#39;</span><span class="p">)</span>
@@ -59,7 +59,7 @@
         <span class="k">return</span> <span class="n">result</span></div></div>
 
 
-<div class="viewcode-block" id="ImageParser"><a class="viewcode-back" href="../../../image_parser.html#html2ans.parsers.image.ImageParser">[docs]</a><span class="k">class</span> <span class="nc">ImageParser</span><span class="p">(</span><span class="n">AbstractImageParser</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageParser"><a class="viewcode-back" href="../../../parsers/image_parser.html#html2ans.parsers.image.ImageParser">[docs]</a><span class="k">class</span> <span class="nc">ImageParser</span><span class="p">(</span><span class="n">AbstractImageParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Basic img element parser.</span>
 
@@ -85,13 +85,13 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="ImageParser.parse"><a class="viewcode-back" href="../../../image_parser.html#html2ans.parsers.image.ImageParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageParser.parse"><a class="viewcode-back" href="../../../parsers/image_parser.html#html2ans.parsers.image.ImageParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="LinkedImageParser"><a class="viewcode-back" href="../../../image_parser.html#html2ans.parsers.image.LinkedImageParser">[docs]</a><span class="k">class</span> <span class="nc">LinkedImageParser</span><span class="p">(</span><span class="n">ImageParser</span><span class="p">):</span>
+<div class="viewcode-block" id="LinkedImageParser"><a class="viewcode-back" href="../../../parsers/image_parser.html#html2ans.parsers.image.LinkedImageParser">[docs]</a><span class="k">class</span> <span class="nc">LinkedImageParser</span><span class="p">(</span><span class="n">ImageParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Link-wrapped image parser.</span>
 
@@ -122,10 +122,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="LinkedImageParser.is_applicable"><a class="viewcode-back" href="../../../image_parser.html#html2ans.parsers.image.LinkedImageParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="LinkedImageParser.is_applicable"><a class="viewcode-back" href="../../../parsers/image_parser.html#html2ans.parsers.image.LinkedImageParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">LinkedImageParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">is_applicable</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">and</span> <span class="n">element</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;img&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LinkedImageParser.parse"><a class="viewcode-back" href="../../../image_parser.html#html2ans.parsers.image.LinkedImageParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="LinkedImageParser.parse"><a class="viewcode-back" href="../../../parsers/image_parser.html#html2ans.parsers.image.LinkedImageParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">img_element</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;img&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">img_element</span><span class="p">:</span>
             <span class="n">parsed_result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">LinkedImageParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">img_element</span><span class="p">)</span>
@@ -139,7 +139,7 @@
         <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="FigureParser"><a class="viewcode-back" href="../../../image_parser.html#html2ans.parsers.image.FigureParser">[docs]</a><span class="k">class</span> <span class="nc">FigureParser</span><span class="p">(</span><span class="n">ImageParser</span><span class="p">):</span>
+<div class="viewcode-block" id="FigureParser"><a class="viewcode-back" href="../../../parsers/image_parser.html#html2ans.parsers.image.FigureParser">[docs]</a><span class="k">class</span> <span class="nc">FigureParser</span><span class="p">(</span><span class="n">ImageParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Figure-wrapped image parser.</span>
 
@@ -168,7 +168,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;figure&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="FigureParser.parse"><a class="viewcode-back" href="../../../image_parser.html#html2ans.parsers.image.FigureParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="FigureParser.parse"><a class="viewcode-back" href="../../../parsers/image_parser.html#html2ans.parsers.image.FigureParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">match</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">img_element</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;img&#39;</span><span class="p">)</span>
@@ -206,9 +206,8 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../dev_guide.html">Development Guide</a></li>
 </ul>
 

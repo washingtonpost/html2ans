@@ -37,7 +37,7 @@
 <span class="kn">from</span> <span class="nn">bs4.element</span> <span class="k">import</span> <span class="n">NavigableString</span><span class="p">,</span> <span class="n">Tag</span>
 
 
-<div class="viewcode-block" id="has_attributes"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.has_attributes">[docs]</a><span class="k">def</span> <span class="nf">has_attributes</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">filter_types</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">)):</span>
+<div class="viewcode-block" id="has_attributes"><a class="viewcode-back" href="../../../parsers/parser_utils.html#html2ans.parsers.utils.has_attributes">[docs]</a><span class="k">def</span> <span class="nf">has_attributes</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">filter_types</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">)):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper function to check if a tag has attributes (excluding the given ``filter_types``).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -46,7 +46,7 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="parse_dimensions"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.parse_dimensions">[docs]</a><span class="k">def</span> <span class="nf">parse_dimensions</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">tag_json</span><span class="p">,</span> <span class="n">dimension_keys</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)):</span>
+<div class="viewcode-block" id="parse_dimensions"><a class="viewcode-back" href="../../../parsers/parser_utils.html#html2ans.parsers.utils.parse_dimensions">[docs]</a><span class="k">def</span> <span class="nf">parse_dimensions</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">tag_json</span><span class="p">,</span> <span class="n">dimension_keys</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds dimensions to converted JSON. Images and iframes will generally</span>
 <span class="sd">    have width/height properties; this is just a convenience method for</span>
@@ -59,7 +59,7 @@
             <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="AbstractParserUtilities"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities">[docs]</a><span class="k">class</span> <span class="nc">AbstractParserUtilities</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AbstractParserUtilities"><a class="viewcode-back" href="../../../parsers/parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities">[docs]</a><span class="k">class</span> <span class="nc">AbstractParserUtilities</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Common utility functions for parsers. These methods are grouped here (rather</span>
 <span class="sd">    than in the ``BaseElementParser``) because they are used both in element</span>
@@ -105,7 +105,7 @@
 <span class="sd">    be considered text only.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="AbstractParserUtilities.is_empty"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.is_empty">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractParserUtilities.is_empty"><a class="viewcode-back" href="../../../parsers/parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.is_empty">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns true if the given tag is empty. Things like \n, &lt;p&gt;\n&lt;/p&gt;, &lt;iframe /&gt;</span>
@@ -123,7 +123,7 @@
             <span class="n">result</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="AbstractParserUtilities.is_text_only"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.is_text_only">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractParserUtilities.is_text_only"><a class="viewcode-back" href="../../../parsers/parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.is_text_only">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">is_text_only</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns true if the given tag only has ``NavigableString`` or</span>
@@ -142,7 +142,7 @@
             <span class="n">result</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">child</span><span class="p">:</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">is_text_only</span><span class="p">(</span><span class="n">child</span><span class="p">),</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">element</span><span class="p">)))</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="AbstractParserUtilities.is_wrapper"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.is_wrapper">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractParserUtilities.is_wrapper"><a class="viewcode-back" href="../../../parsers/parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.is_wrapper">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">is_wrapper</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns true if this tag is only wrapping other content.</span>
@@ -162,7 +162,7 @@
                 <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">is_text_only</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">element</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="AbstractParserUtilities.get_children"><a class="viewcode-back" href="../../../parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.get_children">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AbstractParserUtilities.get_children"><a class="viewcode-back" href="../../../parsers/parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities.get_children">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">filter_tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filter_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the given tag&#39;s children (excluding the ``filter_types`` and</span>
@@ -205,9 +205,8 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../dev_guide.html">Development Guide</a></li>
 </ul>
 

@@ -7,18 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Base Parsers &#8212; html2ans 3.0.0 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Audio Parsers" href="audio_parser.html" />
-    <link rel="prev" title="Parsers" href="parsers.html" />
+    <link rel="prev" title="Element Parsers" href="../parsers.html" />
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -33,16 +33,48 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-html2ans.parsers.base">
-<span id="base-parsers"></span><h1>Base Parsers<a class="headerlink" href="#module-html2ans.parsers.base" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="base-parsers">
+<h1>Base Parsers<a class="headerlink" href="#base-parsers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="parsing-results">
+<h2>Parsing Results<a class="headerlink" href="#parsing-results" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="html2ans.parsers.base.ParseResult">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.base.</code><code class="descname">ParseResult</code><a class="reference internal" href="../_modules/html2ans/parsers/base.html#ParseResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ParseResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.base.ParseResult" title="html2ans.parsers.base.ParseResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.ParseResult</span></code></a></p>
+<p>A wrapper for holding the results of parsing.</p>
+<p><code class="docutils literal notranslate"><span class="pre">output</span></code> is the ANS JSON parsed by the parser.</p>
+<p><code class="docutils literal notranslate"><span class="pre">match</span></code> indicates whether or not other parse attempts should be made.</p>
+<p>The idea of the parsing “match” is necessary so that we can try
+multiple parsers per tag (and not try multiple parsers when we don’t have to).
+For example, when parsing <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;&lt;/p&gt;</span></code>, if we only returned an empty dictionary
+with the first available parser, the next logical step is to try the next parser.
+By returning <code class="docutils literal notranslate"><span class="pre">match=True</span></code> in that situation, we don’t make any more
+parsing attempts, we just move on to the next element in the tree.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>output</strong> (<em>dict</em><em> or </em><em>list</em><em>[</em><em>dict</em><em>]</em>) – The output ANS</li>
+<li><strong>match</strong> (<em>bool</em>) – Whether or not this parse was a match for a given element</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="parser-interface">
+<h2>Parser Interface<a class="headerlink" href="#parser-interface" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.base.ElementParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.base.</code><code class="descname">ElementParser</code><a class="reference internal" href="_modules/html2ans/parsers/base.html#ElementParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ElementParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.base.</code><code class="descname">ElementParser</code><a class="reference internal" href="../_modules/html2ans/parsers/base.html#ElementParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ElementParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Element parser interface.</p>
+<p>Element parsing interface.</p>
 <dl class="method">
 <dt id="html2ans.parsers.base.ElementParser.is_applicable">
-<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/base.html#ElementParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ElementParser.is_applicable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#ElementParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ElementParser.is_applicable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Indicates if the given element is something this
 parser can/should be parsing.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -57,7 +89,7 @@ parser can/should be parsing.</p>
 
 <dl class="method">
 <dt id="html2ans.parsers.base.ElementParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/base.html#ElementParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ElementParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#ElementParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ElementParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -71,9 +103,12 @@ parser can/should be parsing.</p>
 
 </dd></dl>
 
+</div>
+<div class="section" id="base-parser">
+<h2>Base Parser<a class="headerlink" href="#base-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.base.BaseElementParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.base.</code><code class="descname">BaseElementParser</code><a class="reference internal" href="_modules/html2ans/parsers/base.html#BaseElementParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.BaseElementParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.base.</code><code class="descname">BaseElementParser</code><a class="reference internal" href="../_modules/html2ans/parsers/base.html#BaseElementParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.BaseElementParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.base.ElementParser" title="html2ans.parsers.base.ElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.ElementParser</span></code></a>, <a class="reference internal" href="parser_utils.html#html2ans.parsers.utils.AbstractParserUtilities" title="html2ans.parsers.utils.AbstractParserUtilities"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.utils.AbstractParserUtilities</span></code></a></p>
 <p>Base element parser; assumes elements are being parsed using
 BeautifulSoup. Provides a standard method of checking for
@@ -107,7 +142,7 @@ but <code class="docutils literal notranslate"><span class="pre">&lt;div</span> 
 
 <dl class="method">
 <dt id="html2ans.parsers.base.BaseElementParser.is_applicable">
-<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/base.html#BaseElementParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.BaseElementParser.is_applicable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#BaseElementParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.BaseElementParser.is_applicable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
 <code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -122,7 +157,7 @@ but <code class="docutils literal notranslate"><span class="pre">&lt;div</span> 
 
 <dl class="method">
 <dt id="html2ans.parsers.base.BaseElementParser.construct_output">
-<code class="descname">construct_output</code><span class="sig-paren">(</span><em>element</em>, <em>ans_type=None</em>, <em>content=None</em>, <em>version=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/base.html#BaseElementParser.construct_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.BaseElementParser.construct_output" title="Permalink to this definition">¶</a></dt>
+<code class="descname">construct_output</code><span class="sig-paren">(</span><em>element</em>, <em>ans_type=None</em>, <em>content=None</em>, <em>version=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#BaseElementParser.construct_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.BaseElementParser.construct_output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method for constructing an output dictionary. If element is a <code class="docutils literal notranslate"><span class="pre">Tag</span></code> with
 attributes, those attributes will be stashed in <code class="docutils literal notranslate"><span class="pre">additional_properties</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -145,39 +180,17 @@ root parser</li>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="html2ans.parsers.base.ParseResult">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.base.</code><code class="descname">ParseResult</code><a class="reference internal" href="_modules/html2ans/parsers/base.html#ParseResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ParseResult" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.base.ParseResult" title="html2ans.parsers.base.ParseResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.ParseResult</span></code></a></p>
-<p>A wrapper for parsing results. The idea of a parsing “match” is necessary
-so that we can try multiple parsers per tag (and not try multiple parsers
-when we don’t have to). For example, when parsing <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;&lt;/p&gt;</span></code>, if we
-only returned an empty dictionary with the first available parser,
-the next logical step is to try the next parser. By returning <code class="docutils literal notranslate"><span class="pre">match=True</span></code>
-in that situation, we don’t make any more parsing attempts, we just move on
-to the next element in the tree.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>output</strong> (<em>dict</em><em> or </em><em>list</em><em>[</em><em>dict</em><em>]</em>) – The output ANS</li>
-<li><strong>match</strong> (<em>bool</em>) – Whether or not this parser was a match for a given element</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+</div>
+<div class="section" id="ignore-elements-null-parser">
+<h2>Ignore Elements (Null Parser)<a class="headerlink" href="#ignore-elements-null-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.base.NullParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.base.</code><code class="descname">NullParser</code><a class="reference internal" href="_modules/html2ans/parsers/base.html#NullParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.NullParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.base.</code><code class="descname">NullParser</code><a class="reference internal" href="../_modules/html2ans/parsers/base.html#NullParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.NullParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>Parser for elements we want to ignore in the output ANS.</p>
 <dl class="method">
 <dt id="html2ans.parsers.base.NullParser.is_applicable">
-<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/base.html#NullParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.NullParser.is_applicable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#NullParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.NullParser.is_applicable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
 <code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -192,7 +205,7 @@ to the next element in the tree.</p>
 
 <dl class="method">
 <dt id="html2ans.parsers.base.NullParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/html2ans/parsers/base.html#NullParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.NullParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#NullParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.NullParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -207,6 +220,7 @@ to the next element in the tree.</p>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
@@ -215,7 +229,7 @@ to the next element in the tree.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">html2ans</a></h1>
+<h1 class="logo"><a href="../index.html">html2ans</a></h1>
 
 
 
@@ -226,15 +240,28 @@ to the next element in the tree.</p>
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="base.html">Base</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exc.html">Exceptions</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="parsers.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usage.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../base.html">Document Parsing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../parsers.html">Element Parsers</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Base Parsers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#parsing-results">Parsing Results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parser-interface">Parser Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#base-parser">Base Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ignore-elements-null-parser">Ignore Elements (Null Parser)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="dev_guide.html">Development Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="audio_parser.html">Audio Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed_parser.html">Embed Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="image_parser.html">Image Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="text_parser.html">Text Parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="raw_html_parser.html">Raw HTML Parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parser_utils.html">Parser Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guide.html">Development Guide</a></li>
 </ul>
 
 
@@ -252,7 +279,7 @@ to the next element in the tree.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -273,7 +300,7 @@ to the next element in the tree.</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/base_parser.rst.txt"
+      <a href="../_sources/parsers/base_parser.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

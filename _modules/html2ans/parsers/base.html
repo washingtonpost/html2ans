@@ -40,12 +40,35 @@
 <span class="kn">from</span> <span class="nn">html2ans.parsers.utils</span> <span class="k">import</span> <span class="n">AbstractParserUtilities</span>
 
 
-<div class="viewcode-block" id="ElementParser"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.ElementParser">[docs]</a><span class="k">class</span> <span class="nc">ElementParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ParseResult"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.ParseResult">[docs]</a><span class="k">class</span> <span class="nc">ParseResult</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;ParseResult&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">])):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Element parser interface.</span>
+<span class="sd">    A wrapper for holding the results of parsing.</span>
+
+<span class="sd">    ``output`` is the ANS JSON parsed by the parser.</span>
+
+<span class="sd">    ``match`` indicates whether or not other parse attempts should be made.</span>
+<span class="sd">    </span>
+<span class="sd">    The idea of the parsing &quot;match&quot; is necessary so that we can try</span>
+<span class="sd">    multiple parsers per tag (and not try multiple parsers when we don&#39;t have to).</span>
+<span class="sd">    For example, when parsing ``&lt;p&gt;&lt;/p&gt;``, if we only returned an empty dictionary</span>
+<span class="sd">    with the first available parser, the next logical step is to try the next parser.</span>
+<span class="sd">    By returning ``match=True`` in that situation, we don&#39;t make any more</span>
+<span class="sd">    parsing attempts, we just move on to the next element in the tree.</span>
+
+<span class="sd">    :param output: The output ANS</span>
+<span class="sd">    :type output: dict or list[dict]</span>
+<span class="sd">    :param match: Whether or not this parse was a match for a given element</span>
+<span class="sd">    :type match: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ElementParser"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.ElementParser">[docs]</a><span class="k">class</span> <span class="nc">ElementParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Element parsing interface.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ElementParser.is_applicable"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.ElementParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ElementParser.is_applicable"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.ElementParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Indicates if the given element is something this</span>
 <span class="sd">        parser can/should be parsing.</span>
@@ -55,7 +78,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ElementParser.parse"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.ElementParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ElementParser.parse"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.ElementParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parses the given element.</span>
 
@@ -65,7 +88,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="BaseElementParser"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.BaseElementParser">[docs]</a><span class="k">class</span> <span class="nc">BaseElementParser</span><span class="p">(</span><span class="n">ElementParser</span><span class="p">,</span> <span class="n">AbstractParserUtilities</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseElementParser"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.BaseElementParser">[docs]</a><span class="k">class</span> <span class="nc">BaseElementParser</span><span class="p">(</span><span class="n">ElementParser</span><span class="p">,</span> <span class="n">AbstractParserUtilities</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base element parser; assumes elements are being parsed using</span>
 <span class="sd">    BeautifulSoup. Provides a standard method of checking for</span>
@@ -96,7 +119,7 @@
 <span class="sd">    but ``&lt;div class=&quot;headlines&quot;&gt;&lt;img ...&gt;&lt;p&gt;My headline&lt;/p&gt;&lt;/div&gt;`` would.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="BaseElementParser.is_applicable"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.BaseElementParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseElementParser.is_applicable"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.BaseElementParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks applicability using ``applicable_elements`` and, optionally,</span>
 <span class="sd">        ``applicable_classes``</span>
@@ -119,7 +142,7 @@
             <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">y</span><span class="p">,</span>
             <span class="nb">list</span><span class="p">(</span><span class="n">applicable_class</span> <span class="ow">in</span> <span class="n">classes</span> <span class="k">for</span> <span class="n">applicable_class</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">applicable_classes</span><span class="p">))</span>
 
-<div class="viewcode-block" id="BaseElementParser.construct_output"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.BaseElementParser.construct_output">[docs]</a>    <span class="k">def</span> <span class="nf">construct_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ans_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseElementParser.construct_output"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.BaseElementParser.construct_output">[docs]</a>    <span class="k">def</span> <span class="nf">construct_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ans_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convenience method for constructing an output dictionary. If element is a ``Tag`` with</span>
 <span class="sd">        attributes, those attributes will be stashed in ``additional_properties``.</span>
@@ -149,35 +172,17 @@
         <span class="k">return</span> <span class="n">result</span></div></div>
 
 
-<div class="viewcode-block" id="ParseResult"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.ParseResult">[docs]</a><span class="k">class</span> <span class="nc">ParseResult</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;ParseResult&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">])):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A wrapper for parsing results. The idea of a parsing &quot;match&quot; is necessary</span>
-<span class="sd">    so that we can try multiple parsers per tag (and not try multiple parsers</span>
-<span class="sd">    when we don&#39;t have to). For example, when parsing ``&lt;p&gt;&lt;/p&gt;``, if we</span>
-<span class="sd">    only returned an empty dictionary with the first available parser,</span>
-<span class="sd">    the next logical step is to try the next parser. By returning ``match=True``</span>
-<span class="sd">    in that situation, we don&#39;t make any more parsing attempts, we just move on</span>
-<span class="sd">    to the next element in the tree.</span>
-
-<span class="sd">    :param output: The output ANS</span>
-<span class="sd">    :type output: dict or list[dict]</span>
-<span class="sd">    :param match: Whether or not this parser was a match for a given element</span>
-<span class="sd">    :type match: bool</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="NullParser"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.NullParser">[docs]</a><span class="k">class</span> <span class="nc">NullParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
+<div class="viewcode-block" id="NullParser"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.NullParser">[docs]</a><span class="k">class</span> <span class="nc">NullParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parser for elements we want to ignore in the output ANS.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="n">Comment</span><span class="p">,</span> <span class="s1">&#39;br&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="NullParser.is_applicable"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.NullParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="NullParser.is_applicable"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.NullParser.is_applicable">[docs]</a>    <span class="k">def</span> <span class="nf">is_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="NullParser.parse"><a class="viewcode-back" href="../../../base_parser.html#html2ans.parsers.base.NullParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="NullParser.parse"><a class="viewcode-back" href="../../../parsers/base_parser.html#html2ans.parsers.base.NullParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div></div>
 </pre></div>
 
@@ -198,9 +203,8 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../dev_guide.html">Development Guide</a></li>
 </ul>
 
