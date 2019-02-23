@@ -7,13 +7,18 @@ workflows:
       - test
   deploy:
     jobs:
-      - update_docs
+      - update_docs:
+          filters:
+            tags:
+              only: /[0-9]+(\.[0-9]+)*/
+            branches:
+              ignore: /.*/
       - build_and_deploy:
           filters:
             tags:
               only: /[0-9]+(\.[0-9]+)*/
             branches:
-              only: master
+              ignore: /.*/
 jobs: # A basic unit of work in a run
   build_and_deploy:
     working_directory: ~/html2ans
@@ -56,7 +61,8 @@ jobs: # A basic unit of work in a run
           command: |
             python3 -m virtualenv html2ans
             source html2ans/bin/activate
-            python setup.py install build_sphinx
+            pip install -e .
+            python setup.py build_sphinx
       - run:
           name: Upload docs
           command: |
