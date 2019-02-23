@@ -37,6 +37,41 @@
 <h1>Audio Parsers<a class="headerlink" href="#audio-parsers" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="basic-audio-parser">
 <h2>Basic Audio Parser<a class="headerlink" href="#basic-audio-parser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="html2ans.parsers.audio.AudioParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.audio.</code><code class="descname">AudioParser</code><a class="reference internal" href="../_modules/html2ans/parsers/audio.html#AudioParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.audio.AudioParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
+<p>Audio element parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/audio.json">ANS schema</a></p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">audio</span><span class="p">&gt;&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;postreports.mp3&quot;</span> <span class="p">/&gt;&lt;/</span><span class="nt">audio</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;audio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;streams&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;postreports.mp3&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="html2ans.parsers.audio.AudioParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/audio.html#AudioParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.audio.AudioParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the given element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

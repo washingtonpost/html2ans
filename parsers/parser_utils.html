@@ -33,8 +33,101 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="parser-utilities">
-<h1>Parser Utilities<a class="headerlink" href="#parser-utilities" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-html2ans.parsers.utils">
+<span id="parser-utilities"></span><h1>Parser Utilities<a class="headerlink" href="#module-html2ans.parsers.utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="html2ans.parsers.utils.has_attributes">
+<code class="descclassname">html2ans.parsers.utils.</code><code class="descname">has_attributes</code><span class="sig-paren">(</span><em>tag</em>, <em>filter_types=('id'</em>, <em>'class'</em>, <em>'style')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#has_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.has_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to check if a tag has attributes (excluding the given <code class="docutils literal notranslate"><span class="pre">filter_types</span></code>).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="html2ans.parsers.utils.parse_dimensions">
+<code class="descclassname">html2ans.parsers.utils.</code><code class="descname">parse_dimensions</code><span class="sig-paren">(</span><em>tag</em>, <em>tag_json</em>, <em>dimension_keys=('width'</em>, <em>'height')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#parse_dimensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.parse_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds dimensions to converted JSON. Images and iframes will generally
+have width/height properties; this is just a convenience method for
+adding those properties.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="html2ans.parsers.utils.AbstractParserUtilities">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.utils.</code><code class="descname">AbstractParserUtilities</code><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Common utility functions for parsers. These methods are grouped here (rather
+than in the <code class="docutils literal notranslate"><span class="pre">BaseElementParser</span></code>) because they are used both in element
+parsing and in document parser (i.e. by the <code class="docutils literal notranslate"><span class="pre">BaseHtmlAnsParser</span></code>).</p>
+<dl class="attribute">
+<dt id="html2ans.parsers.utils.AbstractParserUtilities.WRAPPER_TAGS">
+<code class="descname">WRAPPER_TAGS</code><em class="property"> = ['p', 'div']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.WRAPPER_TAGS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Which tags to consider as potential wrappers in the <code class="docutils literal notranslate"><span class="pre">is_wrapper</span></code> method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="html2ans.parsers.utils.AbstractParserUtilities.EMPTY_STRINGS">
+<code class="descname">EMPTY_STRINGS</code><em class="property"> = [None, '', ' ', '\n', '&lt;br&gt;', '&lt;br/&gt;']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.EMPTY_STRINGS" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of strings considered empty (if a <code class="docutils literal notranslate"><span class="pre">NavigableString</span></code> is passed to 
+<code class="docutils literal notranslate"><span class="pre">is_empty</span></code> and the string is in this list, <code class="docutils literal notranslate"><span class="pre">is_empty</span></code> will return True).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="html2ans.parsers.utils.AbstractParserUtilities.EMPTY_TAGS">
+<code class="descname">EMPTY_TAGS</code><em class="property"> = ['br']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.EMPTY_TAGS" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of tags considered empty (if a tag passed to <code class="docutils literal notranslate"><span class="pre">is_empty</span></code> is in this list,
+<code class="docutils literal notranslate"><span class="pre">is_empty</span></code> will return True).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="html2ans.parsers.utils.AbstractParserUtilities.TEXT_TAGS">
+<code class="descname">TEXT_TAGS</code><em class="property"> = ['blockquote', 'p', 'a', 'b', 'del', 'em', 'i', 'ins', 'mark', 'small', 'strong', 'sub', 'sup', 'span']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.TEXT_TAGS" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of tags considered to be text. This affects the results of <code class="docutils literal notranslate"><span class="pre">is_text_only</span></code>
+which is used by most text parsers. For example, because by default <code class="docutils literal notranslate"><span class="pre">a</span></code> tags
+are considered text, <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;Here</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">&lt;a</span> <span class="pre">href=&quot;google.com&quot;&gt;link&lt;/a&gt;&lt;/p&gt;</span></code> would
+be considered text only.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="html2ans.parsers.utils.AbstractParserUtilities.is_empty">
+<em class="property">classmethod </em><code class="descname">is_empty</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_empty" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Returns true if the given tag is empty. Things like</div></blockquote>
+<p>, &lt;p&gt;
+&lt;/p&gt;, &lt;iframe /&gt;</p>
+<blockquote>
+<div>are considered empty.
+:param tag: the tag to check
+:return: True if empty</div></blockquote>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="html2ans.parsers.utils.AbstractParserUtilities.is_text_only">
+<em class="property">classmethod </em><code class="descname">is_text_only</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_text_only"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_text_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the given tag only has <code class="docutils literal notranslate"><span class="pre">NavigableString</span></code> or
+tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES</span></code> for children.
+:param element:
+:return: True if this element only contains text</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="html2ans.parsers.utils.AbstractParserUtilities.is_wrapper">
+<em class="property">classmethod </em><code class="descname">is_wrapper</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if this tag is only wrapping other content.
+:param element:
+:return: True if the given element is only wrapping sub-content</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="html2ans.parsers.utils.AbstractParserUtilities.get_children">
+<em class="property">classmethod </em><code class="descname">get_children</code><span class="sig-paren">(</span><em>element</em>, <em>filter_tags=None</em>, <em>filter_types=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.get_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.get_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the given tag’s children (excluding the <code class="docutils literal notranslate"><span class="pre">filter_types</span></code> and
+<code class="docutils literal notranslate"><span class="pre">filter_tags</span></code>).
+:param element: the element to check
+:param filter_types: class types to filter from the tag’s children
+:param filter_tags: tag names to filter from the tag’s children
+:return: the unfiltered/unempty children if element is a Tag, else []</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
