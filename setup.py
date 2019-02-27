@@ -1,51 +1,28 @@
-import sys
-import os
 from codecs import open
-from setuptools import setup, find_packages
+import os
+from setuptools import find_packages, setup
 from setuptools.command.install import install
-
-
-THIS_FILE_DIR = os.path.dirname(__file__)
-
-try:
-    # pip 9
-    from pip.req import parse_requirements
-    from pip.download import PipSession
-except ImportError:
-    # pip 10
-    from pip._internal.req import parse_requirements
-    from pip._internal.download import PipSession
-
-
-def load_reqs(fn):
-    reqs = []
-    reqs_extras = {}
-    parsed_reqs = parse_requirements(fn, session=PipSession())
-
-    for req in parsed_reqs:
-        markers = req.markers
-        if markers:
-            reqs_extras[":" + str(markers)] = str(req.req)
-        else:
-            reqs.append(str(req.req))
-
-    return reqs, reqs_extras
+import sys
 
 
 NEEDS_DOCS = 'build_sphinx' in sys.argv
 NEEDS_PYTEST = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
-
-DOCS_REQUIRE, DOCS_EXTRAS = load_reqs('reqs/doc.txt') if NEEDS_DOCS else ([], {})
-INSTALL_REQUIRES, EXTRAS_REQUIRE = load_reqs('reqs/default.in')
-TESTS_REQUIRE, TESTS_EXTRAS = load_reqs('reqs/test.txt')
-SETUP_REQUIRES = []
-
-if NEEDS_DOCS:
-    EXTRAS_REQUIRE.update(DOCS_EXTRAS)
-    SETUP_REQUIRES.extend(DOCS_REQUIRE)
-if NEEDS_PYTEST:
-    EXTRAS_REQUIRE.update(TESTS_EXTRAS)
-    SETUP_REQUIRES.append('pytest-runner')
+DOCS_REQUIRE = ('sphinx',)
+INSTALL_REQUIRES = (
+    'BeautifulSoup4<5',
+    'ftfy<5;python_version<"3"',
+    'ftfy<6;python_version>="3"',
+    'html5lib<2',
+    'lxml<5',
+    'six<2',
+)
+TESTS_REQUIRE = ('pytest<5',)
+SETUP_REQUIRES = (('pytest-runner',) if NEEDS_PYTEST else ()) + (DOCS_REQUIRE if NEEDS_DOCS else ())
+EXTRAS_REQUIRE = {
+    'dev': DOCS_REQUIRE + TESTS_REQUIRE,
+    'tests': TESTS_REQUIRE
+}
+THIS_FILE_DIR = os.path.dirname(__file__)
 
 # Get the long description from the README file
 with open(os.path.join(THIS_FILE_DIR, 'README.rst'), encoding='utf-8') as f:
