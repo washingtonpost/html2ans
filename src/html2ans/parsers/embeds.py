@@ -378,7 +378,7 @@ class InstagramEmbedParser(AbstractEmbedParser):
 
     """
     applicable_classes = ['instagram-media']
-    regex = r'(https?://www.instagram.com/\w+/\w+/)'
+    regex = r'(https?://www.instagram.com/[\w-]+/[\w-]+/)'
     tag = 'a'
     attr = 'href'
     embed_type = 'instagram'

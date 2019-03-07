@@ -27,7 +27,13 @@ from html2ans.parsers.embeds import InstagramEmbedParser
      ' target="_blank">A post shared by CNN (@cnn)</a> on '
      '<time datetime="2018-11-18T01:00:10+00:00">Nov 17, 2018 at 5:00pm PST</time>'
      '</p></div></blockquote>',
-     "https://www.instagram.com/p/BqTW3VBDl2c/")
+     "https://www.instagram.com/p/BqTW3VBDl2c/"),
+    ('<blockquote class="instagram-media" '
+     'data-instgrm-permalink="https://www.instagram.com/p/Bsd-bD-Hdim/?utm_source=ig_embed&amp;utm_medium=loading"'
+     ' data-instgrm-version="12"><div>'
+     '<a href="https://www.instagram.com/p/Bsd-bD-Hdim/?utm_source=ig_embed&amp;utm_medium=loading">'
+     '<div></div></a></div></blockquote>',
+     "https://www.instagram.com/p/Bsd-bD-Hdim/")
 ])
 def test_embed_parser(tag_string, expected_id, make_http_tag, make_https_tag):
     for test_function in [make_http_tag, make_https_tag]:
