@@ -38,6 +38,7 @@ jobs: # A basic unit of work in a run
           command: |
             python3 -m virtualenv html2ans
             source html2ans/bin/activate
+            pip install twine
             python setup.py install test verify sdist bdist_wheel
             twine upload dist/*
   update_docs:
