@@ -14,6 +14,16 @@ from html2ans.parsers.image import (
     ImageParser,
 )
 from html2ans.parsers.embeds import (
+    ArcPlayerEmbedParser,
+    DailyMotionEmbedParser,
+    FacebookPostEmbedParser,
+    FacebookVideoEmbedParser,
+    FlickrEmbedParser,
+    IFrameParser,
+    ImgurEmbedParser,
+    InstagramEmbedParser,
+    PollDaddyEmbedParser,
+    RedditEmbedParser,
     SpotifyEmbedParser,
     TumblrEmbedParser,
     TwitterTweetEmbedParser,
@@ -21,12 +31,6 @@ from html2ans.parsers.embeds import (
     VimeoEmbedParser,
     VineEmbedParser,
     YoutubeEmbedParser,
-    FacebookPostEmbedParser,
-    FacebookVideoEmbedParser,
-    IFrameParser,
-    ImgurEmbedParser,
-    InstagramEmbedParser,
-    ArcPlayerEmbedParser,
 )
 from html2ans.parsers.audio import AudioParser
 from html2ans.parsers.raw_html import RawHtmlParser
@@ -39,33 +43,48 @@ class DefaultHtmlAnsParser(BaseHtmlAnsParser):
     """
 
     DEFAULT_PARSERS = [
+        # embed parsers
+        ArcPlayerEmbedParser(),  # div
+        DailyMotionEmbedParser(),  # iframe
+        FacebookPostEmbedParser(),  # iframe (with embed inside)
+        FacebookVideoEmbedParser(),  # iframe (with embed inside)
+        FlickrEmbedParser(),  # a (with image inside)
+        ImgurEmbedParser(),  # blockquote (with embed inside)
+        InstagramEmbedParser(),  # blockquote (with embed inside)
+        PollDaddyEmbedParser(),  # noscript
+        RedditEmbedParser(),  # blockquote (with embed inside)
+        SpotifyEmbedParser(),  # iframe (with embed inside)
+        TumblrEmbedParser(),  # div
+        TwitterTweetEmbedParser(),  # blockquote (with embed inside)
+        TwitterVideoEmbedParser(),  # blockquote (with embed inside)
+        YoutubeEmbedParser(),  # iframe (with embed inside)
+        VimeoEmbedParser(),  # iframe (with embed inside)
+        VineEmbedParser(),  # iframe (with embed inside)
+
+        # text parsers
         HeaderParser(),  # h1-h6
         ListParser(),  # ul/ol
         FormattedTextParser(),  # strong, em, etc.
-        LinkedImageParser(),  # a
-        LinkParser(),  # a
-        ImageParser(),  # img
-        ArcPlayerEmbedParser(),  # div
-        TumblrEmbedParser(),  # div
-        FigureParser(),  # figure
-        AudioParser(),  # audio
-        TwitterTweetEmbedParser(),  # blockquote (with embed inside)
-        TwitterVideoEmbedParser(),  # blockquote (with embed inside)
-        InstagramEmbedParser(),  # blockquote (with embed inside)
-        ImgurEmbedParser(),  # blockquote (with embed inside)
-        YoutubeEmbedParser(),  # iframe (with embed inside)
-        FacebookPostEmbedParser(),  # iframe (with embed inside)
-        FacebookVideoEmbedParser(),  # iframe (with embed inside)
-        SpotifyEmbedParser(),  # iframe (with embed inside)
-        VimeoEmbedParser(),  # iframe (with embed inside)
-        VineEmbedParser(),  # iframe (with embed inside)
         BlockquoteParser(),  # blockquote
         ParagraphParser(),  # NavigableString, p
-        IFrameParser(),  # iframe
+
+        # image/figure parsers
+        LinkedImageParser(),  # a
+        ImageParser(),  # img
+        FigureParser(),  # figure
+
+        LinkParser(),  # a
+
+        AudioParser(),  # audio
+
+        IFrameParser(),  # generic iframe
+
         NullParser(),  # comments
     ]
     """
-    Default parsers for the default implementation.
+    Default parsers for the default implementation. These will be added to
+    the `BaseHtmlAnsParser` ``parsers`` attribute in the order listed, so
+    order matters!
     """
 
     BACKUP_PARSERS = [
@@ -73,7 +92,8 @@ class DefaultHtmlAnsParser(BaseHtmlAnsParser):
         RawHtmlParser()
     ]
     """
-    Backup parsers for the default implementation.
+    Backup parsers for the default implementation. These will be tried in
+    the order listed, so order matters!
     """
 
     def __init__(self, *args, **kwargs):
