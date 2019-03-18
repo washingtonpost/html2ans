@@ -7,13 +7,18 @@ workflows:
       - test
   deploy:
     jobs:
-      - update_docs
+      - update_docs:
+          filters:
+            tags:
+              only: /[0-9]+(\.[0-9]+)*/
+            branches:
+              ignore: /.*/
       - build_and_deploy:
           filters:
             tags:
               only: /[0-9]+(\.[0-9]+)*/
             branches:
-              only: master
+              ignore: /.*/
 jobs: # A basic unit of work in a run
   build_and_deploy:
     working_directory: ~/html2ans
@@ -23,16 +28,11 @@ jobs: # A basic unit of work in a run
     steps:
       - checkout
       - run:
-          name: init .pypirc
-          command: |
-            echo -e "[pypi]" >> ~/.pypirc
-            echo -e "username = arcpsteam" >> ~/.pypirc
-            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
-      - run:
           name: Build and deploy
           command: |
             python3 -m virtualenv html2ans
             source html2ans/bin/activate
+            pip install twine
             python setup.py install test verify sdist bdist_wheel
             twine upload dist/*
   update_docs:
@@ -56,7 +56,8 @@ jobs: # A basic unit of work in a run
           command: |
             python3 -m virtualenv html2ans
             source html2ans/bin/activate
-            python setup.py install build_sphinx
+            pip install -e .
+            python setup.py build_sphinx
       - run:
           name: Upload docs
           command: |

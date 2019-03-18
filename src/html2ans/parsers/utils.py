@@ -39,7 +39,7 @@ class AbstractParserUtilities(object):
 
     EMPTY_STRINGS = [None, '', ' ', '\n', '<br>', '<br/>']
     """
-    List of strings considered empty (if a ``NavigableString`` is passed to 
+    List of strings considered empty (if a ``NavigableString`` is passed to
     ``is_empty`` and the string is in this list, ``is_empty`` will return True).
     """
 

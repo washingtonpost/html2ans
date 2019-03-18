@@ -13,7 +13,7 @@ class ParseResult(namedtuple('ParseResult', ['output', 'match'])):
     ``output`` is the ANS JSON parsed by the parser.
 
     ``match`` indicates whether or not other parse attempts should be made.
-    
+
     The idea of the parsing "match" is necessary so that we can try
     multiple parsers per tag (and not try multiple parsers when we don't have to).
     For example, when parsing ``<p></p>``, if we only returned an empty dictionary
