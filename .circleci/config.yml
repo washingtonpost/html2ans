@@ -28,12 +28,6 @@ jobs: # A basic unit of work in a run
     steps:
       - checkout
       - run:
-          name: init .pypirc
-          command: |
-            echo -e "[pypi]" >> ~/.pypirc
-            echo -e "username = arcpsteam" >> ~/.pypirc
-            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
-      - run:
           name: Build and deploy
           command: |
             python3 -m virtualenv html2ans
