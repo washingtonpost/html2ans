@@ -1,18 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Parser Utilities &#8212; html2ans 3.0.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>Parser Utilities &#8212; html2ans 3.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Development" href="../dev_guide.html" />
@@ -65,7 +64,7 @@ parsing and in document parser (i.e. by the <code class="docutils literal notran
 <dl class="attribute">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.EMPTY_STRINGS">
 <code class="descname">EMPTY_STRINGS</code><em class="property"> = [None, '', ' ', '\n', '&lt;br&gt;', '&lt;br/&gt;']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.EMPTY_STRINGS" title="Permalink to this definition">¶</a></dt>
-<dd><p>List of strings considered empty (if a <code class="docutils literal notranslate"><span class="pre">NavigableString</span></code> is passed to 
+<dd><p>List of strings considered empty (if a <code class="docutils literal notranslate"><span class="pre">NavigableString</span></code> is passed to
 <code class="docutils literal notranslate"><span class="pre">is_empty</span></code> and the string is in this list, <code class="docutils literal notranslate"><span class="pre">is_empty</span></code> will return True).</p>
 </dd></dl>
 
@@ -89,13 +88,15 @@ be considered text only.</p>
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.is_empty">
 <em class="property">classmethod </em><code class="descname">is_empty</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_empty" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div>Returns true if the given tag is empty. Things like</div></blockquote>
+<div><p>Returns true if the given tag is empty. Things like</p>
+</div></blockquote>
 <p>, &lt;p&gt;
 &lt;/p&gt;, &lt;iframe /&gt;</p>
 <blockquote>
-<div>are considered empty.
+<div><p>are considered empty.
 :param tag: the tag to check
-:return: True if empty</div></blockquote>
+:return: True if empty</p>
+</div></blockquote>
 </dd></dl>
 
 <dl class="classmethod">
@@ -184,8 +185,6 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -198,7 +197,7 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

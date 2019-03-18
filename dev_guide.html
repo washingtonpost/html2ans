@@ -1,18 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Development &#8212; html2ans 3.0.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>Development &#8212; html2ans 3.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Parser Utilities" href="parsers/parser_utils.html" />
@@ -37,28 +36,45 @@
 <div class="section" id="getting-set-up">
 <h2>Getting set up<a class="headerlink" href="#getting-set-up" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Clone this repo</li>
-<li>Make sure you have Python 3.6+ installed</li>
-<li>Ideally, set up a virtualenv and activate it (<a class="reference external" href="http://virtualenvwrapper.readthedocs.io/en/latest/">http://virtualenvwrapper.readthedocs.io/en/latest/</a>)</li>
-<li>From your local copy of this project, run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements-dev.txt</span></code></li>
-<li>Run tox with the command <code class="docutils literal notranslate"><span class="pre">tox</span></code></li>
-<li>If that completes successfully, you are good to go!</li>
-<li>Make sure you re-run tox before committing changes</li>
+<li><p>Clone this repo</p></li>
+<li><p>Ideally, set up a virtualenv and activate it (<a class="reference external" href="http://virtualenvwrapper.readthedocs.io/en/latest/">http://virtualenvwrapper.readthedocs.io/en/latest/</a>)</p></li>
+<li><p>From your local copy of this project, run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements-dev.txt</span></code></p></li>
+<li><p>Run tox with the command <code class="docutils literal notranslate"><span class="pre">tox</span></code></p></li>
+<li><p>If that completes successfully, you are good to go!</p></li>
+<li><p>Make sure you re-run tox before committing changes</p></li>
 </ul>
 </div>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>The documentation for this project is generated using Sphinx and hosted via Github<ul>
-<li>See <a class="reference external" href="https://daler.github.io/sphinxdoc-test/includeme.html#publishing-sphinx-generated-docs-on-github">https://daler.github.io/sphinxdoc-test/includeme.html#publishing-sphinx-generated-docs-on-github</a></li>
+<li><p>The documentation for this project is generated using Sphinx and hosted via Github</p>
+<ul>
+<li><p>See <a class="reference external" href="https://daler.github.io/sphinxdoc-test/includeme.html#publishing-sphinx-generated-docs-on-github">https://daler.github.io/sphinxdoc-test/includeme.html#publishing-sphinx-generated-docs-on-github</a></p></li>
 </ul>
 </li>
-<li>Docs will be automatically generated and uploaded when a new version is released</li>
-<li>To update docs independent of a new release:<ul>
-<li>Follow <a class="reference external" href="https://daler.github.io/sphinxdoc-test/includeme.html#setting-up-cloned-repos-on-another-machine">these instructions</a></li>
-<li>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">build_sphinx</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">../html2ans-docs/html</span></code></li>
-<li>Commit and push the newly generated documentation</li>
+<li><p>Docs will be automatically generated and uploaded when a new version is released</p></li>
+<li><p>To update docs independent of a new release:</p>
+<ul>
+<li><p>Follow <a class="reference external" href="https://daler.github.io/sphinxdoc-test/includeme.html#setting-up-cloned-repos-on-another-machine">these instructions</a></p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">build_sphinx</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">../html2ans-docs/html</span></code></p></li>
+<li><p>Commit and push the newly generated documentation</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="release-process">
+<h2>Release Process<a class="headerlink" href="#release-process" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>New releases will be pushed to pypi when an appropriate tag (i.e. a version number in the form X.X.X) is pushed</p></li>
+<li><p>In preparation for a new release:</p>
+<ul>
+<li><p>Decide what the next version will be per <a class="reference external" href="https://semver.org/">semantic versioning</a></p></li>
+<li><p>Make a new branch called <code class="docutils literal notranslate"><span class="pre">release/&lt;version</span> <span class="pre">number&gt;</span></code></p></li>
+<li><p>Update the version in <code class="docutils literal notranslate"><span class="pre">setup.py</span></code></p></li>
+<li><p>Update the changelog for all changes that will be included in the release</p></li>
+<li><p>Commit your changes and make a PR against master</p></li>
+<li><p>Once the changes are merged, tag the branch with the version’s release number and push that tag</p></li>
 </ul>
 </li>
 </ul>
@@ -88,6 +104,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Development Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getting-set-up">Getting set up</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-process">Release Process</a></li>
 </ul>
 </li>
 </ul>
@@ -110,8 +127,6 @@
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -124,7 +139,7 @@
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

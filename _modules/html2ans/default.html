@@ -1,18 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>html2ans.default &#8212; html2ans 3.0.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>html2ans.default &#8212; html2ans 3.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -48,6 +47,16 @@
     <span class="n">ImageParser</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">html2ans.parsers.embeds</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">ArcPlayerEmbedParser</span><span class="p">,</span>
+    <span class="n">DailyMotionEmbedParser</span><span class="p">,</span>
+    <span class="n">FacebookPostEmbedParser</span><span class="p">,</span>
+    <span class="n">FacebookVideoEmbedParser</span><span class="p">,</span>
+    <span class="n">FlickrEmbedParser</span><span class="p">,</span>
+    <span class="n">IFrameParser</span><span class="p">,</span>
+    <span class="n">ImgurEmbedParser</span><span class="p">,</span>
+    <span class="n">InstagramEmbedParser</span><span class="p">,</span>
+    <span class="n">PollDaddyEmbedParser</span><span class="p">,</span>
+    <span class="n">RedditEmbedParser</span><span class="p">,</span>
     <span class="n">SpotifyEmbedParser</span><span class="p">,</span>
     <span class="n">TumblrEmbedParser</span><span class="p">,</span>
     <span class="n">TwitterTweetEmbedParser</span><span class="p">,</span>
@@ -55,12 +64,6 @@
     <span class="n">VimeoEmbedParser</span><span class="p">,</span>
     <span class="n">VineEmbedParser</span><span class="p">,</span>
     <span class="n">YoutubeEmbedParser</span><span class="p">,</span>
-    <span class="n">FacebookPostEmbedParser</span><span class="p">,</span>
-    <span class="n">FacebookVideoEmbedParser</span><span class="p">,</span>
-    <span class="n">IFrameParser</span><span class="p">,</span>
-    <span class="n">ImgurEmbedParser</span><span class="p">,</span>
-    <span class="n">InstagramEmbedParser</span><span class="p">,</span>
-    <span class="n">ArcPlayerEmbedParser</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">html2ans.parsers.audio</span> <span class="k">import</span> <span class="n">AudioParser</span>
 <span class="kn">from</span> <span class="nn">html2ans.parsers.raw_html</span> <span class="k">import</span> <span class="n">RawHtmlParser</span>
@@ -73,33 +76,48 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">DEFAULT_PARSERS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># embed parsers</span>
+        <span class="n">ArcPlayerEmbedParser</span><span class="p">(),</span>  <span class="c1"># div</span>
+        <span class="n">DailyMotionEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe</span>
+        <span class="n">FacebookPostEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">FacebookVideoEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">FlickrEmbedParser</span><span class="p">(),</span>  <span class="c1"># a (with image inside)</span>
+        <span class="n">ImgurEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
+        <span class="n">InstagramEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
+        <span class="n">PollDaddyEmbedParser</span><span class="p">(),</span>  <span class="c1"># noscript</span>
+        <span class="n">RedditEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
+        <span class="n">SpotifyEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">TumblrEmbedParser</span><span class="p">(),</span>  <span class="c1"># div</span>
+        <span class="n">TwitterTweetEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
+        <span class="n">TwitterVideoEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
+        <span class="n">YoutubeEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">VimeoEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+        <span class="n">VineEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
+
+        <span class="c1"># text parsers</span>
         <span class="n">HeaderParser</span><span class="p">(),</span>  <span class="c1"># h1-h6</span>
         <span class="n">ListParser</span><span class="p">(),</span>  <span class="c1"># ul/ol</span>
         <span class="n">FormattedTextParser</span><span class="p">(),</span>  <span class="c1"># strong, em, etc.</span>
-        <span class="n">LinkedImageParser</span><span class="p">(),</span>  <span class="c1"># a</span>
-        <span class="n">LinkParser</span><span class="p">(),</span>  <span class="c1"># a</span>
-        <span class="n">ImageParser</span><span class="p">(),</span>  <span class="c1"># img</span>
-        <span class="n">ArcPlayerEmbedParser</span><span class="p">(),</span>  <span class="c1"># div</span>
-        <span class="n">TumblrEmbedParser</span><span class="p">(),</span>  <span class="c1"># div</span>
-        <span class="n">FigureParser</span><span class="p">(),</span>  <span class="c1"># figure</span>
-        <span class="n">AudioParser</span><span class="p">(),</span>  <span class="c1"># audio</span>
-        <span class="n">TwitterTweetEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
-        <span class="n">TwitterVideoEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
-        <span class="n">InstagramEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
-        <span class="n">ImgurEmbedParser</span><span class="p">(),</span>  <span class="c1"># blockquote (with embed inside)</span>
-        <span class="n">YoutubeEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
-        <span class="n">FacebookPostEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
-        <span class="n">FacebookVideoEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
-        <span class="n">SpotifyEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
-        <span class="n">VimeoEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
-        <span class="n">VineEmbedParser</span><span class="p">(),</span>  <span class="c1"># iframe (with embed inside)</span>
         <span class="n">BlockquoteParser</span><span class="p">(),</span>  <span class="c1"># blockquote</span>
         <span class="n">ParagraphParser</span><span class="p">(),</span>  <span class="c1"># NavigableString, p</span>
-        <span class="n">IFrameParser</span><span class="p">(),</span>  <span class="c1"># iframe</span>
+
+        <span class="c1"># image/figure parsers</span>
+        <span class="n">LinkedImageParser</span><span class="p">(),</span>  <span class="c1"># a</span>
+        <span class="n">ImageParser</span><span class="p">(),</span>  <span class="c1"># img</span>
+        <span class="n">FigureParser</span><span class="p">(),</span>  <span class="c1"># figure</span>
+
+        <span class="n">LinkParser</span><span class="p">(),</span>  <span class="c1"># a</span>
+
+        <span class="n">AudioParser</span><span class="p">(),</span>  <span class="c1"># audio</span>
+
+        <span class="n">IFrameParser</span><span class="p">(),</span>  <span class="c1"># generic iframe</span>
+
         <span class="n">NullParser</span><span class="p">(),</span>  <span class="c1"># comments</span>
     <span class="p">]</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Default parsers for the default implementation.</span>
+<span class="sd">    Default parsers for the default implementation. These will be added to</span>
+<span class="sd">    the `BaseHtmlAnsParser` ``parsers`` attribute in the order listed, so</span>
+<span class="sd">    order matters!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">BACKUP_PARSERS</span> <span class="o">=</span> <span class="p">[</span>
@@ -107,7 +125,8 @@
         <span class="n">RawHtmlParser</span><span class="p">()</span>
     <span class="p">]</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Backup parsers for the default implementation.</span>
+<span class="sd">    Backup parsers for the default implementation. These will be tried in</span>
+<span class="sd">    the order listed, so order matters!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -159,8 +178,6 @@
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -173,7 +190,7 @@
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

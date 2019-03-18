@@ -1,18 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Base Parsers &#8212; html2ans 3.0.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>Base Parsers &#8212; html2ans 3.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Audio Parsers" href="audio_parser.html" />
@@ -50,18 +49,14 @@ For example, when parsing <code class="docutils literal notranslate"><span class
 with the first available parser, the next logical step is to try the next parser.
 By returning <code class="docutils literal notranslate"><span class="pre">match=True</span></code> in that situation, we don’t make any more
 parsing attempts, we just move on to the next element in the tree.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>output</strong> (<em>dict</em><em> or </em><em>list</em><em>[</em><em>dict</em><em>]</em>) – The output ANS</li>
-<li><strong>match</strong> (<em>bool</em>) – Whether or not this parse was a match for a given element</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> (<em>dict</em><em> or </em><em>list</em><em>[</em><em>dict</em><em>]</em>) – The output ANS</p></li>
+<li><p><strong>match</strong> (<em>bool</em>) – Whether or not this parse was a match for a given element</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -77,28 +72,22 @@ parsing attempts, we just move on to the next element in the tree.</p>
 <code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#ElementParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ElementParser.is_applicable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Indicates if the given element is something this
 parser can/should be parsing.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to check for applicability</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to check for applicability</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="html2ans.parsers.base.ElementParser.parse">
 <code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#ElementParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.ElementParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -145,14 +134,11 @@ but <code class="docutils literal notranslate"><span class="pre">&lt;div</span> 
 <code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#BaseElementParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.BaseElementParser.is_applicable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
 <code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -160,22 +146,18 @@ but <code class="docutils literal notranslate"><span class="pre">&lt;div</span> 
 <code class="descname">construct_output</code><span class="sig-paren">(</span><em>element</em>, <em>ans_type=None</em>, <em>content=None</em>, <em>version=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#BaseElementParser.construct_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.BaseElementParser.construct_output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method for constructing an output dictionary. If element is a <code class="docutils literal notranslate"><span class="pre">Tag</span></code> with
 attributes, those attributes will be stashed in <code class="docutils literal notranslate"><span class="pre">additional_properties</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element being parsed</li>
-<li><strong>ans_type</strong> (<em>str</em>) – the ANS type to put in the output <code class="docutils literal notranslate"><span class="pre">type</span></code> field</li>
-<li><strong>content</strong> (<em>str</em>) – the content to put in the <code class="docutils literal notranslate"><span class="pre">content</span></code> field</li>
-<li><strong>version</strong> (<em>str</em>) – the version to put in the <code class="docutils literal notranslate"><span class="pre">version</span></code> field. Note: if not provided but
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element being parsed</p></li>
+<li><p><strong>ans_type</strong> (<em>str</em>) – the ANS type to put in the output <code class="docutils literal notranslate"><span class="pre">type</span></code> field</p></li>
+<li><p><strong>content</strong> (<em>str</em>) – the content to put in the <code class="docutils literal notranslate"><span class="pre">content</span></code> field</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – the version to put in the <code class="docutils literal notranslate"><span class="pre">version</span></code> field. Note: if not provided but
 <code class="docutils literal notranslate"><span class="pre">version_required=True</span></code> on this parser, the output will receive a version from the
-root parser</li>
+root parser</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -193,28 +175,22 @@ root parser</li>
 <code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#NullParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.NullParser.is_applicable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
 <code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="html2ans.parsers.base.NullParser.parse">
 <code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/base.html#NullParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.base.NullParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> (<em>bs4.element.Tag</em><em> or </em><em>bs4.element.Comment</em><em> or </em><em>bs4.element.NavigableString</em>) – the element to parse</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -282,8 +258,6 @@ root parser</li>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -296,7 +270,7 @@ root parser</li>
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
