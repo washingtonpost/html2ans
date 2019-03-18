@@ -21,14 +21,24 @@ def test_empty(body_html, test_html2ans):
     "<body><!-- test comment 4 --></body>",
     '<body><div><p><!-- <a href="#test">test link</a> --></p></div></body>'
     '<body><p><!-- uuid: \"002051cc-8f7a-11e8-9774-c7a7ea8e16e4\"--></p></body>',
-    "<body><!-- <div><p>Commented out</p></div> --></body>"
-    ])
+    "<body><!-- <div><p>Commented out</p></div> --></body>",
+    "<!-- test comment 1 --><div><!-- test comment 2 --></div>",
+    "<div><p><!-- test comment 3 --></p></div>",
+    "<!-- test comment 4 -->",
+    '<div><p><!-- <a href="#test">test link</a> --></p></div>'
+    '<p><!-- uuid: \"002051cc-8f7a-11e8-9774-c7a7ea8e16e4\"--></p>',
+    "<!-- <div><p>Commented out</p></div> -->"
+])
 def test_comments(test_html, test_html2ans):
     assert test_html2ans.generate_ans(test_html) == []
 
 
-def test_empty_except_navigable_string(test_html2ans):
-    parsed = test_html2ans.generate_ans('<body>This is a navigable string</body>')
+@pytest.mark.parametrize('test_html', [
+    '<body>This is a navigable string</body>',
+    'This is a navigable string',
+])
+def test_empty_except_navigable_string(test_html, test_html2ans):
+    parsed = test_html2ans.generate_ans(test_html)
     assert len(parsed) == 1
     assert parsed[0].get('content') == 'This is a navigable string'
 
