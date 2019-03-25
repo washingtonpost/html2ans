@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals  # need this for python 2.7 unicode issues
 
 import six
+from bs4 import BeautifulSoup
 from bs4.element import NavigableString, Tag
 from ftfy import fix_text
 
@@ -245,7 +246,7 @@ class LinkParser(BaseElementParser):
     applicable_elements = ['a']
 
     def parse(self, element, *args, **kwargs):
-        result = self.construct_output(element, "interstitial_link", element.text)
+        result = self.construct_output(element, "interstitial_link", str(element))
         match = True
         url = element.attrs.get('href')
         result["url"] = url
@@ -254,6 +255,39 @@ class LinkParser(BaseElementParser):
             result = None
             match = True
         return ParseResult(result, match)
+
+
+class InlineLinkParser(BaseElementParser):
+    """
+    Converts links into
+    ANS elements of type ``text`` with no extra validation. `ANS schema
+    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json>`_
+
+    Example:
+
+    .. code-block:: html
+
+        <a href="https://www.washingtonpost.com">The Washington Post</a>
+
+    ->
+
+    .. code-block:: python
+
+        {
+            "type": "text",
+            "content": "<a href="https://www.washingtonpost.com">The Washington Post</a>"
+        }
+
+    """
+    applicable_elements = ['a']
+
+    def parse(self, element, *args, **kwargs):
+        result = self.construct_output(element, "text", str(element))
+
+        if "additional_properties" in result:
+            del result["additional_properties"]
+
+        return ParseResult(result, True)
 
 
 class ListParser(BaseElementParser):
@@ -266,9 +300,12 @@ class ListParser(BaseElementParser):
     .. code-block:: html
 
         <ul>
-            <li>Post Reports is the daily podcast from The Washington Post.</li>
-            <li>Unparalleled reporting.</li>
-            <li>Expert insight.</li>
+            <li>Post Reports is the daily <a href="/podcast/">podcast</a> from The Washington Post.</li>
+            <li>
+                <ul>
+                    <li>Unparalleled reporting.</li>
+                    <li>Expert insight.</li>
+                </ul>
             <li>Clear analysis.</li>
         </ul>
 
@@ -277,30 +314,31 @@ class ListParser(BaseElementParser):
     .. code-block:: python
 
         {
-            "type": "list",
-            "list_type": "unordered",
-            "items": [
-                {
-                    "type": "text",
-                    "content": "Post Reports is the daily podcast from The Washington Post."
+            'type': 'list',
+            'list_type': 'unordered',
+            'items': [
+                {'type': 'text',
+                 'content': 'Post Reports is the daily'},
+                {'type': 'text',
+                 'content': '<a href="/podcast/">podcast</a>'},
+                {'type': 'text',
+                 'content': 'from The Washington Post.'},
+                {'type': 'list',
+                 'list_type': 'unordered',
+                 'items': [
+                     {'type': 'text',
+                      'content': 'Unparalleled reporting.'},
+                     {'type': 'text',
+                      'content': 'Expert insight.'}
+                 ]
                 },
-                {
-                    "type": "text",
-                    "content": "Unparalleled reporting."
-                },
-                {
-                    "type": "text",
-                    "content": "Expert insight."
-                },
-                {
-                    "type": "text",
-                    "content": "Clear analysis."
-                }
+                {'type': 'text', 'content': 'Clear analysis.'}
             ]
         }
 
     """
     applicable_elements = ['ul', 'ol']
+    text_parsers = [InlineLinkParser, ParagraphParser]
 
     def parse(self, element, *args, **kwargs):
         if element.name == 'ul':
@@ -312,18 +350,26 @@ class ListParser(BaseElementParser):
             # as of ANS 0.6.2, has to be either text or another list
             # https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.6.2/story_elements/list_element.json
             if isinstance(list_item, Tag) and list_item.contents:
-                # we could do something complicated so that this parser has its own sub-parsers
-                # but for the time being, assume the list items are fairly simple
-                # if this item is wrapping something else, just take the first child
-                list_item = list_item.contents[0]
-            if isinstance(list_item, Tag) and list_item.name in self.applicable_elements:
-                parsed_list_item = self.parse(list_item).output
-                field_check = "items"
-            else:
-                parsed_list_item = ParagraphParser().parse(list_item).output
-                field_check = "content"
-            if isinstance(parsed_list_item, dict) and parsed_list_item.get(field_check):
-                list_elements.append(parsed_list_item)
+
+                for content in list_item.contents:
+
+                    if isinstance(content, Tag) and content.name in self.applicable_elements:
+                        parsed_list_item = self.parse(content).output
+                        field_check = "items"
+                    else:
+                        field_check = "content"
+                        parsed_list_item = None
+
+                        for next_parser in self.text_parsers:
+
+                            if next_parser().is_applicable(content):
+                                parsed_list_item = next_parser().parse(content).output
+
+                                if parsed_list_item:
+                                    break
+
+                    if isinstance(parsed_list_item, dict) and parsed_list_item.get(field_check):
+                        list_elements.append(parsed_list_item)
 
         result = self.construct_output(element, "list")
         result["list_type"] = list_type

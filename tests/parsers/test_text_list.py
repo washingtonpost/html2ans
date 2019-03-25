@@ -1,4 +1,5 @@
 import pytest
+
 from html2ans.parsers.text import ListParser
 
 parser = ListParser()
@@ -51,19 +52,30 @@ def test_nested_list(make_tag):
     ]
 
 
-def test_link_in_list(make_tag):
-    tag = make_tag('<ul><li><a href="http://www.rcinet.ca">Canada article</a></li></ul>', 'ul')
+def test_complex_list(make_tag):
+    tag = make_tag('<ul><li>Post Reports is the daily <a href="/podcast/">podcast</a> from '
+                   'The Washington Post.</li><li><ul><li>Unparalleled reporting.</li>'
+                   '<li>Expert insight.</li></ul><li>Clear analysis.</li></ul>', 'ul')
     parsed = parser.parse(tag).output
     assert parsed.get('type') == 'list'
     assert parsed.get('list_type') == 'unordered'
     assert parsed.get('items') == [
-        {
-            'type': 'text',
-            'content': 'Canada article',
-            'additional_properties': {
-                'href': "http://www.rcinet.ca"
-            }
-        }
+        {'type': 'text',
+         'content': 'Post Reports is the daily'},
+        {'type': 'text',
+         'content': '<a href="/podcast/">podcast</a>'},
+        {'type': 'text',
+         'content': 'from The Washington Post.'},
+        {'type': 'list',
+         'list_type': 'unordered',
+         'items': [
+             {'type': 'text',
+              'content': 'Unparalleled reporting.'},
+             {'type': 'text',
+              'content': 'Expert insight.'}
+         ]
+         },
+        {'type': 'text', 'content': 'Clear analysis.'}
     ]
 
 
