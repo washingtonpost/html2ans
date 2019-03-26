@@ -1,7 +1,6 @@
 from __future__ import absolute_import, unicode_literals  # need this for python 2.7 unicode issues
 
 import six
-from bs4 import BeautifulSoup
 from bs4.element import NavigableString, Tag
 from ftfy import fix_text
 
@@ -16,6 +15,8 @@ class AbstractTextParser(BaseElementParser):
     def construct_output(self, element, *args, **kwargs):
         if isinstance(element, NavigableString) or isinstance(element, six.text_type):
             content = six.text_type(element).strip()
+        elif element.name == "a":
+            content = str(element)
         else:
             # There doesn't seem to be a great way to extract the text
             # without eliminating text formatters
@@ -220,7 +221,7 @@ class HeaderParser(BaseElementParser):
         return ParseResult(result, True)
 
 
-class LinkParser(BaseElementParser):
+class InterstitialLinkParser(BaseElementParser):
     """
     Converts links in anchor elements into
     ANS elements of type ``interstitial_link``. `ANS schema
@@ -257,7 +258,7 @@ class LinkParser(BaseElementParser):
         return ParseResult(result, match)
 
 
-class InlineLinkParser(BaseElementParser):
+class InlineLinkParser(ParagraphParser):
     """
     Converts links into
     ANS elements of type ``text`` with no extra validation. `ANS schema
@@ -281,14 +282,6 @@ class InlineLinkParser(BaseElementParser):
     """
     applicable_elements = ['a']
 
-    def parse(self, element, *args, **kwargs):
-        result = self.construct_output(element, "text", str(element))
-
-        if "additional_properties" in result:
-            del result["additional_properties"]
-
-        return ParseResult(result, True)
-
 
 class ListParser(BaseElementParser):
     """
@@ -300,7 +293,7 @@ class ListParser(BaseElementParser):
     .. code-block:: html
 
         <ul>
-            <li>Post Reports is the daily <a href="/podcast/">podcast</a> from The Washington Post.</li>
+            <li>Post Reports is the daily <a class="pod_link" href="/podcast/">podcast</a> from The Washington Post.</li>
             <li>
                 <ul>
                     <li>Unparalleled reporting.</li>
@@ -323,7 +316,11 @@ class ListParser(BaseElementParser):
                 },
                 {
                     'type': 'text',
-                    'content': '<a href="/podcast/">podcast</a>'
+                    'content': '<a class="pod_link" href="/podcast/">podcast</a>',
+                    'additional_properties': {
+                        'class': ['pod_link'],
+                        'href': '/podcast/'
+                     }
                 },
                 {
                     'type': 'text',

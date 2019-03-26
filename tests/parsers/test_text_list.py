@@ -53,7 +53,8 @@ def test_nested_list(make_tag):
 
 
 def test_complex_list(make_tag):
-    tag = make_tag('<ul><li>Post Reports is the daily <a href="/podcast/">podcast</a> from '
+    tag = make_tag('<ul><li>Post Reports is the daily '
+                   '<a class="pod_link" href="/podcast/">podcast</a> from '
                    'The Washington Post.</li><li><ul><li>Unparalleled reporting.</li>'
                    '<li>Expert insight.</li></ul><li>Clear analysis.</li></ul>', 'ul')
     parsed = parser.parse(tag).output
@@ -63,7 +64,11 @@ def test_complex_list(make_tag):
         {'type': 'text',
          'content': 'Post Reports is the daily'},
         {'type': 'text',
-         'content': '<a href="/podcast/">podcast</a>'},
+         'content': '<a class="pod_link" href="/podcast/">podcast</a>',
+         'additional_properties': {
+             'class': ['pod_link'],
+             'href': '/podcast/'
+         }},
         {'type': 'text',
          'content': 'from The Washington Post.'},
         {'type': 'list',
