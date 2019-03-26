@@ -15,7 +15,7 @@ class AbstractTextParser(BaseElementParser):
     def construct_output(self, element, *args, **kwargs):
         if isinstance(element, NavigableString) or isinstance(element, six.text_type):
             content = six.text_type(element).strip()
-        elif element.name == "a":
+        elif element.name in self.STYLING_TAGS:
             content = str(element)
         else:
             # There doesn't seem to be a great way to extract the text
@@ -107,10 +107,6 @@ class FormattedTextParser(AbstractTextParser):
         if self.is_text_only(element):
             match = True
             result = self.construct_output(element)
-            if isinstance(result, dict):
-                result["content"] = "<{}>{}</{}>".format(
-                    element.name,
-                    result.get("content"), element.name)
         return ParseResult(result, match)
 
 
