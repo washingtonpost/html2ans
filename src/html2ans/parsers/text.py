@@ -317,22 +317,36 @@ class ListParser(BaseElementParser):
             'type': 'list',
             'list_type': 'unordered',
             'items': [
-                {'type': 'text',
-                 'content': 'Post Reports is the daily'},
-                {'type': 'text',
-                 'content': '<a href="/podcast/">podcast</a>'},
-                {'type': 'text',
-                 'content': 'from The Washington Post.'},
-                {'type': 'list',
-                 'list_type': 'unordered',
-                 'items': [
-                     {'type': 'text',
-                      'content': 'Unparalleled reporting.'},
-                     {'type': 'text',
-                      'content': 'Expert insight.'}
-                 ]
+                {
+                    'type': 'text',
+                    'content': 'Post Reports is the daily'
                 },
-                {'type': 'text', 'content': 'Clear analysis.'}
+                {
+                    'type': 'text',
+                    'content': '<a href="/podcast/">podcast</a>'
+                },
+                {
+                    'type': 'text',
+                    'content': 'from The Washington Post.'
+                },
+                {
+                    'type': 'list',
+                    'list_type': 'unordered',
+                    'items': [
+                        {
+                            'type': 'text',
+                            'content': 'Unparalleled reporting.'
+                        },
+                        {
+                            'type': 'text',
+                            'content': 'Expert insight.'
+                        }
+                    ]
+                },
+                {
+                    'type': 'text',
+                    'content': 'Clear analysis.'
+                }
             ]
         }
 
