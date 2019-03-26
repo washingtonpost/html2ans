@@ -246,7 +246,7 @@ class LinkParser(BaseElementParser):
     applicable_elements = ['a']
 
     def parse(self, element, *args, **kwargs):
-        result = self.construct_output(element, "interstitial_link", str(element))
+        result = self.construct_output(element, "interstitial_link", element.text)
         match = True
         url = element.attrs.get('href')
         result["url"] = url
