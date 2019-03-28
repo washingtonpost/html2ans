@@ -382,3 +382,7 @@ class ListParser(BaseElementParser):
         result["list_type"] = list_type
         result["items"] = list_elements
         return ParseResult(result, True)
+
+
+# Backwards compatibility
+LinkParser = InterstitialLinkParser
