@@ -38,7 +38,7 @@ def test_nested_list(make_tag):
         {
             'items': [
                 {
-                    'content': 'level two item',
+                    'content': '<p>level two item</p>',
                     'type': 'text'
                 }
             ],
@@ -46,42 +46,33 @@ def test_nested_list(make_tag):
             'type': 'list'
         },
         {
-            'content': 'level one item',
+            'content': '<p>level one item</p>',
             'type': 'text'
         }
     ]
 
 
 def test_complex_list(make_tag):
-    tag = make_tag('<ul><li>Post Reports is the daily '
-                   '<a class="pod_link" href="/podcast/">podcast</a> from '
-                   'The Washington Post.</li><li><ul><li>Unparalleled reporting.</li>'
-                   '<li>Expert insight.</li></ul><li>Clear analysis.</li></ul>', 'ul')
+    tag = make_tag('<ul><li>Post Reports, '
+                   '<a href="/podcast/">a daily podcast</a> '
+                   'from The Washington Post.</li>'
+                   '<li><ol><li>Unparalleled reporting.</li>'
+                   '<li>Expert insight.</li></ol>'
+                   '<li>Clear analysis.</li></ul>', 'ul')
     parsed = parser.parse(tag).output
     assert parsed.get('type') == 'list'
     assert parsed.get('list_type') == 'unordered'
-    assert parsed.get('items') == [
-        {'type': 'text',
-         'content': 'Post Reports is the daily'},
-        {'type': 'text',
-         'content': '<a class="pod_link" href="/podcast/">podcast</a>',
-         'additional_properties': {
-             'class': ['pod_link'],
-             'href': '/podcast/'
-         }},
-        {'type': 'text',
-         'content': 'from The Washington Post.'},
-        {'type': 'list',
-         'list_type': 'unordered',
-         'items': [
-             {'type': 'text',
-              'content': 'Unparalleled reporting.'},
-             {'type': 'text',
-              'content': 'Expert insight.'}
-         ]
-         },
-        {'type': 'text', 'content': 'Clear analysis.'}
-    ]
+    list_items = parsed.get("items")
+    assert len(list_items) == 3
+    assert list_items[0].get("type") == "text"
+    assert list_items[0].get("content") == 'Post Reports, ' \
+                                           '<a href="/podcast/">a daily podcast</a> ' \
+                                           'from The Washington Post.'
+    assert list_items[1].get("type") == "list"
+    assert list_items[1].get("list_type") == "ordered"
+    assert len(list_items[1].get("items")) == 2
+    assert list_items[1].get("items")[0].get("type") == "text"
+    assert list_items[2].get("type") == "text"
 
 
 def test_basic_list(make_tag):

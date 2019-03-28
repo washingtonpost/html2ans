@@ -48,7 +48,7 @@ class AbstractParserUtilities(object):
     List of tags considered empty (if a tag passed to ``is_empty`` is in this list,
     ``is_empty`` will return True).
     """
-    STYLING_TAGS = [
+    INLINE_TAGS = [
         'a',
         'b',
         'del',
@@ -63,7 +63,7 @@ class AbstractParserUtilities(object):
         'span'
     ]
 
-    TEXT_TAGS = STYLING_TAGS + ['p', 'blockquote']
+    TEXT_TAGS = INLINE_TAGS + ['p', 'blockquote']
     """
     List of tags considered to be text. This affects the results of ``is_text_only``
     which is used by most text parsers. For example, because by default ``a`` tags
