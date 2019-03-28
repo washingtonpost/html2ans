@@ -296,12 +296,16 @@ class ListParser(BaseElementParser):
     .. code-block:: html
 
         <ul>
-            <li>Post Reports, <a href="/podcast/">a daily podcast</a> from The Washington Post.</li>
             <li>
-                <ul>
+                Post Reports,
+                <a href="/podcast/">a daily podcast</a>
+                from The Washington Post.
+            </li>
+            <li>
+                <ol>
                     <li>Unparalleled reporting.</li>
                     <li>Expert insight.</li>
-                </ul>
+                </ol>
             <li>Clear analysis.</li>
         </ul>
 
@@ -319,7 +323,7 @@ class ListParser(BaseElementParser):
                 },
                 {
                     'type': 'list',
-                    'list_type': 'unordered',
+                    'list_type': 'ordered',
                     'items': [
                         {
                             'type': 'text',
