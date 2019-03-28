@@ -306,7 +306,7 @@ class ListParser(BaseElementParser):
                     <li>Unparalleled reporting.</li>
                     <li>Expert insight.</li>
                 </ol>
-            <li>Clear analysis.</li>
+            <li><p>Clear analysis.</p></li>
         </ul>
 
     ->
@@ -337,7 +337,7 @@ class ListParser(BaseElementParser):
                 },
                 {
                     'type': 'text',
-                    'content': 'Clear analysis.'
+                    'content': '<p>Clear analysis.</p>'
                 }
             ]
         }
