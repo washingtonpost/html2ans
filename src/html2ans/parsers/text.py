@@ -344,9 +344,9 @@ class ListParser(BaseElementParser):
 
 
     """
+    applicable_elements = ['ul', 'ol']
 
     def __init__(self, list_item_parser=None):
-        self.applicable_elements = ['ul', 'ol']
         self.text_parser = list_item_parser if list_item_parser else ListItemParser()
 
     def parse(self, element, *args, **kwargs):
