@@ -1,7 +1,7 @@
 from html2ans.base import BaseHtmlAnsParser
 from html2ans.parsers.base import NullParser
 from html2ans.parsers.text import (
-    LinkParser,
+    InterstitialLinkParser,
     BlockquoteParser,
     FormattedTextParser,
     HeaderParser,
@@ -73,7 +73,7 @@ class DefaultHtmlAnsParser(BaseHtmlAnsParser):
         ImageParser(),  # img
         FigureParser(),  # figure
 
-        LinkParser(),  # a
+        InterstitialLinkParser(),  # a
 
         AudioParser(),  # audio
 

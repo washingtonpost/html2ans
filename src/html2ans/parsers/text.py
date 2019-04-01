@@ -15,6 +15,8 @@ class AbstractTextParser(BaseElementParser):
     def construct_output(self, element, *args, **kwargs):
         if isinstance(element, NavigableString) or isinstance(element, six.text_type):
             content = six.text_type(element).strip()
+        elif element.name in self.INLINE_TAGS:
+            content = str(element)
         else:
             # There doesn't seem to be a great way to extract the text
             # without eliminating text formatters
@@ -105,10 +107,6 @@ class FormattedTextParser(AbstractTextParser):
         if self.is_text_only(element):
             match = True
             result = self.construct_output(element)
-            if isinstance(result, dict):
-                result["content"] = "<{}>{}</{}>".format(
-                    element.name,
-                    result.get("content"), element.name)
         return ParseResult(result, match)
 
 
@@ -219,7 +217,7 @@ class HeaderParser(BaseElementParser):
         return ParseResult(result, True)
 
 
-class LinkParser(BaseElementParser):
+class InterstitialLinkParser(BaseElementParser):
     """
     Converts links in anchor elements into
     ANS elements of type ``interstitial_link``. `ANS schema
@@ -256,6 +254,38 @@ class LinkParser(BaseElementParser):
         return ParseResult(result, match)
 
 
+class ListItemParser(ParagraphParser):
+    """
+    Parses a single list item tag as paragraph text
+    ANS elements of type ``text``. `ANS schema
+    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json>`_
+
+    Example:
+
+    .. code-block:: html
+
+        <li>
+            Post Reports,
+            <a href="/podcast/">a daily podcast</a>
+            from The Washington Post.
+        </li>
+
+    ->
+
+    .. code-block:: python
+
+        {
+            "type": "text",
+            "content": "Post Reports, <a href="/podcast/">a daily podcast</a> from The Washington Post."
+        }
+
+    """
+    applicable_elements = ["li"]
+
+    def __init__(self):
+        self.TEXT_TAGS.append("li")
+
+
 class ListParser(BaseElementParser):
     """
     List parser. `ANS schema
@@ -266,10 +296,17 @@ class ListParser(BaseElementParser):
     .. code-block:: html
 
         <ul>
-            <li>Post Reports is the daily podcast from The Washington Post.</li>
-            <li>Unparalleled reporting.</li>
-            <li>Expert insight.</li>
-            <li>Clear analysis.</li>
+            <li>
+                Post Reports,
+                <a href="/podcast/">a daily podcast</a>
+                from The Washington Post.
+            </li>
+            <li>
+                <ol>
+                    <li>Unparalleled reporting.</li>
+                    <li>Expert insight.</li>
+                </ol>
+            <li><p>Clear analysis.</p></li>
         </ul>
 
     ->
@@ -277,55 +314,76 @@ class ListParser(BaseElementParser):
     .. code-block:: python
 
         {
-            "type": "list",
-            "list_type": "unordered",
-            "items": [
+            'type': 'list',
+            'list_type': 'unordered',
+            'items': [
                 {
-                    "type": "text",
-                    "content": "Post Reports is the daily podcast from The Washington Post."
+                    'type': 'text',
+                    'content': 'Post Reports, <a href="/podcast/">a daily podcast</a> from The Washington Post.'
                 },
                 {
-                    "type": "text",
-                    "content": "Unparalleled reporting."
+                    'type': 'list',
+                    'list_type': 'ordered',
+                    'items': [
+                        {
+                            'type': 'text',
+                            'content': 'Unparalleled reporting.'
+                        },
+                        {
+                            'type': 'text',
+                            'content': 'Expert insight.'
+                        }
+                    ]
                 },
                 {
-                    "type": "text",
-                    "content": "Expert insight."
-                },
-                {
-                    "type": "text",
-                    "content": "Clear analysis."
+                    'type': 'text',
+                    'content': '<p>Clear analysis.</p>'
                 }
             ]
         }
 
+
     """
     applicable_elements = ['ul', 'ol']
 
+    def __init__(self, list_item_parser=None):
+        self.list_item_parser = list_item_parser if list_item_parser else ListItemParser()
+
     def parse(self, element, *args, **kwargs):
+        list_elements = []
+
+        def _add_list_element(parsed_list_item, check_field):
+
+            if isinstance(parsed_list_item, dict) and parsed_list_item.get(check_field):
+                list_elements.append(parsed_list_item)
+
         if element.name == 'ul':
             list_type = 'unordered'
         else:
             list_type = 'ordered'
-        list_elements = []
+
         for list_item in element.contents:
+
             # as of ANS 0.6.2, has to be either text or another list
             # https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.6.2/story_elements/list_element.json
             if isinstance(list_item, Tag) and list_item.contents:
-                # we could do something complicated so that this parser has its own sub-parsers
-                # but for the time being, assume the list items are fairly simple
-                # if this item is wrapping something else, just take the first child
-                list_item = list_item.contents[0]
-            if isinstance(list_item, Tag) and list_item.name in self.applicable_elements:
-                parsed_list_item = self.parse(list_item).output
-                field_check = "items"
-            else:
-                parsed_list_item = ParagraphParser().parse(list_item).output
-                field_check = "content"
-            if isinstance(parsed_list_item, dict) and parsed_list_item.get(field_check):
-                list_elements.append(parsed_list_item)
+                child_lists = list_item.find_all(self.applicable_elements)
+
+                if child_lists:
+
+                    for child in child_lists:
+                        _add_list_element(self.parse(child).output, "items")
+
+                else:
+
+                    if self.list_item_parser.is_applicable(list_item):
+                        _add_list_element(self.list_item_parser.parse(list_item).output, "content")
 
         result = self.construct_output(element, "list")
         result["list_type"] = list_type
         result["items"] = list_elements
         return ParseResult(result, True)
+
+
+# Backwards compatibility
+LinkParser = InterstitialLinkParser
