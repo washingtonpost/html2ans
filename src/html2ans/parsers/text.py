@@ -347,7 +347,7 @@ class ListParser(BaseElementParser):
     applicable_elements = ['ul', 'ol']
 
     def __init__(self, list_item_parser=None):
-        self.text_parser = list_item_parser if list_item_parser else ListItemParser()
+        self.list_item_parser = list_item_parser if list_item_parser else ListItemParser()
 
     def parse(self, element, *args, **kwargs):
         list_elements = []
@@ -376,8 +376,8 @@ class ListParser(BaseElementParser):
 
                 else:
 
-                    if self.text_parser.is_applicable(list_item):
-                        _add_list_element(self.text_parser.parse(list_item).output, "content")
+                    if self.list_item_parser.is_applicable(list_item):
+                        _add_list_element(self.list_item_parser.parse(list_item).output, "content")
 
         result = self.construct_output(element, "list")
         result["list_type"] = list_type
