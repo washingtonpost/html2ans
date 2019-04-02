@@ -1,7 +1,7 @@
 import pytest
-from html2ans.parsers.text import LinkParser
+from html2ans.parsers.text import InterstitialLinkParser
 
-parser = LinkParser()
+parser = InterstitialLinkParser()
 
 
 @pytest.mark.parametrize('tag_string', [

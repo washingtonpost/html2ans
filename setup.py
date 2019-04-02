@@ -29,7 +29,7 @@ with open(os.path.join(THIS_FILE_DIR, 'README.rst'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 
 # The full version, including alpha/beta/rc tags
-RELEASE = '3.0.1'
+RELEASE = '3.0.2'
 # The short X.Y version
 VERSION = '.'.join(RELEASE.split('.')[:2])
 
@@ -61,7 +61,8 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6'
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7'
     ],
     description='Convert HTML to ANS',
     long_description=LONG_DESCRIPTION,

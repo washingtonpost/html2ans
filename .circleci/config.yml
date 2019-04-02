@@ -77,7 +77,7 @@ jobs: # A basic unit of work in a run
       - run: mkdir test-reports
       - run:
           name: Run tests
-          command: tox -e circleci
+          command: tox -e py27-circleci, py35-circleci, py36-circleci, py37-circleci
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-reports
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
