@@ -31,10 +31,16 @@ Header Parser
 .. autoclass:: html2ans.parsers.text.HeaderParser
 
 
-Link Parser
------------
+Interstitial Link Parser
+------------------------
 
 .. autoclass:: html2ans.parsers.text.InterstitialLinkParser
+
+
+List Item Parser
+----------------
+
+.. autoclass:: html2ans.parsers.text.ListItemParser
 
 
 List Parser

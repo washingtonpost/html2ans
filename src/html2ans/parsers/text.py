@@ -257,8 +257,10 @@ class InterstitialLinkParser(BaseElementParser):
 class ListItemParser(ParagraphParser):
     """
     Parses a single list item tag as paragraph text
-    ANS elements of type ``text``. `ANS schema
-    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/text.json>`_
+    ANS elements of type ``text``. As of ANS 0.6.2, list items have
+    to be either text or another list (in the case of another list,
+    the ``ListParser`` is used recursively). `ANS schema
+    <https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/list_element.json>`_
 
     Example:
 
@@ -342,6 +344,8 @@ class ListParser(BaseElementParser):
             ]
         }
 
+    :param list_item_parser: the parser to use on individual list elements (defaults to ``ListItemParser``)
+    :type list_item_parser: ElementParser
 
     """
     applicable_elements = ['ul', 'ol']
@@ -363,9 +367,6 @@ class ListParser(BaseElementParser):
             list_type = 'ordered'
 
         for list_item in element.contents:
-
-            # as of ANS 0.6.2, has to be either text or another list
-            # https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.6.2/story_elements/list_element.json
             if isinstance(list_item, Tag) and list_item.contents:
                 child_lists = list_item.find_all(self.applicable_elements)
 
