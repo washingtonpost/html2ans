@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v3.0.2
+------
+
+* Fixes link parsing inside list elements by adding a ``ListItemParser`` (used by the ``ListParser``) and modifying the handling of inline tags in text
+
+
 v3.0.1
 ------
 
