@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>html2ans &#8212; html2ans 3.0.1 documentation</title>
+    <title>html2ans &#8212; html2ans 3.0.2 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -69,6 +69,7 @@ parsers <code class="docutils literal notranslate"><span class="pre">Html2Ans</s
 <span class="n">parser</span><span class="o">.</span><span class="n">generate_ans</span><span class="p">(</span><span class="n">your_html_here</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>The types of items your parser can parse should be listed in its <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> attribute.</p>
 <p>The default parser class (<code class="docutils literal notranslate"><span class="pre">DefaultHtmlAnsParser</span></code> or <code class="docutils literal notranslate"><span class="pre">Html2Ans</span></code>) has parsers for text, links, images, various social media embeds, etc.</p>
 </div>
 <div class="section" id="prioritized-addition">
@@ -92,7 +93,7 @@ let’s examine why you might need to do so.</p>
 <span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="kn">import</span> <span class="n">ParseResult</span>
 
 <span class="k">class</span> <span class="nc">YourCustomImageParser</span><span class="p">(</span><span class="n">ImageParser</span><span class="p">):</span>
-    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;div&#39;</span><span class="p">]</span>
+    <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">]</span>
     <span class="n">applicable_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fancy-figure&#39;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -105,6 +106,29 @@ let’s examine why you might need to do so.</p>
             <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="custom-parsing-tips">
+<h3>Custom Parsing Tips<a class="headerlink" href="#custom-parsing-tips" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="ans-versions">
+<h4>ANS Versions<a class="headerlink" href="#ans-versions" title="Permalink to this headline">¶</a></h4>
+<p>Some ANS types require a version. You can set a version in your main parser (<code class="docutils literal notranslate"><span class="pre">Html2Ans</span></code>) and then automatically include that version in any element parser’s output by setting the parser’s <code class="docutils literal notranslate"><span class="pre">version_required</span></code> attribute to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p><em>Note: this doesn’t mean valid, version-compatible ANS is automatically produced!</em></p>
+</div>
+<div class="section" id="keeping-html-in-text-output">
+<h4>Keeping HTML in <code class="docutils literal notranslate"><span class="pre">text</span></code> Output<a class="headerlink" href="#keeping-html-in-text-output" title="Permalink to this headline">¶</a></h4>
+<p>To adjust what HTML is/isn’t left inline when parsing text, adjust the <code class="docutils literal notranslate"><span class="pre">INLINE_TAGS</span></code> attribute on the text parser. Every parser inherits from <code class="docutils literal notranslate"><span class="pre">html2ans.parsers.utils.AbstractParserUtilities</span></code> which provides a list of default <code class="docutils literal notranslate"><span class="pre">INLINE_TAGS</span></code> which can be used to make sure text formatters (e.g. <code class="docutils literal notranslate"><span class="pre">strong</span></code>, <code class="docutils literal notranslate"><span class="pre">em</span></code>, etc.) are left in place when text is parsed.</p>
+</div>
+<div class="section" id="link-parsing">
+<h4>Link Parsing<a class="headerlink" href="#link-parsing" title="Permalink to this headline">¶</a></h4>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">a</span></code> tags are left inline in text, assuming there is text outside of the link. A link by itself (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;&lt;a</span> <span class="pre">href=&quot;google.com&quot;&gt;Search&lt;/a&gt;&lt;/p&gt;</span></code>) will be turned into an <code class="docutils literal notranslate"><span class="pre">interstitial_link</span></code>. If <code class="docutils literal notranslate"><span class="pre">interstitial_link</span></code> elements are unwanted, simply add <code class="docutils literal notranslate"><span class="pre">a</span></code> to the list of <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> for the <code class="docutils literal notranslate"><span class="pre">ParagraphParser</span></code>.</p>
+</div>
+<div class="section" id="removing-unnecessary-tags">
+<h4>Removing Unnecessary Tags<a class="headerlink" href="#removing-unnecessary-tags" title="Permalink to this headline">¶</a></h4>
+<p>Sometimes it is helpful to remove unnecessary tags (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;&lt;/p&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;&lt;img</span> <span class="pre">src=&quot;...&quot;</span> <span class="pre">/&gt;&lt;/div&gt;</span></code>). By default, <code class="docutils literal notranslate"><span class="pre">Html2Ans</span></code> considers <code class="docutils literal notranslate"><span class="pre">p</span></code> and <code class="docutils literal notranslate"><span class="pre">div</span></code> tags with no attributes other than <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">class</span></code>, or <code class="docutils literal notranslate"><span class="pre">style</span></code> to be unnecessary “wrappers”. When these are encountered, they are ignored and their children are parsed.</p>
+<p>The benefit of this is that <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;&lt;/p&gt;</span></code> is ignored and <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;&lt;img</span> <span class="pre">src=&quot;...&quot;</span> <span class="pre">/&gt;&lt;/div&gt;</span></code> is parsed as an image.</p>
+<p>The downside is that sometimes you don’t want your HTML removed! There are a few options in this case. You can configure what tags can be considered wrappers via the <code class="docutils literal notranslate"><span class="pre">WRAPPER_TAGS</span></code> attribute on <code class="docutils literal notranslate"><span class="pre">Html2Ans</span></code>. So if <code class="docutils literal notranslate"><span class="pre">div</span></code> tags should never be removed, simply remove <code class="docutils literal notranslate"><span class="pre">div</span></code> from this list. If a more complicated set of rules are necessary, override the <code class="docutils literal notranslate"><span class="pre">is_wrapper</span></code> method on <code class="docutils literal notranslate"><span class="pre">Html2Ans</span></code>.</p>
+<p>If it’s easier to modify the HTML than to modify this library, you can also add an arbitrary attribute like so: <code class="docutils literal notranslate"><span class="pre">&lt;div</span> <span class="pre">no_parse_flag=&quot;true&quot;&gt;...&lt;/div&gt;</span></code>. This <code class="docutils literal notranslate"><span class="pre">div</span></code> will not be considered a wrapper when it is encountered.</p>
 </div>
 </div>
 </div>
@@ -163,7 +187,7 @@ let’s examine why you might need to do so.</p>
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

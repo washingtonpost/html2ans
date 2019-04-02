@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>html2ans.parsers.utils &#8212; html2ans 3.0.1 documentation</title>
+    <title>html2ans.parsers.utils &#8212; html2ans 3.0.2 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -81,10 +81,7 @@
 <span class="sd">    List of tags considered empty (if a tag passed to ``is_empty`` is in this list,</span>
 <span class="sd">    ``is_empty`` will return True).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">TEXT_TAGS</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;blockquote&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;p&#39;</span><span class="p">,</span>
+    <span class="n">INLINE_TAGS</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;a&#39;</span><span class="p">,</span>
         <span class="s1">&#39;b&#39;</span><span class="p">,</span>
         <span class="s1">&#39;del&#39;</span><span class="p">,</span>
@@ -96,7 +93,10 @@
         <span class="s1">&#39;strong&#39;</span><span class="p">,</span>
         <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
         <span class="s1">&#39;sup&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;span&#39;</span><span class="p">]</span>
+        <span class="s1">&#39;span&#39;</span>
+    <span class="p">]</span>
+
+    <span class="n">TEXT_TAGS</span> <span class="o">=</span> <span class="n">INLINE_TAGS</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;blockquote&#39;</span><span class="p">]</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    List of tags considered to be text. This affects the results of ``is_text_only``</span>
 <span class="sd">    which is used by most text parsers. For example, because by default ``a`` tags</span>
@@ -239,7 +239,7 @@
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

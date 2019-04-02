@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Text Parsers &#8212; html2ans 3.0.1 documentation</title>
+    <title>Text Parsers &#8212; html2ans 3.0.2 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -219,11 +219,11 @@ tags like <code class="docutils literal notranslate"><span class="pre">em</span>
 </dd></dl>
 
 </div>
-<div class="section" id="link-parser">
-<h2>Link Parser<a class="headerlink" href="#link-parser" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="interstitial-link-parser">
+<h2>Interstitial Link Parser<a class="headerlink" href="#interstitial-link-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="html2ans.parsers.text.LinkParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">LinkParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#LinkParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser" title="Permalink to this definition">¶</a></dt>
+<dt id="html2ans.parsers.text.InterstitialLinkParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">InterstitialLinkParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#InterstitialLinkParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.InterstitialLinkParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>Converts links in anchor elements into
 ANS elements of type <code class="docutils literal notranslate"><span class="pre">interstitial_link</span></code>. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/interstitial_link.json">ANS schema</a></p>
@@ -240,8 +240,8 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <dl class="method">
-<dt id="html2ans.parsers.text.LinkParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#LinkParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.LinkParser.parse" title="Permalink to this definition">¶</a></dt>
+<dt id="html2ans.parsers.text.InterstitialLinkParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#InterstitialLinkParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.InterstitialLinkParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -253,47 +253,93 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
 </dd></dl>
 
 </div>
+<div class="section" id="list-item-parser">
+<h2>List Item Parser<a class="headerlink" href="#list-item-parser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="html2ans.parsers.text.ListItemParser">
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">ListItemParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#ListItemParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListItemParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.text.ParagraphParser" title="html2ans.parsers.text.ParagraphParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.text.ParagraphParser</span></code></a></p>
+<p>Parses a single list item tag as paragraph text
+ANS elements of type <code class="docutils literal notranslate"><span class="pre">text</span></code>. As of ANS 0.6.2, list items have
+to be either text or another list (in the case of another list,
+the <code class="docutils literal notranslate"><span class="pre">ListParser</span></code> is used recursively). <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/list_element.json">ANS schema</a></p>
+<p>Example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+    Post Reports,
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/podcast/&quot;</span><span class="p">&gt;</span>a daily podcast<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    from The Washington Post.
+<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>-&gt;</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Post Reports, &lt;a href=&quot;</span><span class="o">/</span><span class="n">podcast</span><span class="o">/</span><span class="s2">&quot;&gt;a daily podcast&lt;/a&gt; from The Washington Post.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="list-parser">
 <h2>List Parser<a class="headerlink" href="#list-parser" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="html2ans.parsers.text.ListParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">ListParser</code><a class="reference internal" href="../_modules/html2ans/parsers/text.html#ListParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">html2ans.parsers.text.</code><code class="descname">ListParser</code><span class="sig-paren">(</span><em>list_item_parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#ListParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>List parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/list.json">ANS schema</a></p>
 <p>Example:</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Post Reports is the daily podcast from The Washington Post.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Unparalleled reporting.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Expert insight.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Clear analysis.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+        Post Reports,
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/podcast/&quot;</span><span class="p">&gt;</span>a daily podcast<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        from The Washington Post.
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Unparalleled reporting.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Expert insight.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">ol</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Clear analysis.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>-&gt;</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;list_type&quot;</span><span class="p">:</span> <span class="s2">&quot;unordered&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;list&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;list_type&#39;</span><span class="p">:</span> <span class="s1">&#39;unordered&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Post Reports is the daily podcast from The Washington Post.&quot;</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Post Reports, &lt;a href=&quot;/podcast/&quot;&gt;a daily podcast&lt;/a&gt; from The Washington Post.&#39;</span>
         <span class="p">},</span>
         <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Unparalleled reporting.&quot;</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;list_type&#39;</span><span class="p">:</span> <span class="s1">&#39;ordered&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Unparalleled reporting.&#39;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Expert insight.&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
         <span class="p">},</span>
         <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Expert insight.&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Clear analysis.&quot;</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;&lt;p&gt;Clear analysis.&lt;/p&gt;&#39;</span>
         <span class="p">}</span>
     <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>list_item_parser</strong> (<a class="reference internal" href="base_parser.html#html2ans.parsers.base.ElementParser" title="html2ans.parsers.base.ElementParser"><em>ElementParser</em></a>) – the parser to use on individual list elements (defaults to <code class="docutils literal notranslate"><span class="pre">ListItemParser</span></code>)</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="html2ans.parsers.text.ListParser.parse">
 <code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/text.html#ListParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.text.ListParser.parse" title="Permalink to this definition">¶</a></dt>
@@ -342,7 +388,8 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
 <li class="toctree-l4"><a class="reference internal" href="#formatted-text-parser">Formatted Text Parser</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#blockquote-parser">Blockquote Parser</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#header-parser">Header Parser</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#link-parser">Link Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interstitial-link-parser">Interstitial Link Parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#list-item-parser">List Item Parser</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#list-parser">List Parser</a></li>
 </ul>
 </li>
@@ -385,7 +432,7 @@ ANS elements of type <code class="docutils literal notranslate"><span class="pre
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Parser Utilities &#8212; html2ans 3.0.1 documentation</title>
+    <title>Parser Utilities &#8212; html2ans 3.0.2 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -77,7 +77,7 @@ parsing and in document parser (i.e. by the <code class="docutils literal notran
 
 <dl class="attribute">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.TEXT_TAGS">
-<code class="descname">TEXT_TAGS</code><em class="property"> = ['blockquote', 'p', 'a', 'b', 'del', 'em', 'i', 'ins', 'mark', 'small', 'strong', 'sub', 'sup', 'span']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.TEXT_TAGS" title="Permalink to this definition">¶</a></dt>
+<code class="descname">TEXT_TAGS</code><em class="property"> = ['a', 'b', 'del', 'em', 'i', 'ins', 'mark', 'small', 'strong', 'sub', 'sup', 'span', 'p', 'blockquote', 'li']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.TEXT_TAGS" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of tags considered to be text. This affects the results of <code class="docutils literal notranslate"><span class="pre">is_text_only</span></code>
 which is used by most text parsers. For example, because by default <code class="docutils literal notranslate"><span class="pre">a</span></code> tags
 are considered text, <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;Here</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">&lt;a</span> <span class="pre">href=&quot;google.com&quot;&gt;link&lt;/a&gt;&lt;/p&gt;</span></code> would
@@ -197,7 +197,7 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
