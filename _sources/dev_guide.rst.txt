@@ -40,3 +40,4 @@ Release Process
   - Update the changelog for all changes that will be included in the release
   - Commit your changes and make a PR against master
   - Once the changes are merged, tag the branch with the version's release number and push that tag
+  - Merge master into dev
