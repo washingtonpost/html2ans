@@ -1,0 +1,89 @@
+# how to skip Circle builds with a commit message: https://circleci.com/docs/2.0/skip-build/
+version: 2.1 # use CircleCI 2.0
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test:
+        filters:
+          branches:
+              ignore: /gh-pages/
+  deploy:
+    jobs:
+      - update_docs:
+          filters:
+            tags:
+              only:
+                - /[0-9]+(\.[0-9]+)*/
+                - docs
+            branches:
+              ignore: /.*/
+      - build_and_deploy:
+          filters:
+            tags:
+              only: /[0-9]+(\.[0-9]+)*/
+            branches:
+              ignore: /.*/
+jobs: # A basic unit of work in a run
+  build_and_deploy:
+    working_directory: ~/html2ans
+    docker: # run the steps with Docker
+      # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - run:
+          name: Build and deploy
+          command: |
+            python3 -m virtualenv html2ans
+            source html2ans/bin/activate
+            pip install twine
+            python setup.py install test verify sdist bdist_wheel
+            twine upload dist/*
+  update_docs:
+    working_directory: ~/html2ans
+    docker: # run the steps with Docker
+      # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - run:
+          name: Initialize gh-pages
+          command: |
+            cd ..
+            mkdir html2ans-docs
+            cd html2ans-docs
+            git clone https://github.com/washingtonpost/html2ans.git html
+            cd html
+            git checkout -b gh-pages remotes/origin/gh-pages
+      - run:
+          name: Build docs
+          command: |
+            python3 -m virtualenv html2ans
+            source html2ans/bin/activate
+            pip install -e .
+            python setup.py build_sphinx
+      - run:
+          name: Upload docs
+          command: |
+            cd ../html2ans-docs/html
+            git config --global user.email "arc.professional.services@gmail.com"
+            git config --global user.name "Arc PS Team"
+            git add -A
+            git commit -m "Updated docs"
+            git push -q https://${DOCS_GH_TOKEN}@github.com/washingtonpost/html2ans.git gh-pages
+  test:
+    working_directory: ~/html2ans
+    docker: # run the steps with Docker
+      # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
+      - image: themattrix/tox # https://github.com/themattrix/docker-tox
+    steps:
+      - checkout
+      - run: mkdir test-reports
+      - run:
+          name: Run tests
+          command: tox -e py27-circleci, py35-circleci, py36-circleci, py37-circleci
+      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: test-reports
+      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: test-reports
