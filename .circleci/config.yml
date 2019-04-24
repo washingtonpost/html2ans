@@ -10,7 +10,9 @@ workflows:
       - update_docs:
           filters:
             tags:
-              only: /[0-9]+(\.[0-9]+)*/
+              only:
+                - /[0-9]+(\.[0-9]+)*/
+                - docs
             branches:
               ignore: /.*/
       - build_and_deploy:
