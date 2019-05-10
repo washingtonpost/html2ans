@@ -1,6 +1,7 @@
 import six
 
 from bs4.element import NavigableString, Tag
+from furl import furl
 
 
 def has_attributes(tag, filter_types=('id', 'class', 'style')):
@@ -152,3 +153,13 @@ class AbstractParserUtilities(object):
                     elif not [isinstance(child, filter_type) for filter_type in filter_types]:
                         result.append(child)
         return result
+
+    def _create_encoded_url(self, original_url):
+        """
+        Url encode path a uri.
+
+        :param original_url: str URI value
+        :return: URI value properly url encoded to include in ans
+        """
+
+        return furl(original_url).url
