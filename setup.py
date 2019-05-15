@@ -15,7 +15,7 @@ INSTALL_REQUIRES = (
     'html5lib<2',
     'lxml<5',
     'six<2',
-    'furl<3;python_version>="2"',
+    'furl>=2.0.0,<3',
 )
 TESTS_REQUIRE = ('pytest<5',)
 SETUP_REQUIRES = (('pytest-runner',) if NEEDS_PYTEST else ()) + (DOCS_REQUIRE if NEEDS_DOCS else ())
