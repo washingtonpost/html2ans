@@ -15,6 +15,7 @@ INSTALL_REQUIRES = (
     'html5lib<2',
     'lxml<5',
     'six<2',
+    'furl>=2.0.0',
 )
 TESTS_REQUIRE = ('pytest<5',)
 SETUP_REQUIRES = (('pytest-runner',) if NEEDS_PYTEST else ()) + (DOCS_REQUIRE if NEEDS_DOCS else ())
@@ -29,7 +30,7 @@ with open(os.path.join(THIS_FILE_DIR, 'README.rst'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 
 # The full version, including alpha/beta/rc tags
-RELEASE = '3.0.2'
+RELEASE = '3.0.3'
 # The short X.Y version
 VERSION = '.'.join(RELEASE.split('.')[:2])
 

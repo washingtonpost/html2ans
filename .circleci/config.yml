@@ -4,13 +4,18 @@ workflows:
   version: 2
   test:
     jobs:
-      - test
+      - test:
+        filters:
+          branches:
+              ignore: /gh-pages/
   deploy:
     jobs:
       - update_docs:
           filters:
             tags:
-              only: /[0-9]+(\.[0-9]+)*/
+              only:
+                - /[0-9]+(\.[0-9]+)*/
+                - docs
             branches:
               ignore: /.*/
       - build_and_deploy:
