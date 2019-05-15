@@ -2,12 +2,6 @@ Changelog
 =========
 
 
-v3.0.3
-------
-
-* Fixes audio tag parsing ensuring the stream -> url is properly url encoded against bad characters.  This also introduces an external dependency on furl to properly support url encoding across python versions.
-
-
 v3.0.2
 ------
 
