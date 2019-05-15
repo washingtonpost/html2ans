@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>html2ans.parsers.audio &#8212; html2ans 3.0.2 documentation</title>
+    <title>html2ans.parsers.audio &#8212; html2ans 3.0.3 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -70,8 +70,8 @@
             <span class="k">if</span> <span class="n">source_url</span><span class="p">:</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">construct_output</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;audio&quot;</span><span class="p">)</span>
                 <span class="n">result</span><span class="p">[</span><span class="s2">&quot;streams&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{</span>
-                    <span class="c1"># escapes white space in the URL</span>
-                    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">source_url</span>
+                    <span class="c1"># url encodes any illegal url characters</span>
+                    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_encoded_url</span><span class="p">(</span><span class="n">source_url</span><span class="p">)</span>
                 <span class="p">}]</span>
                 <span class="n">match</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">ParseResult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span></div></div>
