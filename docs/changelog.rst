@@ -1,6 +1,7 @@
 Changelog
 =========
 
+
 v3.0.2
 ------
 
@@ -11,7 +12,7 @@ v3.0.1
 ------
 
 * Adds ``DailyMotionEmbedParser``, ``FlickrEmbedParser``, ``PollDaddyEmbedParser``, and ``RedditEmbedParser`` to ``DEFAULT_PARSERS`` in ``Html2Ans``/``DefaultHtmlAnsParser``
-  
+
   - These were accidentally left out of ``DEFAULT_PARSERS`` in v3.0.0
 
 * Updates the ``InstagramEmbedParser`` to accept hyphens in embed IDs

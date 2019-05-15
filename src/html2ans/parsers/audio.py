@@ -37,8 +37,8 @@ class AudioParser(BaseElementParser):
             if source_url:
                 result = self.construct_output(element, "audio")
                 result["streams"] = [{
-                    # escapes white space in the URL
-                    "url": source_url
+                    # url encodes any illegal url characters
+                    "url": self._create_encoded_url(source_url)
                 }]
                 match = True
         return ParseResult(result, match)
