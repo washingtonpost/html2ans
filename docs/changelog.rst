@@ -2,6 +2,12 @@ Changelog
 =========
 
 
+v3.0.3
+------
+
+* Fixes audio streaming url encoding
+
+
 v3.0.2
 ------
 
