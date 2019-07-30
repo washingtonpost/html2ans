@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Parser Utilities &#8212; html2ans 3.0.3 documentation</title>
+    <title>Parser Utilities &#8212; html2ans 3.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,13 +36,13 @@
 <span id="parser-utilities"></span><h1>Parser Utilities<a class="headerlink" href="#module-html2ans.parsers.utils" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="html2ans.parsers.utils.has_attributes">
-<code class="descclassname">html2ans.parsers.utils.</code><code class="descname">has_attributes</code><span class="sig-paren">(</span><em>tag</em>, <em>filter_types=('id'</em>, <em>'class'</em>, <em>'style')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#has_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.has_attributes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">html2ans.parsers.utils.</code><code class="sig-name descname">has_attributes</code><span class="sig-paren">(</span><em class="sig-param">tag</em>, <em class="sig-param">filter_types=('id'</em>, <em class="sig-param">'class'</em>, <em class="sig-param">'style')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#has_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.has_attributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function to check if a tag has attributes (excluding the given <code class="docutils literal notranslate"><span class="pre">filter_types</span></code>).</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="html2ans.parsers.utils.parse_dimensions">
-<code class="descclassname">html2ans.parsers.utils.</code><code class="descname">parse_dimensions</code><span class="sig-paren">(</span><em>tag</em>, <em>tag_json</em>, <em>dimension_keys=('width'</em>, <em>'height')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#parse_dimensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.parse_dimensions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">html2ans.parsers.utils.</code><code class="sig-name descname">parse_dimensions</code><span class="sig-paren">(</span><em class="sig-param">tag</em>, <em class="sig-param">tag_json</em>, <em class="sig-param">dimension_keys=('width'</em>, <em class="sig-param">'height')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#parse_dimensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.parse_dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds dimensions to converted JSON. Images and iframes will generally
 have width/height properties; this is just a convenience method for
 adding those properties.</p>
@@ -50,43 +50,43 @@ adding those properties.</p>
 
 <dl class="class">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.utils.</code><code class="descname">AbstractParserUtilities</code><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.utils.</code><code class="sig-name descname">AbstractParserUtilities</code><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Common utility functions for parsers. These methods are grouped here (rather
 than in the <code class="docutils literal notranslate"><span class="pre">BaseElementParser</span></code>) because they are used both in element
 parsing and in document parser (i.e. by the <code class="docutils literal notranslate"><span class="pre">BaseHtmlAnsParser</span></code>).</p>
 <dl class="attribute">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.WRAPPER_TAGS">
-<code class="descname">WRAPPER_TAGS</code><em class="property"> = ['p', 'div']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.WRAPPER_TAGS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WRAPPER_TAGS</code><em class="property"> = ['p', 'div']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.WRAPPER_TAGS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Which tags to consider as potential wrappers in the <code class="docutils literal notranslate"><span class="pre">is_wrapper</span></code> method.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.EMPTY_STRINGS">
-<code class="descname">EMPTY_STRINGS</code><em class="property"> = [None, '', ' ', '\n', '&lt;br&gt;', '&lt;br/&gt;']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.EMPTY_STRINGS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">EMPTY_STRINGS</code><em class="property"> = [None, '', ' ', '\n', '&lt;br&gt;', '&lt;br/&gt;']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.EMPTY_STRINGS" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of strings considered empty (if a <code class="docutils literal notranslate"><span class="pre">NavigableString</span></code> is passed to
 <code class="docutils literal notranslate"><span class="pre">is_empty</span></code> and the string is in this list, <code class="docutils literal notranslate"><span class="pre">is_empty</span></code> will return True).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.EMPTY_TAGS">
-<code class="descname">EMPTY_TAGS</code><em class="property"> = ['br']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.EMPTY_TAGS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">EMPTY_TAGS</code><em class="property"> = ['br']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.EMPTY_TAGS" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of tags considered empty (if a tag passed to <code class="docutils literal notranslate"><span class="pre">is_empty</span></code> is in this list,
 <code class="docutils literal notranslate"><span class="pre">is_empty</span></code> will return True).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.TEXT_TAGS">
-<code class="descname">TEXT_TAGS</code><em class="property"> = ['a', 'b', 'del', 'em', 'i', 'ins', 'mark', 'small', 'strong', 'sub', 'sup', 'span', 'p', 'blockquote', 'li']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.TEXT_TAGS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">TEXT_TAGS</code><em class="property"> = ['a', 'b', 'del', 'em', 'i', 'ins', 'mark', 'small', 'strong', 'sub', 'sup', 'span', 'u', 'p', 'blockquote', 'li']</em><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.TEXT_TAGS" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of tags considered to be text. This affects the results of <code class="docutils literal notranslate"><span class="pre">is_text_only</span></code>
 which is used by most text parsers. For example, because by default <code class="docutils literal notranslate"><span class="pre">a</span></code> tags
 are considered text, <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;Here</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">&lt;a</span> <span class="pre">href=&quot;google.com&quot;&gt;link&lt;/a&gt;&lt;/p&gt;</span></code> would
 be considered text only.</p>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.is_empty">
-<em class="property">classmethod </em><code class="descname">is_empty</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_empty" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">is_empty</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_empty" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Returns true if the given tag is empty. Things like</p>
 </div></blockquote>
@@ -99,26 +99,26 @@ be considered text only.</p>
 </div></blockquote>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.is_text_only">
-<em class="property">classmethod </em><code class="descname">is_text_only</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_text_only"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_text_only" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">is_text_only</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_text_only"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_text_only" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the given tag only has <code class="docutils literal notranslate"><span class="pre">NavigableString</span></code> or
 tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES</span></code> for children.
 :param element:
 :return: True if this element only contains text</p>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.is_wrapper">
-<em class="property">classmethod </em><code class="descname">is_wrapper</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_wrapper" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">is_wrapper</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.is_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.is_wrapper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if this tag is only wrapping other content.
 :param element:
 :return: True if the given element is only wrapping sub-content</p>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="html2ans.parsers.utils.AbstractParserUtilities.get_children">
-<em class="property">classmethod </em><code class="descname">get_children</code><span class="sig-paren">(</span><em>element</em>, <em>filter_tags=None</em>, <em>filter_types=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.get_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.get_children" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">get_children</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">filter_tags=None</em>, <em class="sig-param">filter_types=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/utils.html#AbstractParserUtilities.get_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.utils.AbstractParserUtilities.get_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the given tag’s children (excluding the <code class="docutils literal notranslate"><span class="pre">filter_types</span></code> and
 <code class="docutils literal notranslate"><span class="pre">filter_tags</span></code>).
 :param element: the element to check
@@ -180,10 +180,10 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -197,7 +197,7 @@ tags in <code class="docutils literal notranslate"><span class="pre">TEXT_TYPES<
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Embed Parsers &#8212; html2ans 3.0.3 documentation</title>
+    <title>Embed Parsers &#8212; html2ans 3.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,44 +36,44 @@
 <span id="embed-parsers"></span><h1>Embed Parsers<a class="headerlink" href="#module-html2ans.parsers.embeds" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="html2ans.parsers.embeds.AbstractEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">AbstractEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#AbstractEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">AbstractEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#AbstractEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>Abstract class for embed parsing.</p>
 <p><a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/utils/reference.json">Reference ANS schema</a></p>
 <p><a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/utils/oembed_response.json">Oembed response ANS schema</a></p>
 <dl class="attribute">
 <dt id="html2ans.parsers.embeds.AbstractEmbedParser.regex">
-<code class="descname">regex</code><em class="property"> = ''</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.regex" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">regex</code><em class="property"> = ''</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.regex" title="Permalink to this definition">¶</a></dt>
 <dd><p>A regex that can be used to find the embed’s ID</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="html2ans.parsers.embeds.AbstractEmbedParser.tag">
-<code class="descname">tag</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.tag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tag</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.tag" title="Permalink to this definition">¶</a></dt>
 <dd><p>The tag the embed URL will appear in</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="html2ans.parsers.embeds.AbstractEmbedParser.attr">
-<code class="descname">attr</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.attr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">attr</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.attr" title="Permalink to this definition">¶</a></dt>
 <dd><p>The attribute the embed URL will appear in</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="html2ans.parsers.embeds.AbstractEmbedParser.embed_type">
-<code class="descname">embed_type</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.embed_type" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">embed_type</code><em class="property"> = None</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.embed_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>The embed type (for populating <code class="docutils literal notranslate"><span class="pre">referent.type</span></code>)</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="html2ans.parsers.embeds.AbstractEmbedParser.provider">
-<code class="descname">provider</code><em class="property"> = ''</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.provider" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">provider</code><em class="property"> = ''</em><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.provider" title="Permalink to this definition">¶</a></dt>
 <dd><p>A URL from the embed can be accessed from (given the embed’s ID)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="html2ans.parsers.embeds.AbstractEmbedParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#AbstractEmbedParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#AbstractEmbedParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.AbstractEmbedParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -86,7 +86,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.DailyMotionEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">DailyMotionEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#DailyMotionEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.DailyMotionEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">DailyMotionEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#DailyMotionEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.DailyMotionEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>DailyMotion video parser.</p>
 <p>Example:</p>
@@ -109,7 +109,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.FlickrEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">FlickrEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#FlickrEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.FlickrEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">FlickrEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#FlickrEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.FlickrEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Flickr embed parser.</p>
 <p>Example:</p>
@@ -134,7 +134,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.RedditEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">RedditEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#RedditEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.RedditEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">RedditEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#RedditEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.RedditEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Reddit embed parser.</p>
 <p>Example:</p>
@@ -162,7 +162,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.PollDaddyEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">PollDaddyEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#PollDaddyEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.PollDaddyEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">PollDaddyEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#PollDaddyEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.PollDaddyEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>PollDaddy embed parser.</p>
 <p>Example:</p>
@@ -187,7 +187,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.TwitterTweetEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">TwitterTweetEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#TwitterTweetEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.TwitterTweetEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">TwitterTweetEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#TwitterTweetEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.TwitterTweetEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Twitter post parser.</p>
 <p>Example:</p>
@@ -222,7 +222,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.TwitterVideoEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">TwitterVideoEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#TwitterVideoEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.TwitterVideoEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">TwitterVideoEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#TwitterVideoEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.TwitterVideoEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.TwitterTweetEmbedParser" title="html2ans.parsers.embeds.TwitterTweetEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.TwitterTweetEmbedParser</span></code></a></p>
 <p>Twitter video parser.</p>
 <p>Example:</p>
@@ -268,7 +268,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.InstagramEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">InstagramEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#InstagramEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.InstagramEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">InstagramEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#InstagramEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.InstagramEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Instagram embed parser.</p>
 <p>Example:</p>
@@ -305,7 +305,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.VineEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">VineEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#VineEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.VineEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">VineEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#VineEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.VineEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Vine embed parser.</p>
 <p>Example:</p>
@@ -331,13 +331,13 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.ArcPlayerEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">ArcPlayerEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#ArcPlayerEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.ArcPlayerEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">ArcPlayerEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#ArcPlayerEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.ArcPlayerEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.FacebookPostEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">FacebookPostEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#FacebookPostEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.FacebookPostEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">FacebookPostEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#FacebookPostEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.FacebookPostEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Facebook post embed parser.</p>
 <p>Example:</p>
@@ -360,7 +360,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.FacebookVideoEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">FacebookVideoEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#FacebookVideoEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.FacebookVideoEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">FacebookVideoEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#FacebookVideoEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.FacebookVideoEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.FacebookPostEmbedParser" title="html2ans.parsers.embeds.FacebookPostEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.FacebookPostEmbedParser</span></code></a></p>
 <p>Facebook video embed parser.</p>
 <p>Example:</p>
@@ -383,7 +383,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.YoutubeEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">YoutubeEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#YoutubeEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.YoutubeEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">YoutubeEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#YoutubeEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.YoutubeEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Youtube video embed parser.</p>
 <p>Example:</p>
@@ -404,7 +404,7 @@
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.embeds.YoutubeEmbedParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#YoutubeEmbedParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.YoutubeEmbedParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#YoutubeEmbedParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.YoutubeEmbedParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -417,7 +417,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.VimeoEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">VimeoEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#VimeoEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.VimeoEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">VimeoEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#VimeoEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.VimeoEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Vimeo video embed parser.</p>
 <p>Example:</p>
@@ -440,7 +440,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.TumblrEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">TumblrEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#TumblrEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.TumblrEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">TumblrEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#TumblrEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.TumblrEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Vimeo video embed parser.</p>
 <p>Example:</p>
@@ -467,7 +467,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.SpotifyEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">SpotifyEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#SpotifyEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.SpotifyEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">SpotifyEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#SpotifyEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.SpotifyEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Spotify embed parser.</p>
 <p>Example:</p>
@@ -490,7 +490,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.ImgurEmbedParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">ImgurEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#ImgurEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.ImgurEmbedParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">ImgurEmbedParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#ImgurEmbedParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.ImgurEmbedParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#html2ans.parsers.embeds.AbstractEmbedParser" title="html2ans.parsers.embeds.AbstractEmbedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.embeds.AbstractEmbedParser</span></code></a></p>
 <p>Imgur embed parser.</p>
 <p>Example:</p>
@@ -515,7 +515,7 @@
 
 <dl class="class">
 <dt id="html2ans.parsers.embeds.IFrameParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.embeds.</code><code class="descname">IFrameParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#IFrameParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.IFrameParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.embeds.</code><code class="sig-name descname">IFrameParser</code><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#IFrameParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.IFrameParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="raw_html_parser.html#html2ans.parsers.raw_html.RawHtmlParser" title="html2ans.parsers.raw_html.RawHtmlParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.raw_html.RawHtmlParser</span></code></a></p>
 <p>Iframe parser.</p>
 <p>Example:</p>
@@ -534,7 +534,7 @@
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.embeds.IFrameParser.is_applicable">
-<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#IFrameParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.IFrameParser.is_applicable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_applicable</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#IFrameParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.IFrameParser.is_applicable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
 <code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
 <dl class="field-list simple">
@@ -546,7 +546,7 @@
 
 <dl class="method">
 <dt id="html2ans.parsers.embeds.IFrameParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#IFrameParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.IFrameParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/embeds.html#IFrameParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.embeds.IFrameParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -608,10 +608,10 @@
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -625,7 +625,7 @@
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

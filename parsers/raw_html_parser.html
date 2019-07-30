@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Raw HTML Parser &#8212; html2ans 3.0.3 documentation</title>
+    <title>Raw HTML Parser &#8212; html2ans 3.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,7 +36,7 @@
 <span id="raw-html-parser"></span><h1>Raw HTML Parser<a class="headerlink" href="#module-html2ans.parsers.raw_html" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="html2ans.parsers.raw_html.RawHtmlParser">
-<em class="property">class </em><code class="descclassname">html2ans.parsers.raw_html.</code><code class="descname">RawHtmlParser</code><a class="reference internal" href="../_modules/html2ans/parsers/raw_html.html#RawHtmlParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.raw_html.RawHtmlParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">html2ans.parsers.raw_html.</code><code class="sig-name descname">RawHtmlParser</code><a class="reference internal" href="../_modules/html2ans/parsers/raw_html.html#RawHtmlParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.raw_html.RawHtmlParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base_parser.html#html2ans.parsers.base.BaseElementParser" title="html2ans.parsers.base.BaseElementParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">html2ans.parsers.base.BaseElementParser</span></code></a></p>
 <p>Raw HTML parser. <a class="reference external" href="https://github.com/washingtonpost/ans-schema/blob/master/src/main/resources/schema/ans/0.8.0/story_elements/raw_html.json">ANS schema</a></p>
 <p>Example:</p>
@@ -52,7 +52,7 @@
 </div>
 <dl class="method">
 <dt id="html2ans.parsers.raw_html.RawHtmlParser.is_applicable">
-<code class="descname">is_applicable</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/raw_html.html#RawHtmlParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.raw_html.RawHtmlParser.is_applicable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_applicable</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/raw_html.html#RawHtmlParser.is_applicable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.raw_html.RawHtmlParser.is_applicable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks applicability using <code class="docutils literal notranslate"><span class="pre">applicable_elements</span></code> and, optionally,
 <code class="docutils literal notranslate"><span class="pre">applicable_classes</span></code></p>
 <dl class="field-list simple">
@@ -64,7 +64,7 @@
 
 <dl class="method">
 <dt id="html2ans.parsers.raw_html.RawHtmlParser.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>element</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/raw_html.html#RawHtmlParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.raw_html.RawHtmlParser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/html2ans/parsers/raw_html.html#RawHtmlParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#html2ans.parsers.raw_html.RawHtmlParser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the given element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -126,10 +126,10 @@
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -143,7 +143,7 @@
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

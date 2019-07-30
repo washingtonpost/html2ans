@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>html2ans.parsers.utils &#8212; html2ans 3.0.3 documentation</title>
+    <title>html2ans.parsers.utils &#8212; html2ans 3.0.4 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -94,7 +94,8 @@
         <span class="s1">&#39;strong&#39;</span><span class="p">,</span>
         <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
         <span class="s1">&#39;sup&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;span&#39;</span>
+        <span class="s1">&#39;span&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;u&#39;</span>
     <span class="p">]</span>
 
     <span class="n">TEXT_TAGS</span> <span class="o">=</span> <span class="n">INLINE_TAGS</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;blockquote&#39;</span><span class="p">]</span>
@@ -187,7 +188,8 @@
                         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-    <span class="k">def</span> <span class="nf">_create_encoded_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">original_url</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_encoded_url</span><span class="p">(</span><span class="n">original_url</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Url encode path a uri.</span>
 
@@ -233,10 +235,10 @@
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -250,7 +252,7 @@
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
