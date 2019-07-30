@@ -61,7 +61,8 @@ class AbstractParserUtilities(object):
         'strong',
         'sub',
         'sup',
-        'span'
+        'span',
+        'u'
     ]
 
     TEXT_TAGS = INLINE_TAGS + ['p', 'blockquote']
