@@ -61,7 +61,8 @@ class AbstractParserUtilities(object):
         'strong',
         'sub',
         'sup',
-        'span'
+        'span',
+        'u'
     ]
 
     TEXT_TAGS = INLINE_TAGS + ['p', 'blockquote']
@@ -154,7 +155,8 @@ class AbstractParserUtilities(object):
                         result.append(child)
         return result
 
-    def _create_encoded_url(self, original_url):
+    @staticmethod
+    def _create_encoded_url(original_url):
         """
         Url encode path a uri.
 

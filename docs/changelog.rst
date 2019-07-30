@@ -2,6 +2,12 @@ Changelog
 =========
 
 
+v3.0.4
+------
+
+* Adds ``u`` tags to the default list of ``INLINE_TAGS``
+
+
 v3.0.3
 ------
 
