@@ -77,12 +77,15 @@ def test_double_quote(parser, make_p_tag):
     ('<p><!--BrightspotCmsObjectBegin {}--></p>',
      None),
     ('<p>Before<!-- <img src="imgsrc"/><p>Removed</p> --> Middle <!-- another --> End</p>',
-     "Before Middle  End")
+     "Before Middle  End"),
+    ('<p>Before <!-- <img src="imgsrc"/><p>Removed</p> --><em>Middle</em><!-- another --> End</p>',
+     "Before <em>Middle</em> End")
 ])
 def test_html_comments(tag_string, parsed_output, parser, make_p_tag):
     result = parser.parse(make_p_tag(tag_string))
 
     if parsed_output:
+        assert result.output.get("type") == "text"
         assert result.output.get("content") == parsed_output
     else:
         assert not result.output
