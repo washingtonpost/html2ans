@@ -19,7 +19,7 @@ class AbstractTextParser(BaseElementParser):
         elif element.name in self.INLINE_TAGS:
             content = str(element)
         else:
-            # First, remove html comments and anything within them
+
             def __remove_comments(inner_element):
 
                 if isinstance(inner_element, Comment):
