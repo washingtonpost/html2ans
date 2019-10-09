@@ -1,7 +1,5 @@
 from __future__ import absolute_import, unicode_literals  # need this for python 2.7 unicode issues
 
-from html import escape
-
 import six
 from bs4.element import NavigableString, Tag, Comment
 from ftfy import fix_text
@@ -18,7 +16,6 @@ class AbstractTextParser(BaseElementParser):
 
         if isinstance(element, NavigableString) or isinstance(element, six.text_type):
             content = six.text_type(element).strip()
-            escape(content)
         elif element.name in self.INLINE_TAGS:
             content = str(element)
         else:
