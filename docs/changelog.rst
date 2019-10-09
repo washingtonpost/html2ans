@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v3.0.5
+------
+
+* Fixes bug that would include html comments
+
 
 v3.0.4
 ------
