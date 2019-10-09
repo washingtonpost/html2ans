@@ -69,3 +69,20 @@ def test_single_quote(parser, make_p_tag):
 
 def test_double_quote(parser, make_p_tag):
     assert '"' in parser.parse(make_p_tag('<p>&ldquo; &rdquo;</p>')).output.get('content')
+
+
+@pytest.mark.parametrize('tag_string,parsed_output', [
+    ('<p>Before<!--BrightspotCmsObjectBegin {}--> End</p>',
+     "Before End"),
+    ('<p><!--BrightspotCmsObjectBegin {}--></p>',
+     None),
+    ('<p>Before<!-- <img src="imgsrc"/><p>Removed</p> --> Middle <!-- another --> End</p>',
+     "Before Middle  End")
+])
+def test_html_comments(tag_string, parsed_output, parser, make_p_tag):
+    result = parser.parse(make_p_tag(tag_string))
+
+    if parsed_output:
+        assert result.output.get("content") == parsed_output
+    else:
+        assert not result.output
