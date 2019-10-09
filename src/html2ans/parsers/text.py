@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals  # need this for python 2.7 unicode issues
 
 import six
-from bs4.element import NavigableString, Tag
+from bs4.element import NavigableString, Tag, Comment
 from ftfy import fix_text
 
 from html2ans.parsers.base import BaseElementParser, ParseResult
@@ -13,15 +13,27 @@ class AbstractTextParser(BaseElementParser):
     """
 
     def construct_output(self, element, *args, **kwargs):
+
         if isinstance(element, NavigableString) or isinstance(element, six.text_type):
             content = six.text_type(element).strip()
         elif element.name in self.INLINE_TAGS:
             content = str(element)
         else:
+
+            def __remove_comments(inner_element):
+
+                if isinstance(inner_element, Comment):
+                    out_element = ""
+                else:
+                    out_element = six.text_type(inner_element)
+
+                return out_element
+
             # There doesn't seem to be a great way to extract the text
             # without eliminating text formatters
             # like <strong>, thus the strange join statement
-            content = fix_text(''.join([six.text_type(x) for x in element.contents]).strip())
+            content = fix_text(''.join([__remove_comments(x) for x in element.contents]).strip())
+
         if content:
             return super(AbstractTextParser, self).construct_output(element, "text", content)
         return None
