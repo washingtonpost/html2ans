@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v3.0.6
+------
+
+* Fixes bug that caused badly formed ans on blockquotes
+
+
 v3.0.5
 ------
 

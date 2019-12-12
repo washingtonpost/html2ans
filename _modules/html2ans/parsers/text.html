@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>html2ans.parsers.text &#8212; html2ans 3.0.5 documentation</title>
+    <title>html2ans.parsers.text &#8212; html2ans 3.0.6 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -31,13 +31,13 @@
           <div class="body" role="main">
             
   <h1>Source code for html2ans.parsers.text</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">unicode_literals</span>  <span class="c1"># need this for python 2.7 unicode issues</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">unicode_literals</span>  <span class="c1"># need this for python 2.7 unicode issues</span>
 
 <span class="kn">import</span> <span class="nn">six</span>
-<span class="kn">from</span> <span class="nn">bs4.element</span> <span class="k">import</span> <span class="n">NavigableString</span><span class="p">,</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">Comment</span>
-<span class="kn">from</span> <span class="nn">ftfy</span> <span class="k">import</span> <span class="n">fix_text</span>
+<span class="kn">from</span> <span class="nn">bs4.element</span> <span class="kn">import</span> <span class="n">NavigableString</span><span class="p">,</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">Comment</span>
+<span class="kn">from</span> <span class="nn">ftfy</span> <span class="kn">import</span> <span class="n">fix_text</span>
 
-<span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="k">import</span> <span class="n">BaseElementParser</span><span class="p">,</span> <span class="n">ParseResult</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="kn">import</span> <span class="n">BaseElementParser</span><span class="p">,</span> <span class="n">ParseResult</span>
 
 
 <div class="viewcode-block" id="AbstractTextParser"><a class="viewcode-back" href="../../../parsers/text_parser.html#html2ans.parsers.text.AbstractTextParser">[docs]</a><span class="k">class</span> <span class="nc">AbstractTextParser</span><span class="p">(</span><span class="n">BaseElementParser</span><span class="p">):</span>
@@ -218,9 +218,10 @@
                             <span class="n">content_elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_result</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">p_result</span> <span class="o">=</span> <span class="n">ParagraphParser</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">p_result</span><span class="o">.</span><span class="n">match</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p_result</span><span class="o">.</span><span class="n">match</span> <span class="ow">and</span> <span class="n">p_result</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
                     <span class="n">content_elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_result</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="n">content_elements</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">content_elements</span> <span class="k">if</span> <span class="n">el</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">and</span> <span class="n">content_elements</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;quote&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;content_elements&quot;</span><span class="p">:</span> <span class="n">content_elements</span>
@@ -329,7 +330,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;li&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">TEXT_TAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">)</span></div>
 
 
@@ -395,7 +396,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">applicable_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ul&#39;</span><span class="p">,</span> <span class="s1">&#39;ol&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_item_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_item_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">list_item_parser</span> <span class="o">=</span> <span class="n">list_item_parser</span> <span class="k">if</span> <span class="n">list_item_parser</span> <span class="k">else</span> <span class="n">ListItemParser</span><span class="p">()</span>
 
 <div class="viewcode-block" id="ListParser.parse"><a class="viewcode-back" href="../../../parsers/text_parser.html#html2ans.parsers.text.ListParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -487,7 +488,7 @@
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

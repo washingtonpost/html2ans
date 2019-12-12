@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>html2ans.default &#8212; html2ans 3.0.5 documentation</title>
+    <title>html2ans.default &#8212; html2ans 3.0.6 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -31,9 +31,9 @@
           <div class="body" role="main">
             
   <h1>Source code for html2ans.default</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">html2ans.base</span> <span class="k">import</span> <span class="n">BaseHtmlAnsParser</span>
-<span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="k">import</span> <span class="n">NullParser</span>
-<span class="kn">from</span> <span class="nn">html2ans.parsers.text</span> <span class="k">import</span> <span class="p">(</span>
+<span></span><span class="kn">from</span> <span class="nn">html2ans.base</span> <span class="kn">import</span> <span class="n">BaseHtmlAnsParser</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.base</span> <span class="kn">import</span> <span class="n">NullParser</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.text</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">InterstitialLinkParser</span><span class="p">,</span>
     <span class="n">BlockquoteParser</span><span class="p">,</span>
     <span class="n">FormattedTextParser</span><span class="p">,</span>
@@ -41,12 +41,12 @@
     <span class="n">ListParser</span><span class="p">,</span>
     <span class="n">ParagraphParser</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">html2ans.parsers.image</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.image</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">FigureParser</span><span class="p">,</span>
     <span class="n">LinkedImageParser</span><span class="p">,</span>
     <span class="n">ImageParser</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">html2ans.parsers.embeds</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.embeds</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ArcPlayerEmbedParser</span><span class="p">,</span>
     <span class="n">DailyMotionEmbedParser</span><span class="p">,</span>
     <span class="n">FacebookPostEmbedParser</span><span class="p">,</span>
@@ -65,8 +65,8 @@
     <span class="n">VineEmbedParser</span><span class="p">,</span>
     <span class="n">YoutubeEmbedParser</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">html2ans.parsers.audio</span> <span class="k">import</span> <span class="n">AudioParser</span>
-<span class="kn">from</span> <span class="nn">html2ans.parsers.raw_html</span> <span class="k">import</span> <span class="n">RawHtmlParser</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.audio</span> <span class="kn">import</span> <span class="n">AudioParser</span>
+<span class="kn">from</span> <span class="nn">html2ans.parsers.raw_html</span> <span class="kn">import</span> <span class="n">RawHtmlParser</span>
 
 
 <div class="viewcode-block" id="DefaultHtmlAnsParser"><a class="viewcode-back" href="../../base.html#html2ans.default.DefaultHtmlAnsParser">[docs]</a><span class="k">class</span> <span class="nc">DefaultHtmlAnsParser</span><span class="p">(</span><span class="n">BaseHtmlAnsParser</span><span class="p">):</span>
@@ -129,7 +129,7 @@
 <span class="sd">    the order listed, so order matters!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DefaultHtmlAnsParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">default_parsers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_PARSERS</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
@@ -190,7 +190,7 @@
       &copy;.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
