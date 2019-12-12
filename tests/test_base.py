@@ -56,6 +56,27 @@ def test_start_tag(test_html2ans):
     assert test_html2ans.generate_ans('<body><p></p></body>', start_tag='blockquote') == []
 
 
+"""
+    These instances were returning a content element of 
+    {
+        "type": "quote",
+        "content_elements": [None]
+    }
+    which is not valid ans.  The reason was due to the way these fell back to
+    the blockquote parser when the initial parsers failed.
+"""
+@pytest.mark.parametrize('data', [
+    '<blockquote class="twitter-tweet" data-lang="en">\n	&nbsp;</blockquote>',
+    '<blockquote class="twitter-tweet" data-partner="tweetdeck">\n	&nbsp;</blockquote>',
+    '<blockquote class="imgur-embed-pub" data-id="oSDWFTJ" lang="en">\n	&nbsp;</blockquote>',
+    '<blockquote class="twitter-tweet" data-lang="en">&nbsp;</blockquote>',
+    '<blockquote class="twitter-video" data-lang="en">\n	&nbsp;</blockquote>',
+    '<blockquote class="imgur-embed-pub" data-id="a/bMSXD" lang="en">\n	&nbsp;</blockquote>',
+])
+def test_ignore_empty_blocks(data, test_html2ans):
+    assert test_html2ans.generate_ans(data) == []
+
+
 class DummyParser(BaseElementParser):
     applicable_elements = ['foo']
 
@@ -81,3 +102,4 @@ class DummyParserList(BaseElementParser):
             {'type': 'foo', 'bar': "dummy words"},
             {'type': 'foo', 'bar': "others"}
         ], True)
+
