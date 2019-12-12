@@ -185,9 +185,12 @@ class BlockquoteParser(AbstractTextParser):
                             content_elements.append(p_result.output)
             else:
                 p_result = ParagraphParser().parse(element)
+                if p_result.match and p_result.output:
+                    content_elements.append(p_result.output)
                 if p_result.match:
                     content_elements.append(p_result.output)
-        if match:
+        content_elements = [el for el in content_elements if el is not None]
+        if match and content_elements:
             result = {
                 "type": "quote",
                 "content_elements": content_elements
