@@ -20,14 +20,15 @@ def test_is_applicable(parser, valid_quote_tag, make_tag):
     assert parser.is_applicable(make_tag(valid_quote_tag, 'blockquote'))
 
 
-@pytest.mark.parametrize('html', [
-    '<blockquote><p>This is a blockquote.</p></blockquote>',
-    '<blockquote class="something"><p>This is a blockquote.</p></blockquote>',
-    '<blockquote>This is a blockquote.</blockquote>'
+@pytest.mark.parametrize('html,length', [
+    ('<blockquote><p>This is a blockquote.</p></blockquote>', 1),
+    ('<blockquote class="something"><p>This is a blockquote.</p></blockquote>', 1),
+    ('<blockquote>This is a blockquote.</blockquote>', 1),
 ])
-def test_blockquote_with_p(html, parser, make_tag):
+def test_blockquote_with_p(html, length, parser, make_tag):
     tag = make_tag(html, 'blockquote')
     parsed = parser.parse(tag).output
+    assert len(parsed.get('content_elements')) == length
     assert parsed.get('content_elements')[0]["content"] == 'This is a blockquote.'
 
 
